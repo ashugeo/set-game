@@ -13,74 +13,99 @@ body {
     display: none;
 }
 
-.card {
-    position: relative;
-    display: inline-flex;
-    height: 120px;
-    width: 80px;
-    flex-flow: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #ffffff;
-    margin: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 2px rgba(0,0,0,.1);
+.wrapper {
+    position: absolute;
+    display: flex;
+    flex-flow: column wrap;
+    align-content: center;
+    width: 400px;
+    height: 510px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 
-    svg {
-        display: inline-block;
-        width: 70%;
-        fill: transparent;
-        stroke-width: .2;
-    }
-
-    &.c0 {
-        color: red;
-
-        &.f0 svg {
-            fill: red;
-        }
-
-        &.f1 svg {
-            stroke: red;
-        }
-
-        &.f2 svg {
-            stroke: red;
-            fill: url(#stripes-red);
+    &.set {
+        .card {
+            opacity: .3;
+            transform: scale(.9);
         }
     }
 
-    &.c1 {
-        color: purple;
+    .card {
+        position: relative;
+        display: inline-flex;
+        height: 120px;
+        width: 80px;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #ffffff;
+        margin: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 2px rgba(0,0,0,.1);
+        transition: transform .3s ease;
 
-        &.f0 svg {
-            fill: purple;
+        svg {
+            display: inline-block;
+            width: 70%;
+            fill: transparent;
+            stroke-width: .2;
         }
 
-        &.f1 svg {
-            stroke: purple;
+        &.c0 {
+            color: red;
+
+            &.f0 svg {
+                fill: red;
+            }
+
+            &.f1 svg {
+                stroke: red;
+            }
+
+            &.f2 svg {
+                stroke: red;
+                fill: url(#stripes-red);
+            }
         }
 
-        &.f2 svg {
-            stroke: purple;
-            fill: url(#stripes-purple);
+        &.c1 {
+            color: purple;
+
+            &.f0 svg {
+                fill: purple;
+            }
+
+            &.f1 svg {
+                stroke: purple;
+            }
+
+            &.f2 svg {
+                stroke: purple;
+                fill: url(#stripes-purple);
+            }
         }
-    }
 
-    &.c2 {
-        color: green;
+        &.c2 {
+            color: green;
 
-        &.f0 svg {
-            fill: green;
+            &.f0 svg {
+                fill: green;
+            }
+
+            &.f1 svg {
+                stroke: green;
+            }
+
+            &.f2 svg {
+                stroke: green;
+                fill: url(#stripes-green);
+            }
         }
 
-        &.f1 svg {
-            stroke: green;
-        }
-
-        &.f2 svg {
-            stroke: green;
-            fill: url(#stripes-green);
+        &.set {
+            transform: scale(1.1);
+            opacity: 1;
         }
     }
 }
