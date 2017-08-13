@@ -7,6 +7,7 @@
 body {
     padding: 10px;
     background-color: #eee;
+    font-family: sans-serif;
 }
 
 .all-svgs {
@@ -28,6 +29,13 @@ body {
         .card {
             opacity: .3;
             transform: scale(.9);
+        }
+    }
+
+    &.waiting {
+        .card:hover {
+            transform: scale(1.1);
+            cursor: pointer;
         }
     }
 
@@ -108,4 +116,22 @@ body {
             opacity: 1;
         }
     }
+}
+
+.set-button {
+    position: absolute;
+    display: flex;
+    min-width: 100px;
+    bottom: 40px;
+    padding: 10px 20px;
+    height: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    color: #333;
+    border: 1px solid #333;
+    cursor: pointer;
+    user-select: none;
 }

@@ -3,6 +3,8 @@ let cardsLeft = [];
 let currentCards = [];
 let tests = 0;
 let speed = 1000;
+let solveTimeout;
+let waiting;
 
 $(document).ready(() => {
 
@@ -20,6 +22,23 @@ $(document).ready(() => {
     }
 
     start();
+});
+
+$(document).on('keydown', (e) => {
+    if (e.which === 32) {
+        userSet();
+    }
+});
+
+$(document).on('click', '.set-button', () => {
+    userSet();
+});
+
+$(document).on('click', '.card', () => {
+    if (waiting) {
+        console.log($(this));
+        $(this).addClass('selected');
+    }
 });
 
 function start() {
@@ -91,7 +110,7 @@ function solve() {
     });
 
     if (!foundSet) {
-        setTimeout(() => {
+        solveTimeout = setTimeout(() => {
             solve(firstCard, secondCard);
         }, speed);
     }
@@ -156,4 +175,26 @@ function displaySet(first, second, third) {
     $('.card#' + first).addClass('set');
     $('.card#' + second).addClass('set');
     $('.card#' + third).addClass('set');
+}
+
+function userSet() {
+    console.log('stop');
+    clock(0);
+    waiting = true;
+    clearTimeout(solveTimeout);
+    $('.set-button').text('Click three cards').css('opacity', .5);
+    $('.wrapper').addClass('waiting');
+}
+
+
+function clock(t) {
+    if (t == 10) {
+        console.log('done');
+    } else {
+        t += 1;
+        console.log(11 - t + ' secs left');
+        setTimeout(() => {
+            clock(t);
+        }, 1000);
+    }
 }
