@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 10px;
+    background-color: #eee;
+}
+
+.all-svgs {
+    display: none;
+}
+
+.card {
+    position: relative;
+    display: inline-flex;
+    height: 120px;
+    width: 80px;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 2px rgba(0,0,0,.1);
+
+    svg {
+        display: inline-block;
+        width: 70%;
+        fill: transparent;
+        stroke-width: .2;
+    }
+
+    &.c0 {
+        color: red;
+
+        &.f0 svg {
+            fill: red;
+        }
+
+        &.f1 svg {
+            stroke: red;
+        }
+
+        &.f2 svg {
+            stroke: red;
+            fill: url(#stripes-red);
+        }
+    }
+
+    &.c1 {
+        color: purple;
+
+        &.f0 svg {
+            fill: purple;
+        }
+
+        &.f1 svg {
+            stroke: purple;
+        }
+
+        &.f2 svg {
+            stroke: purple;
+            fill: url(#stripes-purple);
+        }
+    }
+
+    &.c2 {
+        color: green;
+
+        &.f0 svg {
+            fill: green;
+        }
+
+        &.f1 svg {
+            stroke: green;
+        }
+
+        &.f2 svg {
+            stroke: green;
+            fill: url(#stripes-green);
+        }
+    }
+}
