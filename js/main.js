@@ -1,9 +1,10 @@
 let cards = [];
 let cardsLeft = [];
 let currentCards = [];
-let tests = 0;
-let speed = 1000;
+let test = 0;
+let speed = 10000;
 let solveTimeout;
+let clockTimeout;
 let waiting;
 
 $(document).ready(() => {
@@ -34,13 +35,6 @@ $(document).on('click', '.set-button', () => {
     userSet();
 });
 
-$(document).on('click', '.card', () => {
-    if (waiting) {
-        console.log($(this));
-        $(this).addClass('selected');
-    }
-});
-
 function start() {
     cardsLeft = cards.slice();
     for (let i = 0; i < 12; i += 1) {
@@ -48,8 +42,10 @@ function start() {
     }
 
     setTimeout(() => {
-        solve();
-    }, 1000);
+        if (!waiting) {
+            solve();
+        }
+    }, 2000);
 }
 
 function displayAllCards() {
@@ -71,6 +67,11 @@ function displayRandomCard() {
 
 function displayCard(card) {
     let $div = $('<div>', {id: card.id, class: 'card c' + card.color + ' f' + card.fill});
+    $div.on('click', () => {
+        if (waiting) {
+            clickCard($div);
+        }
+    });
 
     for (let qty = 0; qty <= card.qty; qty += 1) {
         if (card.shape === 0) {
@@ -87,10 +88,19 @@ function displayCard(card) {
 }
 
 function solve() {
+    test += 1;
+    console.log('test ' + test);
+    if (test === 30) {
+        for (let i = 0; i < 3; i += 1) {
+            displayRandomCard();
+        }
+        test = 0;
+    }
+
+
     let foundSet;
 
     let firstCard = currentCards[Math.floor(Math.random()*currentCards.length)];
-
     let secondCard = currentCards[Math.floor(Math.random()*currentCards.length)];
 
     while (secondCard === firstCard) {
@@ -98,7 +108,6 @@ function solve() {
     }
 
     let target = findThird(firstCard, secondCard);
-
     let targetID = findCardID(target);
 
     currentCards.forEach((card) => {
@@ -114,19 +123,10 @@ function solve() {
             solve(firstCard, secondCard);
         }, speed);
     }
-
-    tests += 1;
-    console.log(tests);
-    if (tests === 30) {
-        for (let i = 0; i < 3; i += 1) {
-            displayRandomCard();
-        }
-        tests = 0;
-    }
 }
 
 function findThird(firstCard, secondCard) {
-    let target = {};;
+    let target = {};
 
     if (firstCard.shape === secondCard.shape) {
         target.shape = firstCard.shape;
@@ -178,6 +178,14 @@ function displaySet(first, second, third) {
 }
 
 function userSet() {
+    const countdown = `<div class="countdown">
+        <div class="countdown-number"></div>
+        <svg>
+            <circle r="14" cx="25" cy="15"></circle>
+        </svg>
+    </div>`;
+    $('.bottom-row').prepend(countdown);
+
     console.log('stop');
     clock(0);
     waiting = true;
@@ -189,12 +197,34 @@ function userSet() {
 
 function clock(t) {
     if (t == 10) {
-        console.log('done');
+        $('.countdown').remove();
+        $('.set-button').text('Too late!')
     } else {
         t += 1;
+        $('.countdown-number').text(11 - t);
         console.log(11 - t + ' secs left');
-        setTimeout(() => {
+        clockTimeout = setTimeout(() => {
             clock(t);
         }, 1000);
+    }
+}
+
+function clickCard($div) {
+    $div.toggleClass('selected');
+    if ($('.card.selected').length === 3) {
+        clearTimeout(clockTimeout);
+        $('.countdown').remove();
+
+        let selected = [];
+        $('.card.selected').each((id, elem) => {
+            selected.push($(elem).attr('id'));
+        });
+        console.log(cards[selected[0]]);
+        console.log(cards[selected[1]]);
+        let target = findThird(cards[selected[0]], cards[selected[1]]);
+        console.log(target);
+        findCardID(target);
+        console.log(findCardID(target));
+        console.log(cards[selected[2]].id);
     }
 }
