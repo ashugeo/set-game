@@ -2,13 +2,13 @@ let cards = [];
 let cardsLeft = [];
 let currentCards = [];
 let test = 0;
-let speed = 10000;
+let speed = 1000;
 let solveTimeout;
 let clockTimeout;
 let waiting;
+let foundSet;
 
 $(document).ready(() => {
-
     // Generate all cards
     let id = 0;
     for (let shape = 0; shape < 3; shape += 1) {
@@ -82,8 +82,6 @@ function displayCard(card) {
             $div.append('<svg viewBox="0 0 12 8"><use xlink:href="#oval"></use></svg>');
         }
     }
-    // $div.append(card.id);
-    // $div.css('transform', 'rotate(' + Math.round(Math.random()*8 - 4) + 'deg)');
     $('.wrapper').append($div);
 }
 
@@ -96,9 +94,6 @@ function solve() {
         }
         test = 0;
     }
-
-
-    let foundSet;
 
     let firstCard = currentCards[Math.floor(Math.random()*currentCards.length)];
     let secondCard = currentCards[Math.floor(Math.random()*currentCards.length)];
@@ -113,6 +108,7 @@ function solve() {
     currentCards.forEach((card) => {
         if (card.id === targetID) {
             foundSet = true;
+            $('.set-button').text('Too late!').css('opacity', .5);;
             console.log('found set !');
             displaySet(firstCard.id, secondCard.id, targetID);
         }
@@ -178,6 +174,9 @@ function displaySet(first, second, third) {
 }
 
 function userSet() {
+    if (foundSet) {
+        return false;
+    }
     const countdown = `<div class="countdown">
         <div class="countdown-number"></div>
         <svg>
@@ -185,8 +184,6 @@ function userSet() {
         </svg>
     </div>`;
     $('.bottom-row').prepend(countdown);
-
-    console.log('stop');
     clock(0);
     waiting = true;
     clearTimeout(solveTimeout);
@@ -219,12 +216,12 @@ function clickCard($div) {
         $('.card.selected').each((id, elem) => {
             selected.push($(elem).attr('id'));
         });
-        console.log(cards[selected[0]]);
-        console.log(cards[selected[1]]);
         let target = findThird(cards[selected[0]], cards[selected[1]]);
-        console.log(target);
         findCardID(target);
-        console.log(findCardID(target));
-        console.log(cards[selected[2]].id);
+        if (findCardID(target) === cards[selected[2]].id) {
+            $('.set-button').text('Well done!');
+        } else {
+            $('.set-button').text('Sorry, no...');
+        }
     }
 }
