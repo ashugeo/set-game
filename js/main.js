@@ -2,12 +2,13 @@ let cards = [];
 let cardsLeft = [];
 let currentCards = [];
 let test = 0;
-let speed = 100;
+let speed = 1000;
 let p = 0;
 let solveTimeout;
 let clockTimeout;
 let waiting;
 let foundSet;
+let emptyPos = [];
 
 $(document).ready(() => {
     // Generate all cards
@@ -55,26 +56,30 @@ function displayAllCards() {
     });
 }
 
-function displayRandomCard() {
+function displayRandomCard(pos) {
     let rand = Math.floor(Math.random()*cardsLeft.length);
     let card = cardsLeft[rand];
+
+    if (pos === undefined) {
+        pos = p;
+        p += 1;
+    }
 
     if (cardsLeft.indexOf(card) > -1) {
         cardsLeft.splice(cardsLeft.indexOf(card), 1);
         currentCards.push(card);
-        displayCard(card);
+        displayCard(card, pos);
     }
 }
 
-function displayCard(card) {
+function displayCard(card, pos) {
     let $div = $('<div>', {id: card.id, class: 'card c' + card.color + ' f' + card.fill});
-    $div.attr('data-pos', p);
+    $div.attr('data-pos', pos);
     $div.css({
-        top: p%3 * 35 + '%',
-        left: Math.floor(p/3) * 15 + 25 + '%',
+        top: pos%3 * 35 + '%',
+        left: Math.floor(pos/3) * 15 + 25 + '%',
         transform: 'rotate(' + (Math.round(Math.random()*6) - 3) + 'deg)'
     });
-    p += 1;
     $div.on('click', () => {
         if (waiting) {
             clickCard($div);
@@ -119,14 +124,28 @@ function solve() {
             $('.set-button').text('Too late!').addClass('disabled');
             displaySet(firstCard.id, secondCard.id, targetID);
             setTimeout(() => {
+                removeCurrentByID(firstCard.id);
                 setToBot(firstCard.id);
+                setTimeout(() => {
+                    removeCurrentByID(secondCard.id);
+                    setToBot(secondCard.id);
+                }, 200);
+                setTimeout(() => {
+                    removeCurrentByID(targetID);
+                    setToBot(targetID);
+                }, 400);
+                setTimeout(() => {
+                    for (let i = 0; i < 3; i += 1) {
+                        displayRandomCard(emptyPos[0]);
+                        emptyPos.shift();
+                        test = 0;
+                    }
+                    console.log(currentCards);
+                    foundSet = false;
+                    solve();
+                }, 1000);
             }, 2000);
-            setTimeout(() => {
-                setToBot(secondCard.id);
-            }, 2200);
-            setTimeout(() => {
-                setToBot(targetID);
-            }, 2400);
+
         }
     });
 
@@ -244,10 +263,22 @@ function clickCard($div) {
 }
 
 function setToBot(id) {
+    emptyPos.push(parseInt($('.card#' + id).attr('data-pos')));
     $('.wrapper').removeClass('set');
-    $('.card#' + id).removeClass('set').css({
+    $('.card#' + id).removeClass('set').attr('data-pos', 'bot').css({
         left: '5%',
         top: '35%',
         transform: 'rotate(' + (Math.round(Math.random()*6) - 3) + 'deg)',
+        opacity: 1
     });
+}
+
+function removeCurrentByID(id) {
+    currentCards.forEach((card) => {
+        if (card.id === id) {
+            console.log(card);
+            currentCards.splice(currentCards.indexOf(card), 1);
+        }
+    });
+    console.log(currentCards);
 }

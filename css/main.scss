@@ -16,9 +16,6 @@ body {
 
 .wrapper {
     position: absolute;
-    // display: flex;
-    // flex-flow: column wrap;
-    // align-content: center;
     width: 100%;
     height: 660px;
     left: 0;
@@ -59,6 +56,7 @@ body {
         box-shadow: 0 2px 2px rgba(0,0,0,.1);
         transition: top .5s ease-in-out, left .5s ease-in-out, transform .3s ease, opacity .3s 1s ease, box-shadow .3s ease;
         backface-visibility: hidden;
+        // opacity: .3;
 
         svg {
             display: inline-block;
