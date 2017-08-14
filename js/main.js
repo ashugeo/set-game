@@ -2,7 +2,8 @@ let cards = [];
 let cardsLeft = [];
 let currentCards = [];
 let test = 0;
-let speed = 1000;
+let speed = 100;
+let p = 0;
 let solveTimeout;
 let clockTimeout;
 let waiting;
@@ -67,6 +68,13 @@ function displayRandomCard() {
 
 function displayCard(card) {
     let $div = $('<div>', {id: card.id, class: 'card c' + card.color + ' f' + card.fill});
+    $div.attr('data-pos', p);
+    $div.css({
+        top: p%3 * 35 + '%',
+        left: Math.floor(p/3) * 15 + 25 + '%',
+        transform: 'rotate(' + (Math.round(Math.random()*6) - 3) + 'deg)'
+    });
+    p += 1;
     $div.on('click', () => {
         if (waiting) {
             clickCard($div);
@@ -108,9 +116,17 @@ function solve() {
     currentCards.forEach((card) => {
         if (card.id === targetID) {
             foundSet = true;
-            $('.set-button').text('Too late!').css('opacity', .5);;
-            console.log('found set !');
+            $('.set-button').text('Too late!').addClass('disabled');
             displaySet(firstCard.id, secondCard.id, targetID);
+            setTimeout(() => {
+                setToBot(firstCard.id);
+            }, 2000);
+            setTimeout(() => {
+                setToBot(secondCard.id);
+            }, 2200);
+            setTimeout(() => {
+                setToBot(targetID);
+            }, 2400);
         }
     });
 
@@ -168,9 +184,9 @@ function findCardID(target) {
 
 function displaySet(first, second, third) {
     $('.wrapper').addClass('set');
-    $('.card#' + first).addClass('set');
-    $('.card#' + second).addClass('set');
-    $('.card#' + third).addClass('set');
+    $('.card#' + first).addClass('set').css('transform', 'scale(1.15)');
+    $('.card#' + second).addClass('set').css('transform', 'scale(1.15)');
+    $('.card#' + third).addClass('set').css('transform', 'scale(1.15)');
 }
 
 function userSet() {
@@ -178,16 +194,16 @@ function userSet() {
         return false;
     }
     const countdown = `<div class="countdown">
-        <div class="countdown-number"></div>
-        <svg>
-            <circle r="14" cx="25" cy="15"></circle>
-        </svg>
+    <div class="countdown-number"></div>
+    <svg>
+    <circle r="14" cx="25" cy="15"></circle>
+    </svg>
     </div>`;
     $('.bottom-row').prepend(countdown);
     clock(0);
     waiting = true;
     clearTimeout(solveTimeout);
-    $('.set-button').text('Click three cards').css('opacity', .5);
+    $('.set-button').text('Click three cards').addClass('disabled');
     $('.wrapper').addClass('waiting');
 }
 
@@ -219,9 +235,19 @@ function clickCard($div) {
         let target = findThird(cards[selected[0]], cards[selected[1]]);
         findCardID(target);
         if (findCardID(target) === cards[selected[2]].id) {
+            displaySet(cards[selected[0]].id, cards[selected[1]].id, cards[selected[2]].id);
             $('.set-button').text('Well done!');
         } else {
             $('.set-button').text('Sorry, no...');
         }
     }
+}
+
+function setToBot(id) {
+    $('.wrapper').removeClass('set');
+    $('.card#' + id).removeClass('set').css({
+        left: '5%',
+        top: '35%',
+        transform: 'rotate(' + (Math.round(Math.random()*6) - 3) + 'deg)',
+    });
 }
