@@ -11,7 +11,7 @@ let currentCards = [];
 let test = 0;
 
 // Bot delay between each test
-let speed = 100;
+let speed = 1000;
 let solveTimeout;
 
 // Position of the cards on the table
@@ -46,20 +46,20 @@ $(document).on('keydown', (e) => {
     }
 });
 
-$(document).on('mouseover', '.card', (e) => {
-    // User cursos hovers a card
-    if (waiting) { // If waiting for him to select cards, highlight this card
-        $(e.currentTarget).css('transform', 'scale(1.1)');
-    }
-});
-
-$(document).on('mouseout', '.card', (e) => {
-    // User cursor leaves a card
-    if (waiting) {
-        // Remove highlight
-        $(e.currentTarget).css('transform', 'rotate(' + (Math.round(Math.random()* 6) - 3) + 'deg)');
-    }
-});
+// $(document).on('mouseover', '.card', (e) => {
+//     // User cursos hovers a card
+//     if (waiting) { // If waiting for him to select cards, highlight this card
+//         $(e.currentTarget).css('transform', 'scale(1.1)');
+//     }
+// });
+//
+// $(document).on('mouseout', '.card', (e) => {
+//     // User cursor leaves a card
+//     if (waiting) {
+//         // Remove highlight
+//         $(e.currentTarget).css('transform', 'rotate(' + (Math.round(Math.random()* 6) - 3) + 'deg)');
+//     }
+// });
 
 /**
 * Generate all 81 cards
@@ -222,6 +222,8 @@ function solve() {
                         emptyPos.shift();
                         test = 0;
                     }
+                    // User can play again
+                    $('.set-button').text('Set !').removeClass('disabled');
                     // Launch bot tests again
                     foundSet = false;
                     solve();
@@ -354,7 +356,16 @@ function userSet() {
 function clock(t) {
     if (t == 10) { // 10 seconds have passed
         $('.countdown').remove();
-        $('.set-button').text('Too late!')
+        $('.set-button').text('Too late!');
+
+        setTimeout(() => {
+            // User can play again
+            $('.set-button').text('Set !').removeClass('disabled');
+
+            // Launch bot tests again
+            foundSet = false;
+            solve();
+        }, 2000);
     } else {
         // Increment seconds
         t += 1;
@@ -396,11 +407,54 @@ function clickCard($div) {
             // Display valid set
             displaySet(cards[selected[0]].id, cards[selected[1]].id, cards[selected[2]].id);
 
+            // Unselect
+            $('.card.selected').removeClass('selected');
+
+            // Remove cards from currently-displayed array and move them away
+            setTimeout(() => {
+                removeCurrentByID(cards[selected[0]].id);
+                setToUser(cards[selected[0]].id);
+                setTimeout(() => {
+                    removeCurrentByID(cards[selected[1]].id);
+                    setToUser(cards[selected[1]].id);
+                }, 200);
+                setTimeout(() => {
+                    removeCurrentByID(cards[selected[2]].id);
+                    setToUser(cards[selected[2]].id);
+                }, 400);
+
+                setTimeout(() => {
+                    // Add three new cards
+                    for (let i = 0; i < 3; i += 1) {
+                        randomCard(emptyPos[0]);
+                        emptyPos.shift();
+                        test = 0;
+                    }
+                    // User can play again
+                    $('.set-button').text('Set !').removeClass('disabled');
+                    // Launch bot tests again
+                    foundSet = false;
+                    solve();
+                }, 1000);
+            }, 2000);
+
             // Change "Set" button text
             $('.set-button').text('Well done!');
         } else { // User is wrong
             // Change "Set" button text
             $('.set-button').text('Sorry, no...');
+
+            setTimeout(() => {
+                // Unselect
+                $('.card.selected').removeClass('selected');
+
+                // User can play again
+                $('.set-button').text('Set !').removeClass('disabled');
+
+                // Launch bot tests again
+                foundSet = false;
+                solve();
+            }, 3000);
         }
     }
 }
@@ -423,9 +477,26 @@ function setToBot(id) {
 }
 
 /**
- * Remove a card from currently-displayed array
- * @param  {int} id ID of the card to remove
- */
+* Give a card to the user (from a valid set)
+* @param {int} id card ID
+*/
+function setToUser(id) {
+    emptyPos.push(parseInt($('.card#' + id).attr('data-pos')));
+    $('.wrapper').removeClass('set');
+    $('.card#' + id).removeClass('set').attr('data-pos', 'user').css({
+        left: '85%',
+        top: '35%',
+        transform: 'rotate(' + (Math.round(Math.random()*6) - 3) + 'deg)',
+        opacity: 1,
+        zIndex: zIndex
+    });
+    zIndex += 1;
+}
+
+/**
+* Remove a card from currently-displayed array
+* @param  {int} id ID of the card to remove
+*/
 function removeCurrentByID(id) {
     currentCards.forEach((card) => {
         if (card.id === id) {
@@ -435,8 +506,8 @@ function removeCurrentByID(id) {
 }
 
 /**
- * Show button to add three cards
- */
+* Show button to add three cards
+*/
 function showAddThree() {
     // Generate button
     let $button = $('<div>', {class: 'add-three-button'});
