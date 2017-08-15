@@ -11,7 +11,7 @@ let currentCards = [];
 let test = 0;
 
 // Bot delay between each test
-let speed = 1000;
+let speed = 100;
 let solveTimeout;
 
 // Position of the cards on the table
@@ -26,6 +26,9 @@ let waiting = false;
 
 // Set found ?
 let foundSet = false;
+
+// z-index of a card
+let zIndex = 0;
 
 $(document).ready(() => {
     generateCards();
@@ -169,11 +172,10 @@ function solve() {
     // Count tests loops
     test += 1;
     console.log('test ' + test);
+
+    // After 30 unsuccessful loops, suggest user to add 3 cards
     if (test === 30) {
-        for (let i = 0; i < 3; i += 1) {
-            randomCard();
-        }
-        test = 0;
+        showAddThree();
     }
 
     // Pick two cards at random
@@ -358,7 +360,6 @@ function clock(t) {
         t += 1;
         // Display seconds remaining
         $('.countdown-number').text(11 - t);
-        console.log(11 - t + ' secs left');
         // Check again in a second
         clockTimeout = setTimeout(() => {
             clock(t);
@@ -415,8 +416,10 @@ function setToBot(id) {
         left: '5%',
         top: '35%',
         transform: 'rotate(' + (Math.round(Math.random()*6) - 3) + 'deg)',
-        opacity: 1
+        opacity: 1,
+        zIndex: zIndex
     });
+    zIndex += 1;
 }
 
 /**
@@ -426,8 +429,28 @@ function setToBot(id) {
 function removeCurrentByID(id) {
     currentCards.forEach((card) => {
         if (card.id === id) {
-            console.log(card);
             currentCards.splice(currentCards.indexOf(card), 1);
         }
     });
+}
+
+/**
+ * Show button to add three cards
+ */
+function showAddThree() {
+    // Generate button
+    let $button = $('<div>', {class: 'add-three-button'});
+    $button.text('Add three cards ?');
+
+    // Bind click event
+    $button.on('click', () => {
+        $button.remove();
+        for (let i = 0; i < 3; i += 1) {
+            randomCard();
+        }
+        test = 0;
+    });
+
+    // Append button to .botton-row
+    $('.bottom-row').append($button);
 }
