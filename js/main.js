@@ -142,8 +142,8 @@ function displayCard(card, pos) {
     $div.attr('data-pos', pos);
     // Set position and ad slight random rotation
     $div.css({
-        top: pos%3 * 35 + '%',
-        left: Math.floor(pos/3) * 15 + 25 + '%',
+        top: (pos%3) * 220 + ($(window).outerHeight() - 800)/2,
+        left: Math.floor(pos/3) * 160 + ($(window).outerWidth() - 600)/2,
         transform: 'rotate(' + (Math.round(Math.random()*6) - 3) + 'deg)'
     });
     // Bind click event
@@ -205,14 +205,14 @@ function solve() {
             // Remove cards from currently-displayed array and move them away
             setTimeout(() => {
                 removeCurrentByID(firstCard.id);
-                setToBot(firstCard.id);
+                moveCardAway(firstCard.id, 'bot');
                 setTimeout(() => {
                     removeCurrentByID(secondCard.id);
-                    setToBot(secondCard.id);
+                    moveCardAway(secondCard.id, 'bot');
                 }, 200);
                 setTimeout(() => {
                     removeCurrentByID(targetID);
-                    setToBot(targetID);
+                    moveCardAway(targetID, 'bot');
                 }, 400);
 
                 setTimeout(() => {
@@ -310,9 +310,9 @@ function findCardID(target) {
 */
 function displaySet(first, second, third) {
     $('.wrapper').addClass('set');
-    $('.card#' + first).addClass('set').css('transform', 'scale(1.15)');
-    $('.card#' + second).addClass('set').css('transform', 'scale(1.15)');
-    $('.card#' + third).addClass('set').css('transform', 'scale(1.15)');
+    $('.card#' + first).addClass('set').addClass('locked');
+    $('.card#' + second).addClass('set').addClass('locked');
+    $('.card#' + third).addClass('set').addClass('locked');
 }
 
 /**
@@ -413,14 +413,14 @@ function clickCard($div) {
             // Remove cards from currently-displayed array and move them away
             setTimeout(() => {
                 removeCurrentByID(cards[selected[0]].id);
-                setToUser(cards[selected[0]].id);
+                moveCardAway(cards[selected[0]].id, 'user');
                 setTimeout(() => {
                     removeCurrentByID(cards[selected[1]].id);
-                    setToUser(cards[selected[1]].id);
+                    moveCardAway(cards[selected[1]].id, 'user');
                 }, 200);
                 setTimeout(() => {
                     removeCurrentByID(cards[selected[2]].id);
-                    setToUser(cards[selected[2]].id);
+                    moveCardAway(cards[selected[2]].id, 'user');
                 }, 400);
 
                 setTimeout(() => {
@@ -460,34 +460,17 @@ function clickCard($div) {
 }
 
 /**
-* Give a card to the bot (from a valid set)
-* @param {int} id card ID
+* Move a card away (from a valid set to either bot or user)
+* @param {int}    id card ID
+* @param {string} to 'bot' or 'user'
 */
-function setToBot(id) {
+function moveCardAway(id, to) {
     emptyPos.push(parseInt($('.card#' + id).attr('data-pos')));
     $('.wrapper').removeClass('set');
-    $('.card#' + id).removeClass('set').attr('data-pos', 'bot').css({
-        left: '5%',
-        top: '35%',
-        transform: 'rotate(' + (Math.round(Math.random()*6) - 3) + 'deg)',
-        opacity: 1,
-        zIndex: zIndex
-    });
-    zIndex += 1;
-}
-
-/**
-* Give a card to the user (from a valid set)
-* @param {int} id card ID
-*/
-function setToUser(id) {
-    emptyPos.push(parseInt($('.card#' + id).attr('data-pos')));
-    $('.wrapper').removeClass('set');
-    $('.card#' + id).removeClass('set').attr('data-pos', 'user').css({
-        left: '85%',
-        top: '35%',
-        transform: 'rotate(' + (Math.round(Math.random()*6) - 3) + 'deg)',
-        opacity: 1,
+    $('.card#' + id).removeClass('set').attr('data-pos', to).css({
+        left: $('.' + to + ' .sets-wrapper').offset().left,
+        top: $('.' + to + ' .sets-wrapper').offset().top,
+        transform: '',
         zIndex: zIndex
     });
     zIndex += 1;

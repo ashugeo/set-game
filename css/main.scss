@@ -8,6 +8,9 @@ body {
     padding: 10px;
     background-color: #eee;
     font-family: sans-serif;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
 
 .all-svgs {
@@ -16,13 +19,13 @@ body {
 
 .wrapper {
     position: absolute;
-    width: 100%;
-    height: 660px;
+    top: 0;
     left: 0;
-    top: 50px;
+    width: 100%;
+    height: 100%;
 
     &.set {
-        .card {
+        .card:not(.locked) {
             opacity: .3;
             transform: scale(.9);
             transition: top .5s ease-in-out, left .5s ease-in-out, transform .3s ease, opacity .3s ease;
@@ -57,9 +60,14 @@ body {
         backface-visibility: hidden;
         // opacity: .3;
 
+        &.locked {
+            opacity: 1;
+            // box-shadow: none;
+        }
+
         svg {
             display: inline-block;
-            width: 90px;
+            width: 80px;
             fill: transparent;
             stroke-width: .2;
         }
@@ -120,67 +128,108 @@ body {
             box-shadow: 0 10px 10px rgba(0,0,0,.05);
         }
     }
-}
 
-.bottom-row {
-    position: absolute;
-    bottom: 50px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    .bot,
+    .user {
+        position: absolute;
+        top: 50%;
+        width: 200px;
+        height: 310px;
+        border: 1px solid #666;
+        margin: 10px;
+        padding: 20px;
+        border-radius: 5px;
+        transform: translateY(-50%);
 
-    .set-button,
-    .add-three-button {
-        display: flex;
-        min-width: 100px;
-        bottom: 40px;
-        margin-right: 10px;
-        padding: 10px 20px;
-        height: 30px;
-        justify-content: center;
-        align-items: center;
-        border-radius: 25px;
-        color: #333;
-        border: 1px solid #333;
-        cursor: pointer;
-        user-select: none;
+        h2 {
+            text-align: center;
+        }
 
-        &.disabled {
-            opacity: .5;
-            cursor: default;
+        p {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px auto 20px auto;
+            width: 100px;
+            background-color: white;
+            padding: 10px;
+            height: 30px;
+            border-radius: 15px;
+            font-size: 14px;
+            box-shadow: 0 2px 2px rgba(0,0,0,.1);
+        }
+
+        .sets-wrapper {
+            height: 180px;
+            width: 130px;
+            margin: 0 auto;
         }
     }
 
-    .countdown {
-        position: relative;
-        height: 30px;
-        width: 30px;
-        text-align: center;
-        margin-right: 10px;
+    .user {
+        right: 0;
+    }
 
-        .countdown-number {
+    .bottom-row {
+        position: absolute;
+        bottom: 50px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        .set-button,
+        .add-three-button {
+            display: flex;
+            min-width: 100px;
+            bottom: 40px;
+            margin-right: 10px;
+            padding: 10px 20px;
+            height: 30px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 25px;
             color: #333;
-            display: inline-block;
-            line-height: 30px;
+            border: 1px solid #333;
+            cursor: pointer;
+            user-select: none;
+
+            &.disabled {
+                opacity: .5;
+                cursor: default;
+            }
         }
 
-        svg {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 40px;
-            height: 40px;
-            transform: rotateY(-180deg) rotateZ(-90deg);
-        }
+        .countdown {
+            position: relative;
+            height: 30px;
+            width: 30px;
+            text-align: center;
+            margin-right: 10px;
 
-        svg circle {
-            stroke-dasharray: 87px;
-            stroke-dashoffset: 0px;
-            stroke-linecap: round;
-            stroke-width: 1.5;
-            stroke: #333;
-            fill: none;
-            animation: countdown 10s linear forwards;
+            .countdown-number {
+                color: #333;
+                display: inline-block;
+                line-height: 30px;
+            }
+
+            svg {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 40px;
+                height: 40px;
+                transform: rotateY(-180deg) rotateZ(-90deg);
+            }
+
+            svg circle {
+                stroke-dasharray: 87px;
+                stroke-dashoffset: 0px;
+                stroke-linecap: round;
+                stroke-width: 1.5;
+                stroke: #333;
+                fill: none;
+                animation: countdown 10s linear forwards;
+            }
         }
     }
 }
