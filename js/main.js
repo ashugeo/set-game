@@ -46,21 +46,6 @@ $(document).on('keydown', (e) => {
     }
 });
 
-// $(document).on('mouseover', '.card', (e) => {
-//     // User cursos hovers a card
-//     if (waiting) { // If waiting for him to select cards, highlight this card
-//         $(e.currentTarget).css('transform', 'scale(1.1)');
-//     }
-// });
-//
-// $(document).on('mouseout', '.card', (e) => {
-//     // User cursor leaves a card
-//     if (waiting) {
-//         // Remove highlight
-//         $(e.currentTarget).css('transform', 'rotate(' + (Math.round(Math.random()* 6) - 3) + 'deg)');
-//     }
-// });
-
 /**
 * Generate all 81 cards
 */
@@ -112,7 +97,7 @@ function displayAllCards() {
 * @param  {int} pos position of the card on the table
 */
 function randomCard(pos) {
-    // Select a card at random among those not delivered yet
+    // Select a card at random among those not distributed yet
     let rand = Math.floor(Math.random()*cardsLeft.length);
     let card = cardsLeft[rand];
 
@@ -140,9 +125,9 @@ function displayCard(card, pos) {
     let $div = $('<div>', {id: card.id, class: 'card c' + card.color + ' f' + card.fill});
     // Add position as data attribute
     $div.attr('data-pos', pos);
-    // Set position and ad slight random rotation
+    // Set position and add slight random rotation
     $div.css({
-        top: (pos%3) * 220 + ($(window).outerHeight() - 800)/2,
+        top: (pos%3) * 220 + ($(window).outerHeight() - 800)/2 + 40,
         left: Math.floor(pos/3) * 160 + ($(window).outerWidth() - 600)/2,
         transform: 'rotate(' + (Math.round(Math.random()*6) - 3) + 'deg)'
     });
@@ -194,48 +179,20 @@ function solve() {
 
     // Check if third card is on the table
     currentCards.forEach((card) => {
-        if (card.id === targetID) { // Bot found a set !
+        if (card.id === targetID) { // Bot found a set!
+            // Display valid set, move it away, increment points, add a new set
+            validSet([firstCard.id, secondCard.id, targetID], 'bot');
             // Stop bot tests
             foundSet = true;
             // Change "Set" button text
             $('.set-button').text('Too late!').addClass('disabled');
-            // Show set
-            displaySet(firstCard.id, secondCard.id, targetID);
-
-            // Remove cards from currently-displayed array and move them away
-            setTimeout(() => {
-                removeCurrentByID(firstCard.id);
-                moveCardAway(firstCard.id, 'bot');
-                setTimeout(() => {
-                    removeCurrentByID(secondCard.id);
-                    moveCardAway(secondCard.id, 'bot');
-                }, 200);
-                setTimeout(() => {
-                    removeCurrentByID(targetID);
-                    moveCardAway(targetID, 'bot');
-                }, 400);
-
-                setTimeout(() => {
-                    // Add three new cards
-                    for (let i = 0; i < 3; i += 1) {
-                        randomCard(emptyPos[0]);
-                        emptyPos.shift();
-                        test = 0;
-                    }
-                    // User can play again
-                    $('.set-button').text('Set !').removeClass('disabled');
-                    // Launch bot tests again
-                    foundSet = false;
-                    solve();
-                }, 1000);
-            }, 2000);
         }
     });
 
     // This test didn't work, launch a new one
     if (!foundSet) {
         solveTimeout = setTimeout(() => {
-            solve(firstCard, secondCard);
+            solve();
         }, speed);
     }
 }
@@ -303,16 +260,34 @@ function findCardID(target) {
 }
 
 /**
-* Show a valid set
-* @param  {id} first  ID of first card
-* @param  {id} second ID of second card
-* @param  {id} third  ID of third card
+* Display valid set, then move it away and update points
+* @param  {array} set  IDs of 3 cards
+* @param  {string} to  'bot' or 'user'
 */
-function displaySet(first, second, third) {
+function validSet(set, to) {
+    // Display valid set
+    displaySet(set);
+
+    setTimeout(() => {
+        // Move set away
+        moveSetAway(set, to);
+        // Increment points
+        // updatePoints(1, to);
+
+        // Add a new set
+        newSet();
+    }, 2000);
+}
+
+/**
+* Show a valid set
+* @param  {array} set IDs of 3 cards
+*/
+function displaySet(set) {
     $('.wrapper').addClass('set');
-    $('.card#' + first).addClass('set').addClass('locked');
-    $('.card#' + second).addClass('set').addClass('locked');
-    $('.card#' + third).addClass('set').addClass('locked');
+    for (let id of set) {
+        $('.card#' + id).addClass('set').addClass('locked');
+    }
 }
 
 /**
@@ -340,7 +315,7 @@ function userSet() {
     clock(0);
 
     // Stop bot tests
-    clearTimeout(solveTimeout);
+    foundSet = true;
 
     // Change button text
     $('.set-button').text('Click three cards').addClass('disabled');
@@ -395,7 +370,7 @@ function clickCard($div) {
         // Create array with the three selected cards
         let selected = [];
         $('.card.selected').each((id, elem) => {
-            selected.push($(elem).attr('id'));
+            selected.push(parseInt($(elem).attr('id')));
         });
 
         // Find the third card depending on the first two
@@ -403,40 +378,12 @@ function clickCard($div) {
         findCardID(target);
 
         // Check if it corresponds to the third selected card
-        if (findCardID(target) === cards[selected[2]].id) { // User is right
-            // Display valid set
-            displaySet(cards[selected[0]].id, cards[selected[1]].id, cards[selected[2]].id);
+        if (findCardID(target) === selected[2]) { // User found a set!
+            // Display valid set, move it away, increment points, add a new set
+            validSet([selected[0], selected[1], selected[2]], 'user');
 
             // Unselect
             $('.card.selected').removeClass('selected');
-
-            // Remove cards from currently-displayed array and move them away
-            setTimeout(() => {
-                removeCurrentByID(cards[selected[0]].id);
-                moveCardAway(cards[selected[0]].id, 'user');
-                setTimeout(() => {
-                    removeCurrentByID(cards[selected[1]].id);
-                    moveCardAway(cards[selected[1]].id, 'user');
-                }, 200);
-                setTimeout(() => {
-                    removeCurrentByID(cards[selected[2]].id);
-                    moveCardAway(cards[selected[2]].id, 'user');
-                }, 400);
-
-                setTimeout(() => {
-                    // Add three new cards
-                    for (let i = 0; i < 3; i += 1) {
-                        randomCard(emptyPos[0]);
-                        emptyPos.shift();
-                        test = 0;
-                    }
-                    // User can play again
-                    $('.set-button').text('Set !').removeClass('disabled');
-                    // Launch bot tests again
-                    foundSet = false;
-                    solve();
-                }, 1000);
-            }, 2000);
 
             // Change "Set" button text
             $('.set-button').text('Well done!');
@@ -460,7 +407,44 @@ function clickCard($div) {
 }
 
 /**
-* Move a card away (from a valid set to either bot or user)
+* Move a valid set away (to either bot or user)
+* @param  {array}  set IDs of 3 cards
+* @param  {string} to  'bot' or 'user'
+*/
+function moveSetAway(set, to) {
+    let delay = 0;
+    for (let id of set) {
+        setTimeout(() => {
+            // Remove card from currently-displayed array
+            removeCurrentByID(id);
+            // Move card away
+            moveCardAway(id, to);
+        }, delay*200);
+        delay += 1;
+    }
+}
+
+/**
+* Display a new set and run bot test
+*/
+function newSet() {
+    setTimeout(() => {
+        // Add three new cards
+        for (let i = 0; i < 3; i += 1) {
+            randomCard(emptyPos[0]);
+            emptyPos.shift();
+            test = 0;
+        }
+        // User can play again
+        $('.set-button').text('Set !').removeClass('disabled');
+        // Launch bot tests again
+        foundSet = false;
+        solve();
+    }, 1000);
+}
+
+/**
+* Move a card away
 * @param {int}    id card ID
 * @param {string} to 'bot' or 'user'
 */
