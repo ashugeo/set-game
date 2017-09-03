@@ -1,11 +1,11 @@
 // All 81 cards
 let cards = [];
 
-// Cards not distributed yet
-let cardsLeft = [];
+// Cards not dealt yet
+let stock = [];
 
 // Cards currently on the card
-let currentCards = [];
+let cardsShown = [];
 
 // Number of bot test loops
 let test = 0;
@@ -74,8 +74,8 @@ function generateCards() {
 * Start the game
 */
 function start() {
-    // Copy all cards array to not-distributed-yet arrays
-    cardsLeft = cards.slice();
+    // Copy all cards array to stock arrays
+    stock = cards.slice();
 
     // Display first 12 cards
     for (let i = 0; i < 12; i += 1) {
@@ -104,14 +104,14 @@ function displayAllCards() {
 * @param  {int} pos position of the card on the table
 */
 function randomCard(pos) {
-    // Select a card at random among those not distributed yet
-    let rand = Math.floor(Math.random()*cardsLeft.length);
-    let card = cardsLeft[rand];
+    // Select a card at random among those not dealt yet
+    let rand = Math.floor(Math.random()*stock.length);
+    let card = stock[rand];
 
-    // Add this card from not-distributed-yet array and add it to currently-displayed array
-    if (cardsLeft.indexOf(card) > -1) {
-        cardsLeft.splice(cardsLeft.indexOf(card), 1);
-        currentCards.push(card);
+    // Remove this card from stock array and add it to currently-displayed array
+    if (stock.indexOf(card) > -1) {
+        stock.splice(stock.indexOf(card), 1);
+        cardsShown.push(card);
         displayCard(card, pos);
     }
 }
@@ -174,26 +174,27 @@ function solve() {
     console.log('test ' + test);
 
     // After 30 unsuccessful loops, suggest user to add 3 cards
-    if (test === 30) {
+    if (test === 3) {
         showAddThree();
     }
 
     // Pick two cards at random
-    let firstCard = currentCards[Math.floor(Math.random()*currentCards.length)];
-    let secondCard = currentCards[Math.floor(Math.random()*currentCards.length)];
+    let firstCard = cardsShown[Math.floor(Math.random()*cardsShown.length)];
+    let secondCard = cardsShown[Math.floor(Math.random()*cardsShown.length)];
 
     // Make sure the same card has not been picked twice
     while (secondCard === firstCard) {
-        secondCard = currentCards[Math.floor(Math.random()*currentCards.length)];
+        secondCard = cardsShown[Math.floor(Math.random()*cardsShown.length)];
     }
 
     // Find corresponding third card
     let target = findThird(firstCard, secondCard);
+
     // Find corresponding third card ID
     let targetID = findCardID(target);
 
     // Check if third card is on the table
-    currentCards.forEach((card) => {
+    cardsShown.forEach((card) => {
         if (card.id === targetID) { // Bot found a set!
             // Display valid set, move it away, increment points, add a new set
             validSet([firstCard.id, secondCard.id, targetID], 'bot');
@@ -276,14 +277,14 @@ function findCardID(target) {
 
 /**
 * Display valid set, then move it away and update points
-* @param  {array} set  IDs of 3 cards
+* @param  {array}  set IDs of 3 cards
 * @param  {string} to  'bot' or 'user'
 */
 function validSet(set, to) {
     // Remove add-three-button
     $('.add-three-button').remove();
     // Display valid set
-    displaySet(set);
+    showValidSet(set);
 
     setTimeout(() => {
         // Move set away
@@ -292,10 +293,10 @@ function validSet(set, to) {
         updatePoints(1, to);
 
         setTimeout(() => {
-            if (currentCards.length === 9) {
+            if (cardsShown.length === 9) {
                 // Add a new set
                 newSet();
-            } else if (currentCards.length > 9) {
+            } else if (cardsShown.length > 9) {
                 // Reorganize displayed cards
                 reorganizeCards();
             }
@@ -316,7 +317,7 @@ function validSet(set, to) {
 * Show a valid set
 * @param  {array} set IDs of 3 cards
 */
-function displaySet(set) {
+function showValidSet(set) {
     $('.wrapper').addClass('set');
     for (let id of set) {
         $('.card#' + id).addClass('set').addClass('locked');
@@ -478,7 +479,7 @@ function moveSetAway(set, to) {
 }
 
 /**
-* Display a new set and run bot test
+* Display three new cards and run bot test
 */
 function newSet() {
     setTimeout(() => {
@@ -493,8 +494,8 @@ function newSet() {
 
 /**
 * Move a card away
-* @param {int}    id card ID
-* @param {string} to 'bot' or 'user'
+* @param  {int}    id card ID
+* @param  {string} to 'bot' or 'user'
 */
 function moveCardAway(id, to) {
     $('.wrapper').removeClass('set');
@@ -517,9 +518,9 @@ function moveCardAway(id, to) {
 * @param  {int} id ID of the card to remove
 */
 function removeCurrentByID(id) {
-    currentCards.forEach((card) => {
+    cardsShown.forEach((card) => {
         if (card.id === id) {
-            currentCards.splice(currentCards.indexOf(card), 1);
+            cardsShown.splice(cardsShown.indexOf(card), 1);
         }
     });
 }
@@ -545,16 +546,97 @@ function showAddThree() {
     $('.bottom-row').append($button);
 }
 
+/**
+* Reorganize cards on the table
+* @TODO: Works for 12 cards but not more
+* @TODO: Second 'add-three-button' press will place new cards badly
+* @TODO: Rework whole process
+*/
 function reorganizeCards() {
+    // Build array of slots
     let slots = Array.from(new Array(12), (val, i) => i);
+
+    // Build array of currently-displayed cards' positions
     let allPos = [];
-    currentCards.forEach((card) => {
+    cardsShown.forEach((card) => {
         let pos = parseInt($('.card#' + card.id).attr('data-pos'));
         allPos.push(pos);
-        if (pos >= 12) {
-            // console.log(pos);
-        }
     });
+
+    // Compute empty slots
     let emptySlots = slots.filter(x => allPos.indexOf(x) == -1);
-    console.log(emptySlots);
+
+    // Move right-most cards to empty spots on their left
+    for (let slot of emptySlots) {
+        // Basic movement is one slot to the left
+        let shift = 1;
+
+        for (let i = slot%4 + 1; i < 4; i++) { // From (empty spot + 1) to the end of the row
+
+            // Card to move
+            let card = slot - slot%4 + i;
+
+            // If card isn't at this spot anymore, increment shift for next cards
+            if (emptySlots.indexOf(card) !== -1) {
+                shift += 1;
+                continue;
+            }
+
+            // Card's new position
+            const newPos = card - shift;
+
+            // Update card's position
+            updatePos(card, newPos);
+        }
+    }
+
+    // Rebuild array of currently-displayed cards' positions
+    allPos = [];
+    cardsShown.forEach((card) => {
+        let pos = parseInt($('.card#' + card.id).attr('data-pos'));
+        allPos.push(pos);
+    });
+
+    // Compute empty slots again
+    emptySlots = slots.filter(x => allPos.indexOf(x) == -1);
+
+    // Move last column's cards to empty spots
+    for (let card of allPos) {
+        if (card > 11) {
+            // Card's new position
+            const newPos = emptySlots[0];
+
+            // Update card's position
+            updatePos(card, newPos);
+
+            emptySlots.shift();
+        }
+    }
+}
+
+/**
+* Update a card's position
+* @param  {int} card   card's old position
+* @param  {int} newPos target position
+* @TODO: Refactor CSS positioning
+*/
+function updatePos(card, newPos) {
+    // Get jQuery card object
+    const $card = $('.card[data-pos="' + card + '"]');
+
+    // Update data-pos attribute
+    $card.attr('data-pos', newPos);
+
+    // Update position
+    if (newPos < 12) {
+        $card.css({
+            top: Math.floor(newPos/4) * 220 + ($(window).outerHeight() - 800)/2 + 40,
+            left: (newPos%4) * 160 + ($(window).outerWidth() - 600)/2
+        });
+    } else {
+        $card.css({
+            top: (newPos%3) * 220 + ($(window).outerHeight() - 800)/2 + 40,
+            left: Math.floor(newPos/3) * 160 + ($(window).outerWidth() - 600)/2
+        });
+    }
 }
