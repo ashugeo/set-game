@@ -30,6 +30,12 @@ let foundSet = false;
 // z-index of a card
 let zIndex = 0;
 
+// Points counter
+let points = {
+    'bot': 0,
+    'user': 0
+}
+
 $(document).ready(() => {
     generateCards();
     start();
@@ -42,7 +48,8 @@ $(document).on('click', '.set-button', () => {
 $(document).on('keydown', (e) => {
     // User pressed space bar, same as clicking "Set" button
     if (e.which === 32) {
-        userSet();
+        // userSet();
+        clearTimeout(solveTimeout);
     }
 });
 
@@ -126,11 +133,19 @@ function displayCard(card, pos) {
     // Add position as data attribute
     $div.attr('data-pos', pos);
     // Set position and add slight random rotation
-    $div.css({
-        top: (pos%3) * 220 + ($(window).outerHeight() - 800)/2 + 40,
-        left: Math.floor(pos/3) * 160 + ($(window).outerWidth() - 600)/2,
-        transform: 'rotate(' + (Math.round(Math.random()*6) - 3) + 'deg)'
-    });
+    if (pos < 12) {
+        $div.css({
+            top: Math.floor(pos/4) * 220 + ($(window).outerHeight() - 800)/2 + 40,
+            left: (pos%4) * 160 + ($(window).outerWidth() - 600)/2,
+            transform: 'rotate(' + (Math.round(Math.random()*6) - 3) + 'deg)'
+        });
+    } else {
+        $div.css({
+            top: (pos%3) * 220 + ($(window).outerHeight() - 800)/2 + 40,
+            left: Math.floor(pos/3) * 160 + ($(window).outerWidth() - 600)/2,
+            transform: 'rotate(' + (Math.round(Math.random()*6) - 3) + 'deg)'
+        });
+    }
     // Bind click event
     $div.on('click', () => {
         if (waiting) {
@@ -265,6 +280,8 @@ function findCardID(target) {
 * @param  {string} to  'bot' or 'user'
 */
 function validSet(set, to) {
+    // Remove add-three-button
+    $('.add-three-button').remove();
     // Display valid set
     displaySet(set);
 
@@ -272,10 +289,26 @@ function validSet(set, to) {
         // Move set away
         moveSetAway(set, to);
         // Increment points
-        // updatePoints(1, to);
+        updatePoints(1, to);
 
-        // Add a new set
-        newSet();
+        setTimeout(() => {
+            if (currentCards.length === 9) {
+                // Add a new set
+                newSet();
+            } else if (currentCards.length > 9) {
+                // Reorganize displayed cards
+                reorganizeCards();
+            }
+
+            setTimeout(() => {
+                // User can play again
+                $('.set-button').text('Set !').removeClass('disabled');
+                // Launch bot tests again
+                foundSet = false;
+                test = 0;
+                solve();
+            }, 1000);
+        }, 1000);
     }, 2000);
 }
 
@@ -288,6 +321,23 @@ function displaySet(set) {
     for (let id of set) {
         $('.card#' + id).addClass('set').addClass('locked');
     }
+}
+
+function updatePoints(point, to) {
+    if (point === 1) {
+        // Add a point
+        points[to] += 1;
+    } else if (point === -1 && points[to] !== 0) {
+        // Withdraw a point (if not already at 0)
+        points[to] -= 1;
+
+        // Take upper set away
+        // moveSetAway([], 'none')
+    }
+
+    // Update text
+    const $el = $('.' + to + ' p');
+    $el.text(points[to] + ' set' + (points[to] > 1 ? 's' : ''));
 }
 
 /**
@@ -391,6 +441,9 @@ function clickCard($div) {
             // Change "Set" button text
             $('.set-button').text('Sorry, no...');
 
+            // Withdraw one point
+            updatePoints(-1, 'user');
+
             setTimeout(() => {
                 // Unselect
                 $('.card.selected').removeClass('selected');
@@ -431,15 +484,10 @@ function newSet() {
     setTimeout(() => {
         // Add three new cards
         for (let i = 0; i < 3; i += 1) {
+            // Set new card at first empty spot
             randomCard(emptyPos[0]);
             emptyPos.shift();
-            test = 0;
         }
-        // User can play again
-        $('.set-button').text('Set !').removeClass('disabled');
-        // Launch bot tests again
-        foundSet = false;
-        solve();
     }, 1000);
 }
 
@@ -449,8 +497,12 @@ function newSet() {
 * @param {string} to 'bot' or 'user'
 */
 function moveCardAway(id, to) {
-    emptyPos.push(parseInt($('.card#' + id).attr('data-pos')));
     $('.wrapper').removeClass('set');
+
+    // Save emptied positions for new set to appear
+    emptyPos.push(parseInt($('.card#' + id).attr('data-pos')));
+
+    // Move cards
     $('.card#' + id).removeClass('set').attr('data-pos', to).css({
         left: $('.' + to + ' .sets-wrapper').offset().left,
         top: $('.' + to + ' .sets-wrapper').offset().top,
@@ -491,4 +543,18 @@ function showAddThree() {
 
     // Append button to .botton-row
     $('.bottom-row').append($button);
+}
+
+function reorganizeCards() {
+    let slots = Array.from(new Array(12), (val, i) => i);
+    let allPos = [];
+    currentCards.forEach((card) => {
+        let pos = parseInt($('.card#' + card.id).attr('data-pos'));
+        allPos.push(pos);
+        if (pos >= 12) {
+            // console.log(pos);
+        }
+    });
+    let emptySlots = slots.filter(x => allPos.indexOf(x) == -1);
+    console.log(emptySlots);
 }
