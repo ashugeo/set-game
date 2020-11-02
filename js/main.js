@@ -62,7 +62,7 @@ function generateCards() {
         for (let color = 0; color < 3; color += 1) {
             for (let qty = 0; qty < 3; qty += 1) {
                 for (let fill = 0; fill < 3; fill += 1) {
-                    cards.push({shape, color, qty, fill, id});
+                    cards.push({ shape, color, qty, fill, id });
                     id += 1;
                 }
             }
@@ -78,15 +78,11 @@ function start() {
     stock = cards.slice();
 
     // Display first 12 cards
-    for (let i = 0; i < 12; i += 1) {
-        randomCard();
-    }
+    for (let i = 0; i < 12; i += 1) randomCard();
 
     // Launch bot after 2 seconds
     setTimeout(() => {
-        if (!waiting) {
-            solve();
-        }
+        if (!waiting) solve();
     }, 2000);
 }
 
@@ -94,9 +90,7 @@ function start() {
 * Display all 81 cards (unused)
 */
 function displayAllCards() {
-    cards.forEach((card) => {
-        displayCard(card);
-    });
+    cards.forEach(card => displayCard(card));
 }
 
 /**
@@ -105,7 +99,7 @@ function displayAllCards() {
 */
 function randomCard(pos) {
     // Select a card at random among those not dealt yet
-    let rand = Math.floor(Math.random()*stock.length);
+    let rand = Math.floor(Math.random() * stock.length);
     let card = stock[rand];
 
     // Remove this card from stock array and add it to currently-displayed array
@@ -129,39 +123,36 @@ function displayCard(card, pos) {
     }
 
     // Generate div with id, color and fill parameters
-    let $div = $('<div>', {id: card.id, class: 'card c' + card.color + ' f' + card.fill});
+    let $div = $('<div>', { id: card.id, class: 'card c' + card.color + ' f' + card.fill });
+
     // Add position as data attribute
     $div.attr('data-pos', pos);
+
     // Set position and add slight random rotation
     if (pos < 12) {
         $div.css({
-            top: Math.floor(pos/4) * 220 + ($(window).outerHeight() - 800)/2 + 40,
-            left: (pos%4) * 160 + ($(window).outerWidth() - 600)/2,
+            top: Math.floor(pos / 4) * 220 + ($(window).outerHeight() - 800) / 2 + 40,
+            left: (pos % 4) * 160 + ($(window).outerWidth() - 600) / 2,
             transform: 'rotate(' + (Math.round(Math.random()*6) - 3) + 'deg)'
         });
     } else {
         $div.css({
-            top: (pos%3) * 220 + ($(window).outerHeight() - 800)/2 + 40,
-            left: Math.floor(pos/3) * 160 + ($(window).outerWidth() - 600)/2,
+            top: (pos % 3) * 220 + ($(window).outerHeight() - 800) / 2 + 40,
+            left: Math.floor(pos / 3) * 160 + ($(window).outerWidth() - 600) / 2,
             transform: 'rotate(' + (Math.round(Math.random()*6) - 3) + 'deg)'
         });
     }
+
     // Bind click event
     $div.on('click', () => {
-        if (waiting) {
-            clickCard($div);
-        }
+        if (waiting) clickCard($div);
     });
 
     // Add symbol(s)
     for (let qty = 0; qty <= card.qty; qty += 1) {
-        if (card.shape === 0) {
-            $div.append('<svg viewBox="0 0 12 8"><use xlink:href="#tild"></use></svg>');
-        } else if (card.shape === 1) {
-            $div.append('<svg viewBox="0 0 12 8"><use xlink:href="#diamond"></use></svg>');
-        } else if (card.shape === 2) {
-            $div.append('<svg viewBox="0 0 12 8"><use xlink:href="#oval"></use></svg>');
-        }
+        if (card.shape === 0) $div.append('<svg viewBox="0 0 12 8"><use xlink:href="#tild"></use></svg>');
+        else if (card.shape === 1) $div.append('<svg viewBox="0 0 12 8"><use xlink:href="#diamond"></use></svg>');
+        else if (card.shape === 2) $div.append('<svg viewBox="0 0 12 8"><use xlink:href="#oval"></use></svg>');
     }
 
     // Append div to .wrapper
@@ -174,9 +165,7 @@ function solve() {
     console.log('test ' + test);
 
     // After 30 unsuccessful loops, suggest user to add 3 cards
-    if (test === 3) {
-        showAddThree();
-    }
+    if (test === 3) showAddThree();
 
     // Pick two cards at random
     let firstCard = cardsShown[Math.floor(Math.random()*cardsShown.length)];
@@ -194,12 +183,14 @@ function solve() {
     let targetID = findCardID(target);
 
     // Check if third card is on the table
-    cardsShown.forEach((card) => {
+    cardsShown.forEach(card => {
         if (card.id === targetID) { // Bot found a set!
             // Display valid set, move it away, increment points, add a new set
             validSet([firstCard.id, secondCard.id, targetID], 'bot');
+
             // Stop bot tests
             foundSet = true;
+
             // Change "Set" button text
             $('.set-button').text('Too late!').addClass('disabled');
         }
@@ -207,9 +198,7 @@ function solve() {
 
     // This test didn't work, launch a new one
     if (!foundSet) {
-        solveTimeout = setTimeout(() => {
-            solve();
-        }, speed);
+        solveTimeout = setTimeout(() => solve(), speed);
     }
 }
 
@@ -283,6 +272,7 @@ function findCardID(target) {
 function validSet(set, to) {
     // Remove add-three-button
     $('.add-three-button').remove();
+
     // Display valid set
     showValidSet(set);
 
@@ -304,6 +294,7 @@ function validSet(set, to) {
             setTimeout(() => {
                 // User can play again
                 $('.set-button').text('Set !').removeClass('disabled');
+
                 // Launch bot tests again
                 foundSet = false;
                 test = 0;
@@ -319,9 +310,8 @@ function validSet(set, to) {
 */
 function showValidSet(set) {
     $('.wrapper').addClass('set');
-    for (let id of set) {
-        $('.card#' + id).addClass('set').addClass('locked');
-    }
+
+    for (let id of set) $('.card#' + id).addClass('set').addClass('locked');
 }
 
 function updatePoints(point, to) {
@@ -346,17 +336,16 @@ function updatePoints(point, to) {
 */
 function userSet() {
     // Bot has found one before
-    if (foundSet) {
-        return false;
-    }
+    if (foundSet) return false;
 
     // Add 10 seconds countdown to .bottom-row
     const countdown = `<div class="countdown">
-    <div class="countdown-number"></div>
-    <svg>
-    <circle r="14" cx="25" cy="15"></circle>
-    </svg>
+        <div class="countdown-number"></div>
+        <svg>
+            <circle r="14" cx="25" cy="15"></circle>
+        </svg>
     </div>`;
+
     $('.bottom-row').prepend(countdown);
 
     // Waiting for user to pick three cards
@@ -395,12 +384,12 @@ function clock(t) {
     } else {
         // Increment seconds
         t += 1;
+
         // Display seconds remaining
         $('.countdown-number').text(11 - t);
+
         // Check again in a second
-        clockTimeout = setTimeout(() => {
-            clock(t);
-        }, 1000);
+        clockTimeout = setTimeout(() => clock(t), 1000);
     }
 }
 
@@ -420,7 +409,7 @@ function clickCard($div) {
 
         // Create array with the three selected cards
         let selected = [];
-        $('.card.selected').each((id, elem) => {
+        $('.card.selected').each((_, elem) => {
             selected.push(parseInt($(elem).attr('id')));
         });
 
@@ -530,15 +519,13 @@ function removeCurrentByID(id) {
 */
 function showAddThree() {
     // Generate button
-    let $button = $('<div>', {class: 'add-three-button'});
+    let $button = $('<div>', { class: 'add-three-button' });
     $button.text('Add three cards ?');
 
     // Bind click event
     $button.on('click', () => {
         $button.remove();
-        for (let i = 0; i < 3; i += 1) {
-            randomCard();
-        }
+        for (let i = 0; i < 3; i += 1) randomCard();
         test = 0;
     });
 
@@ -554,7 +541,7 @@ function showAddThree() {
 */
 function reorganizeCards() {
     // Build array of slots
-    let slots = Array.from(new Array(12), (val, i) => i);
+    let slots = Array.from(new Array(12), (_, i) => i);
 
     // Build array of currently-displayed cards' positions
     let allPos = [];
@@ -571,10 +558,10 @@ function reorganizeCards() {
         // Basic movement is one slot to the left
         let shift = 1;
 
-        for (let i = slot%4 + 1; i < 4; i++) { // From (empty spot + 1) to the end of the row
+        for (let i = slot % 4 + 1; i < 4; i += 1) { // From (empty spot + 1) to the end of the row
 
             // Card to move
-            let card = slot - slot%4 + i;
+            let card = slot - slot % 4 + i;
 
             // If card isn't at this spot anymore, increment shift for next cards
             if (emptySlots.indexOf(card) !== -1) {
@@ -592,7 +579,7 @@ function reorganizeCards() {
 
     // Rebuild array of currently-displayed cards' positions
     allPos = [];
-    cardsShown.forEach((card) => {
+    cardsShown.forEach(card => {
         let pos = parseInt($('.card#' + card.id).attr('data-pos'));
         allPos.push(pos);
     });
@@ -630,13 +617,13 @@ function updatePos(card, newPos) {
     // Update position
     if (newPos < 12) {
         $card.css({
-            top: Math.floor(newPos/4) * 220 + ($(window).outerHeight() - 800)/2 + 40,
-            left: (newPos%4) * 160 + ($(window).outerWidth() - 600)/2
+            top: Math.floor(newPos / 4) * 220 + ($(window).outerHeight() - 800) / 2 + 40,
+            left: (newPos % 4) * 160 + ($(window).outerWidth() - 600)/2
         });
     } else {
         $card.css({
-            top: (newPos%3) * 220 + ($(window).outerHeight() - 800)/2 + 40,
-            left: Math.floor(newPos/3) * 160 + ($(window).outerWidth() - 600)/2
+            top: (newPos % 3) * 220 + ($(window).outerHeight() - 800) / 2 + 40,
+            left: Math.floor(newPos / 3) * 160 + ($(window).outerWidth() - 600) / 2
         });
     }
 }
