@@ -56,8 +56,8 @@ aside {
         }
 
         .sets-wrapper {
-            height: 180px;
-            width: 130px;
+            height: 174px;
+            width: 132px;
             margin: 0 auto;
             background-color: #f6f6f6;
             border-radius: 8px;
@@ -182,6 +182,11 @@ main {
 
         &.locked {
             opacity: 1;
+            transform: scale(.8) !important;
+
+            &.set {
+                transform: scale(1.1) !important;
+            }
             // box-shadow: none;
         }
 
@@ -314,7 +319,9 @@ main {
 }
 
 .helpers {
-    display: none;
+    .shapes {
+        display: none;
+    }
 }
 
 @keyframes countdown {
