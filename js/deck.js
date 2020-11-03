@@ -79,7 +79,7 @@ export default {
     },
 
     /**
-     * Generate a card div and append it to .wrapper
+     * Generate a card div and append it to main
      * @param  {Object} card card parameters
      * @param  {int}    pos  position of the card on the table
      */
@@ -96,15 +96,15 @@ export default {
         // Set position and add slight random rotation
         if (pos < 12) {
             $div.css({
-                top: Math.floor(pos / 4) * 220 + ($(window).outerHeight() - 800) / 2 + 40,
-                left: (pos % 4) * 160 + ($(window).outerWidth() - 600) / 2,
-                transform: 'rotate(' + (Math.round(Math.random()*6) - 3) + 'deg)'
+                top: Math.floor(pos / 4) * 220 + ($(window).outerHeight() - 624) / 2,
+                left: (pos % 4) * 160 + ($(window).outerWidth() - 320) / 2,
+                transform: 'rotate(' + (Math.round(Math.random() * 6) - 3) + 'deg)'
             });
         } else {
             $div.css({
-                top: (pos % 3) * 220 + ($(window).outerHeight() - 800) / 2 + 40,
-                left: Math.floor(pos / 3) * 160 + ($(window).outerWidth() - 600) / 2,
-                transform: 'rotate(' + (Math.round(Math.random()*6) - 3) + 'deg)'
+                top: (pos % 3) * 220 + ($(window).outerHeight() - 624) / 2,
+                left: Math.floor(pos / 3) * 160 + ($(window).outerWidth() - 320) / 2,
+                transform: 'rotate(' + (Math.round(Math.random() * 6) - 3) + 'deg)'
             });
         }
 
@@ -121,8 +121,8 @@ export default {
             else if (card.shape === 2) $div.append('<svg viewBox="0 0 12 8"><use xlink:href="#oval"></use></svg>');
         }
 
-        // Append div to .wrapper
-        $('.wrapper').append($div);
+        // Append div to main
+        $('main').append($div);
     },
 
     /**

@@ -11,9 +11,14 @@ export default {
         $(document).on('keydown', e => {
             // User pressed space bar, same as clicking "Set" button
             if (e.which === 32) {
+                $('button.main').addClass('active');
                 this.userSet();
                 clearTimeout(ai.solveTimeout);
             }
+        });
+
+        $(document).on('keyup', e => {
+            if (e.which === 32) $('button.main').removeClass('active');
         });
     },
 
@@ -47,7 +52,7 @@ export default {
         $('.set-button').text('Click three cards').addClass('disabled');
 
         // Make cards clickable
-        $('.wrapper').addClass('waiting');
+        $('main').addClass('waiting');
     },
 
     /**
@@ -74,7 +79,7 @@ export default {
             let target = ai.findThird(deck.cards[selected[0]], deck.cards[selected[1]]);
 
             // Check if it corresponds to the third selected card
-            if (deck.findCardID(target) === selected[2]) { // User found a set!
+            if (deck.findCardID(target) === selected[2] || true) { // User found a set!
                 // Display valid set, move it away, increment points, add a new set
                 board.validSet([selected[0], selected[1], selected[2]], 'user');
 

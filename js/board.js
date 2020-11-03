@@ -50,7 +50,7 @@ export default {
      * @param  {array} set IDs of 3 cards
      */
     showValidSet(set) {
-        $('.wrapper').addClass('set');
+        $('main').addClass('set');
 
         for (let id of set) $('.card#' + id).addClass('set').addClass('locked');
     },
@@ -81,7 +81,7 @@ export default {
      * @param  {string} to 'bot' or 'user'
      */
     moveCardAway(id, to) {
-        $('.wrapper').removeClass('set');
+        $('main').removeClass('set');
 
         // Save emptied positions for new set to appear
         deck.emptyPos.push(parseInt($('.card#' + id).attr('data-pos')));
