@@ -6,7 +6,7 @@ import game from './game.js';
 
 export default {
     init() {
-        $(document).on('click', '.set-button', () => this.userSet());
+        $(document).on('click', 'button.main', () => this.userSet());
 
         $(document).on('keydown', e => {
             // User pressed space bar, same as clicking "Set" button
