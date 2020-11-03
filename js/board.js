@@ -35,7 +35,7 @@ export default {
 
                 setTimeout(() => {
                     // User can play again
-                    $('.set-button').text('Set !').removeClass('disabled');
+                    $('button.main').html('Set<span>or press Space</span>').removeAttr('disabled');
 
                     // Launch bot tests again
                     ai.foundSet = false;

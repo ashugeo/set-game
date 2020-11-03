@@ -50,7 +50,7 @@ export default {
                 this.foundSet = true;
 
                 // Change "Set" button text
-                $('.set-button').text('Too late!').addClass('disabled');
+                $('button.main').text('Too late!').attr('disabled', true);
             }
         });
 

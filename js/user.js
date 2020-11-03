@@ -29,16 +29,6 @@ export default {
         // Bot has found one before
         if (ai.foundSet) return false;
 
-        // Add 10 seconds countdown to .bottom-row
-        const countdown = `<div class="countdown">
-            <div class="countdown-number"></div>
-            <svg>
-                <circle r="14" cx="25" cy="15"></circle>
-            </svg>
-        </div>`;
-
-        $('.bottom-row').prepend(countdown);
-
         // Waiting for user to pick three cards
         game.waiting = true;
 
@@ -49,7 +39,7 @@ export default {
         ai.foundSet = true;
 
         // Change button text
-        $('.set-button').text('Click three cards').addClass('disabled');
+        $('button.main').html('10<span>Click 3 cards</span>').attr('disabled', true);
 
         // Make cards clickable
         $('main').addClass('waiting');
@@ -84,10 +74,10 @@ export default {
                 board.validSet([selected[0], selected[1], selected[2]], 'user');
 
                 // Change "Set" button text
-                $('.set-button').text('Well done!');
+                $('button.main').text('Well done!');
             } else { // User is wrong
                 // Change "Set" button text
-                $('.set-button').text('Sorry, no...');
+                $('button.main').text('Sorry, no...');
 
                 // Withdraw one point
                 game.updatePoints(-1, 'user');
@@ -97,7 +87,7 @@ export default {
                     $('.card.selected').removeClass('selected');
 
                     // User can play again
-                    $('.set-button').text('Set !').removeClass('disabled');
+                    $('button.main').html('Set<span>or press Space</span>').removeAttr('disabled');
 
                     // Launch bot tests again
                     ai.foundSet = false;

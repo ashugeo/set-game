@@ -73,6 +73,7 @@ aside {
         margin-top: -32px;
 
         button {
+            position: relative;
             display: block;
             margin: 0 auto;
             border: none;
@@ -97,6 +98,7 @@ aside {
                 border-radius: 8px;
                 padding: 16px;
                 width: 260px;
+                height: 68px;
                 font-size: 1.25rem;
                 letter-spacing: .05em;
                 font-weight: 600;
@@ -116,6 +118,31 @@ aside {
                 &.active {
                     transform: translateY(2px);
                     box-shadow: 0 2px 8px rgba(0,0,0,.2);
+                }
+
+                &:disabled {
+                    // background: linear-gradient(hsl(300, 0%, 100%), hsl(300, 0%, 90%));
+                    // background: white;
+                    // color: hsl(300, 70%, 40%);
+                    text-shadow: none;
+                    overflow: hidden;
+
+                    span {
+                        opacity: 1;
+                    }
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(255,255,255,.1);
+                        animation: countdown 10s linear forwards;
+                        transform: scaleX(0);
+                        transform-origin: right;
+                    }
                 }
             }
 
@@ -253,69 +280,6 @@ main {
             box-shadow: 0 10px 10px rgba(0,0,0,.05);
         }
     }
-
-    // .bottom-row {
-    //     position: absolute;
-    //     bottom: 50px;
-    //     width: 100%;
-    //     display: flex;
-    //     justify-content: center;
-
-    //     .set-button,
-    //     .add-three-button {
-    //         display: flex;
-    //         min-width: 100px;
-    //         bottom: 40px;
-    //         margin-right: 10px;
-    //         padding: 10px 20px;
-    //         height: 30px;
-    //         justify-content: center;
-    //         align-items: center;
-    //         border-radius: 25px;
-    //         color: #333;
-    //         border: 1px solid #333;
-    //         cursor: pointer;
-    //         user-select: none;
-
-    //         &.disabled {
-    //             opacity: .5;
-    //             cursor: default;
-    //         }
-    //     }
-
-    //     .countdown {
-    //         position: relative;
-    //         height: 30px;
-    //         width: 30px;
-    //         text-align: center;
-    //         margin-right: 10px;
-
-    //         .countdown-number {
-    //             color: #333;
-    //             display: inline-block;
-    //             line-height: 30px;
-    //         }
-
-    //         svg {
-    //             position: absolute;
-    //             top: 0;
-    //             right: 0;
-    //             width: 40px;
-    //             height: 40px;
-    //             transform: rotateY(-180deg) rotateZ(-90deg);
-    //         }
-
-    //         svg circle {
-    //             stroke-dasharray: 87px;
-    //             stroke-dashoffset: 0px;
-    //             stroke-linecap: round;
-    //             stroke-width: 1.5;
-    //             stroke: #333;
-    //             fill: none;
-    //             animation: countdown 10s linear forwards;
-    //         }
-    //     }
-    // }
 }
 
 .helpers {
@@ -325,10 +289,7 @@ main {
 }
 
 @keyframes countdown {
-    from {
-        stroke-dashoffset: 0px;
-    }
     to {
-        stroke-dashoffset: 87px;
+        transform: scaleX(1);
     }
 }

@@ -21,8 +21,7 @@ export default {
         }
 
         // Update text
-        const $el = $('.' + to + ' p');
-        $el.text(this.points[to] + ' set' + (this.points[to] > 1 ? 's' : ''));
+        $(`.${to} p`).text(this.points[to] ? `${this.points[to]} set${this.points[to] > 1 ? 's' : ''}` : 'No set yet');
     },
 
     /**
