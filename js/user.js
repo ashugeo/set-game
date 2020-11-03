@@ -33,6 +33,12 @@ export default {
                 $('.fa-volume-up').addClass('hidden');
             }
         });
+
+        // Bind click event
+        $(document).on('click', 'button.secondary', () => {
+            for (let i = 0; i < 3; i += 1) deck.randomCard();
+            ai.test = 0;
+        });
     },
 
     /**

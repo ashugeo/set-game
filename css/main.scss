@@ -152,11 +152,7 @@ aside {
                 color: hsl(300, 0%, 60%);
                 font-weight: bold;
                 transition: color .1s ease;
-
-                &:hover,
-                &:focus {
-                    color: hsl(300, 70%, 40%);
-                }
+                color: hsl(300, 70%, 40%);
 
                 &:disabled {
                     color: hsl(300, 0%, 85%);

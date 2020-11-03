@@ -22,24 +22,5 @@ export default {
 
         // Update text
         $(`.${to} p`).text(this.points[to] ? `${this.points[to]} set${this.points[to] > 1 ? 's' : ''}` : 'No set yet');
-    },
-
-    /**
-     * Show button to add three cards
-     */
-    showAddThree() {
-        // Generate button
-        let $button = $('<div>', { class: 'add-three-button' });
-        $button.text('Add three cards ?');
-
-        // Bind click event
-        $button.on('click', () => {
-            $button.remove();
-            for (let i = 0; i < 3; i += 1) deck.randomCard();
-            ai.test = 0;
-        });
-
-        // Append button to .botton-row
-        $('.bottom-row').append($button);
     }
 }

@@ -23,7 +23,7 @@ export default {
         console.log('test ' + this.test);
 
         // After 20 unsuccessful loops, suggest user to add 3 cards
-        if (this.test === 2) game.showAddThree();
+        if (this.test === 20) $('button.secondary').removeAttr('disabled');
 
         // Pick two cards at random
         const firstCard = deck.shown[Math.floor(Math.random() * deck.shown.length)];

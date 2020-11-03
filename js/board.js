@@ -11,8 +11,8 @@ export default {
      * @param  {string} to  'bot' or 'user'
      */
     validSet(set, to) {
-        // Remove add-three-button
-        $('.add-three-button').remove();
+        // Disable add-three-button
+        $('button.secondary').attr('disabled', true);
 
         // Display valid set
         this.showValidSet(set);
