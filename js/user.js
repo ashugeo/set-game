@@ -1,4 +1,22 @@
+import ai from './ai.js';
+import board from './board.js';
+import clock from './clock.js';
+import deck from './deck.js';
+import game from './game.js';
+
 export default {
+    init() {
+        $(document).on('click', '.set-button', () => this.userSet());
+
+        $(document).on('keydown', e => {
+            // User pressed space bar, same as clicking "Set" button
+            if (e.which === 32) {
+                this.userSet();
+                clearTimeout(ai.solveTimeout);
+            }
+        });
+    },
+
     /**
      * User has cliked "Set" button
      */
@@ -17,7 +35,7 @@ export default {
         $('.bottom-row').prepend(countdown);
 
         // Waiting for user to pick three cards
-        waiting = true;
+        game.waiting = true;
 
         // Start a 10 seconds clock
         clock.countdown(10);
@@ -43,7 +61,7 @@ export default {
         if ($('.card.selected').length === 3) { // 3 cards have been selected
 
             // Stop the clock, remove the countdown
-            clearTimeout(clockTimeout);
+            clearTimeout(clock.timeout);
             $('.countdown').remove();
 
             // Create array with the three selected cards
@@ -53,13 +71,12 @@ export default {
             });
 
             // Find the third card depending on the first two
-            let target = findThird(cards[selected[0]], cards[selected[1]]);
-            findCardID(target);
+            let target = ai.findThird(deck.cards[selected[0]], deck.cards[selected[1]]);
 
             // Check if it corresponds to the third selected card
-            if (findCardID(target) === selected[2]) { // User found a set!
+            if (deck.findCardID(target) === selected[2]) { // User found a set!
                 // Display valid set, move it away, increment points, add a new set
-                validSet([selected[0], selected[1], selected[2]], 'user');
+                board.validSet([selected[0], selected[1], selected[2]], 'user');
 
                 // Unselect
                 $('.card.selected').removeClass('selected');
@@ -71,7 +88,7 @@ export default {
                 $('.set-button').text('Sorry, no...');
 
                 // Withdraw one point
-                updatePoints(-1, 'user');
+                game.updatePoints(-1, 'user');
 
                 setTimeout(() => {
                     // Unselect

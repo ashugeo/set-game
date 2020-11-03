@@ -1,37 +1,50 @@
+import board from './board.js';
+import deck from './deck.js';
+import game from './game.js';
+
 export default {
-    speed: 1000, // Bot delay between each test
+    speed: 100, // Bot delay between each test
     solveTimeout: null,
     test: 0, // Number of bot test loops
     foundSet: false, // Set found?
 
-    solve() {
-        // Count tests loops
-        test += 1;
-        console.log('test ' + test);
+    init() {
+        // Launch bot after 2 seconds
+        setTimeout(() => {
+            if (!game.waiting) this.solve();
+        }, 2000);
+    },
 
-        // After 30 unsuccessful loops, suggest user to add 3 cards
-        if (test === 3) showAddThree();
+    solve() {
+        if (game.waiting) return;
+        
+        // Count tests loops
+        this.test += 1;
+        console.log('test ' + this.test);
+
+        // After 20 unsuccessful loops, suggest user to add 3 cards
+        if (this.test === 20) game.showAddThree();
 
         // Pick two cards at random
-        let firstCard = shown[Math.floor(Math.random()*shown.length)];
-        let secondCard = shown[Math.floor(Math.random()*shown.length)];
+        const firstCard = deck.shown[Math.floor(Math.random() * deck.shown.length)];
+        let secondCard = deck.shown[Math.floor(Math.random() * deck.shown.length)];
 
         // Make sure the same card has not been picked twice
-        while (secondCard === firstCard) {
-            secondCard = shown[Math.floor(Math.random()*shown.length)];
+        while (secondCard.id === firstCard.id) {
+            secondCard = deck.shown[Math.floor(Math.random() * deck.shown.length)];
         }
 
         // Find corresponding third card
-        let target = findThird(firstCard, secondCard);
+        const target = this.findThird(firstCard, secondCard);
 
         // Find corresponding third card ID
-        let targetID = findCardID(target);
+        const targetID = deck.findCardID(target);
 
         // Check if third card is on the table
-        shown.forEach(card => {
+        deck.shown.forEach(card => {
             if (card.id === targetID) { // Bot found a set!
                 // Display valid set, move it away, increment points, add a new set
-                validSet([firstCard.id, secondCard.id, targetID], 'bot');
+                board.validSet([firstCard.id, secondCard.id, targetID], 'bot');
 
                 // Stop bot tests
                 this.foundSet = true;
@@ -42,7 +55,7 @@ export default {
         });
 
         // This test didn't work, launch a new one
-        if (!this.foundSet) solveTimeout = setTimeout(() => solve(), speed);
+        if (!this.foundSet) this.solveTimeout = setTimeout(() => this.solve(), this.speed);
     },
 
     /**

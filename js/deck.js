@@ -1,3 +1,6 @@
+import game from './game.js';
+import user from './user.js';
+
 export default {
     cards: [], // All 81 cards
     stock: [], // Cards not dealt yet
@@ -5,7 +8,8 @@ export default {
     p: 0, // Position of the cards on the table
     emptyPos: [],
 
-    generateCards() {
+    init() {
+        // Generate all 81 cards
         let id = 0;
         for (let shape = 0; shape < 3; shape += 1) {
             for (let color = 0; color < 3; color += 1) {
@@ -17,9 +21,7 @@ export default {
                 }
             }
         }
-    },
 
-    start() {
         // Copy all cards array to stock arrays
         this.stock = this.cards.slice();
     
@@ -51,7 +53,7 @@ export default {
      */
     findCardID(target) {
         let targetID;
-        cards.forEach((card) => {
+        this.cards.forEach(card => {
             if (
                 target.shape === card.shape
                 && target.color === card.color
@@ -69,9 +71,9 @@ export default {
      * @param  {int} id ID of the card to remove
      */
     removeCurrentByID(id) {
-        shown.forEach((card) => {
+        this.shown.forEach((card) => {
             if (card.id === id) {
-                shown.splice(shown.indexOf(card), 1);
+                this.shown.splice(this.shown.indexOf(card), 1);
             }
         });
     },
@@ -83,10 +85,7 @@ export default {
      */
     displayCard(card, pos) {
         // No pos parameter given, auto-increment
-        if (pos === undefined) {
-            pos = this.p;
-            this.p += 1;
-        }
+        if (pos === undefined) pos = this.p++;
 
         // Generate div with id, color and fill parameters
         let $div = $('<div>', { id: card.id, class: 'card c' + card.color + ' f' + card.fill });
@@ -111,8 +110,8 @@ export default {
 
         // Bind click event
         $div.on('click', () => {
-            if (!waiting) return;
-            clickCard($div);
+            if (!game.waiting) return;
+            user.clickCard($div);
         });
 
         // Add symbol(s)
@@ -134,8 +133,8 @@ export default {
             // Add three new cards
             for (let i = 0; i < 3; i += 1) {
                 // Set new card at first empty spot
-                randomCard(emptyPos[0]);
-                emptyPos.shift();
+                this.randomCard(this.emptyPos[0]);
+                this.emptyPos.shift();
             }
         }, 1000);
     }

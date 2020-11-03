@@ -1,4 +1,9 @@
+import ai from './ai.js';
+import game from './game.js';
+
 export default {
+    timeout: null,
+
     /**
      * Give the user 10 seconds to select three cards
      * @param  {int} t current clock state
@@ -9,10 +14,14 @@ export default {
             $('.set-button').text('Too late!');
 
             setTimeout(() => {
+                // Unselect
+                $('.card.selected').removeClass('selected');
+                
                 // User can play again
                 $('.set-button').text('Set !').removeClass('disabled');
 
                 // Launch bot tests again
+                game.waiting = false;
                 ai.foundSet = false;
                 ai.solve();
             }, 2000);
@@ -24,7 +33,7 @@ export default {
             t -= 1;
 
             // Check again in a second
-            setTimeout(() => this.countdown(t), 1000);
+            this.timeout = setTimeout(() => this.countdown(t), 1000);
         }
     }
 }

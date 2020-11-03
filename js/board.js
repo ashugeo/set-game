@@ -1,3 +1,7 @@
+import ai from './ai.js';
+import deck from './deck.js';
+import game from './game.js';
+
 export default {
     zIndex: 0, // z-index of a card
 
@@ -11,21 +15,21 @@ export default {
         $('.add-three-button').remove();
 
         // Display valid set
-        showValidSet(set);
+        this.showValidSet(set);
 
         setTimeout(() => {
             // Move set away
-            moveSetAway(set, to);
+            this.moveSetAway(set, to);
             // Increment points
-            updatePoints(1, to);
+            game.updatePoints(1, to);
 
             setTimeout(() => {
-                if (shown.length === 9) {
+                if (deck.shown.length === 9) {
                     // Add a new set
-                    draw3Cards();
-                } else if (shown.length > 9) {
+                    deck.draw3Cards();
+                } else if (deck.shown.length > 9) {
                     // Reorganize displayed cards
-                    reorganizeCards();
+                    this.reorganizeCards();
                 }
 
                 setTimeout(() => {
@@ -34,8 +38,8 @@ export default {
 
                     // Launch bot tests again
                     ai.foundSet = false;
-                    test = 0;
-                    solve();
+                    ai.test = 0;
+                    ai.solve();
                 }, 1000);
             }, 1000);
         }, 2000);
@@ -62,10 +66,10 @@ export default {
         for (let id of set) {
             setTimeout(() => {
                 // Remove card from currently-displayed array
-                removeCurrentByID(id);
+                deck.removeCurrentByID(id);
 
                 // Move card away
-                moveCardAway(id, to);
+                this.moveCardAway(id, to);
             }, delay * 200);
             delay += 1;
         }
@@ -80,7 +84,7 @@ export default {
         $('.wrapper').removeClass('set');
 
         // Save emptied positions for new set to appear
-        emptyPos.push(parseInt($('.card#' + id).attr('data-pos')));
+        deck.emptyPos.push(parseInt($('.card#' + id).attr('data-pos')));
 
         // Move cards
         $('.card#' + id).removeClass('set').attr('data-pos', to).css({
@@ -103,7 +107,7 @@ export default {
 
         // Build array of currently-displayed cards' positions
         let allPos = [];
-        shown.forEach((card) => {
+        deck.shown.forEach((card) => {
             let pos = parseInt($('.card#' + card.id).attr('data-pos'));
             allPos.push(pos);
         });
@@ -131,13 +135,13 @@ export default {
                 const newPos = card - shift;
 
                 // Update card's position
-                updatePos(card, newPos);
+                this.updatePos(card, newPos);
             }
         }
 
         // Rebuild array of currently-displayed cards' positions
         allPos = [];
-        shown.forEach(card => {
+        deck.shown.forEach(card => {
             let pos = parseInt($('.card#' + card.id).attr('data-pos'));
             allPos.push(pos);
         });
@@ -152,7 +156,7 @@ export default {
                 const newPos = emptySlots[0];
 
                 // Update card's position
-                updatePos(card, newPos);
+                this.updatePos(card, newPos);
 
                 emptySlots.shift();
             }

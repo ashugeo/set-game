@@ -1,5 +1,8 @@
+import ai from './ai.js';
+import deck from './deck.js';
+
 export default {
-    waiting = false, // Game paused?
+    waiting: false, // Game paused?
     points: { // Points counter
         'bot': 0,
         'user': 0
@@ -8,10 +11,10 @@ export default {
     updatePoints(point, to) {
         if (point === 1) {
             // Add a point
-            points[to] += 1;
-        } else if (point === -1 && points[to] !== 0) {
+            this.points[to] += 1;
+        } else if (point === -1 && this.points[to] !== 0) {
             // Withdraw a point (if not already at 0)
-            points[to] -= 1;
+            this.points[to] -= 1;
 
             // Take upper set away
             // moveSetAway([], 'none')
@@ -19,7 +22,7 @@ export default {
 
         // Update text
         const $el = $('.' + to + ' p');
-        $el.text(points[to] + ' set' + (points[to] > 1 ? 's' : ''));
+        $el.text(this.points[to] + ' set' + (this.points[to] > 1 ? 's' : ''));
     },
 
     /**
@@ -33,8 +36,8 @@ export default {
         // Bind click event
         $button.on('click', () => {
             $button.remove();
-            for (let i = 0; i < 3; i += 1) randomCard();
-            test = 0;
+            for (let i = 0; i < 3; i += 1) deck.randomCard();
+            ai.test = 0;
         });
 
         // Append button to .botton-row
