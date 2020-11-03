@@ -99,13 +99,13 @@ export default {
         if (pos < 12) {
             $div.css({
                 top: Math.floor(pos / 4) * 220 + ($(window).outerHeight() - 624) / 2,
-                left: (pos % 4) * 160 + ($(window).outerWidth() - 320) / 2,
+                left: (pos % 4) * 164 + ($(window).outerWidth() - 320) / 2,
                 transform: 'rotate(' + (Math.round(Math.random() * 6) - 3) + 'deg)'
             });
         } else {
             $div.css({
                 top: (pos % 3) * 220 + ($(window).outerHeight() - 624) / 2,
-                left: Math.floor(pos / 3) * 160 + ($(window).outerWidth() - 320) / 2,
+                left: Math.floor(pos / 3) * 164 + ($(window).outerWidth() - 320) / 2,
                 transform: 'rotate(' + (Math.round(Math.random() * 6) - 3) + 'deg)'
             });
         }

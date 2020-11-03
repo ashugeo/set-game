@@ -180,12 +180,12 @@ export default {
         if (newPos < 12) {
             $card.css({
                 top: Math.floor(newPos / 4) * 220 + ($(window).outerHeight() - 800) / 2 + 40,
-                left: (newPos % 4) * 160 + ($(window).outerWidth() - 600)/2
+                left: (newPos % 4) * 164 + ($(window).outerWidth() - 600)/2
             });
         } else {
             $card.css({
                 top: (newPos % 3) * 220 + ($(window).outerHeight() - 800) / 2 + 40,
-                left: Math.floor(newPos / 3) * 160 + ($(window).outerWidth() - 600) / 2
+                left: Math.floor(newPos / 3) * 164 + ($(window).outerWidth() - 600) / 2
             });
         }
     }
