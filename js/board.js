@@ -41,8 +41,8 @@ export default {
                     ai.foundSet = false;
                     ai.test = 0;
                     ai.solve();
-                }, 1000);
-            }, 1000);
+                }, 2000);
+            }, 500);
         }, 2000);
     },
 

@@ -26,7 +26,9 @@ export default {
         this.stock = this.cards.slice();
     
         // Display first 12 cards
-        for (let i = 0; i < 12; i += 1) this.randomCard();
+        for (let i = 0; i < 12; i += 1) {
+            setTimeout(() => this.randomCard(), i * 100);
+        }
     },
 
     /**
@@ -88,7 +90,7 @@ export default {
         if (pos === undefined) pos = this.p++;
 
         // Generate div with id, color and fill parameters
-        let $div = $('<div>', { id: card.id, class: 'card c' + card.color + ' f' + card.fill });
+        let $div = $('<div>', { id: card.id, class: 'new card c' + card.color + ' f' + card.fill });
 
         // Add position as data attribute
         $div.attr('data-pos', pos);
@@ -123,19 +125,20 @@ export default {
 
         // Append div to main
         $('main').append($div);
+        setTimeout(() => $div.removeClass('new'), 100);
     },
 
     /**
      * Display three new cards and run bot test
      */
     draw3Cards() {
-        setTimeout(() => {
-            // Add three new cards
-            for (let i = 0; i < 3; i += 1) {
-                // Set new card at first empty spot
+        // Add three new cards
+        for (let i = 0; i < 3; i += 1) {
+            // Set new card at first empty spot
+            setTimeout(() => {
                 this.randomCard(this.emptyPos[0]);
                 this.emptyPos.shift();
-            }
-        }, 1000);
+            }, i * 100);
+        }
     }
 }

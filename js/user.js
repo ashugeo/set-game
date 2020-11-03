@@ -90,6 +90,7 @@ export default {
                     $('button.main').html('Set<span>or press Space</span>').removeAttr('disabled');
 
                     // Launch bot tests again
+                    game.waiting = false;
                     ai.foundSet = false;
                     ai.solve();
                 }, 3000);
