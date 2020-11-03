@@ -52,7 +52,7 @@ export default {
     showValidSet(set) {
         $('main').addClass('set');
 
-        for (let id of set) $('.card#' + id).addClass('set').addClass('locked');
+        for (let id of set) $('.card#' + id).addClass('set locked');
     },
 
     /**
@@ -89,8 +89,7 @@ export default {
         // Move cards
         $('.card#' + id).removeClass('set').attr('data-pos', to).css({
             left: $('.' + to + ' .sets-wrapper').offset().left,
-            top: $('.' + to + ' .sets-wrapper').offset().top,
-            transform: '',
+            top: $('.' + to + ' .sets-wrapper').offset().top - 4,
             zIndex: this.zIndex++
         });
     },
