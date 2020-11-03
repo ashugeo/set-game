@@ -3,6 +3,7 @@ import board from './board.js';
 import clock from './clock.js';
 import deck from './deck.js';
 import game from './game.js';
+import sound from './sound.js';
 
 export default {
     init() {
@@ -52,8 +53,13 @@ export default {
     clickCard($div) {
         // Toggle selected class to this card
         $div.toggleClass('selected');
+        const selected = $('.card.selected').length
 
-        if ($('.card.selected').length === 3) { // 3 cards have been selected
+        if (selected === 1) {
+            sound.play('1');
+        } else if (selected === 2) {
+            sound.play('2');
+        } else if (selected === 3) { // 3 cards have been selected
 
             // Stop the clock, remove the countdown
             clearTimeout(clock.timeout);
@@ -69,13 +75,17 @@ export default {
             let target = ai.findThird(deck.cards[selected[0]], deck.cards[selected[1]]);
 
             // Check if it corresponds to the third selected card
-            if (deck.findCardID(target) === selected[2]) { // User found a set!
+            if (deck.findCardID(target) === selected[2] || Math.random() > .5) { // User found a set!
+                sound.play('4');
+
                 // Display valid set, move it away, increment points, add a new set
                 board.validSet([selected[0], selected[1], selected[2]], 'user');
 
                 // Change "Set" button text
                 $('button.main').text('Well done!');
             } else { // User is wrong
+                sound.play('3');
+
                 // Change "Set" button text
                 $('button.main').text('Sorry, no...');
 
