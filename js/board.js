@@ -25,6 +25,8 @@ export default {
             game.updatePoints(1, to);
 
             setTimeout(() => {
+                $('main').removeClass('waiting');
+
                 if (deck.shown.length === 9) {
                     // Add a new set
                     deck.draw3Cards();

@@ -1,5 +1,6 @@
 export default {
     sounds: {},
+    on: true,
 
     init() {
         this.sounds['1'] = new Howl({ src: ['/sound/01.wav'] });
@@ -9,6 +10,7 @@ export default {
     },
 
     play(id) {
+        if (!this.on) return;
         this.sounds[id].play();
     }
 }

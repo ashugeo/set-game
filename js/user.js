@@ -21,6 +21,18 @@ export default {
         $(document).on('keyup', e => {
             if (e.which === 32) $('button.main').removeClass('active');
         });
+
+        $(document).on('click', '.controls .sound', e => {
+            sound.on = !sound.on;
+
+            if (sound.on) {
+                $('.fa-volume-up').removeClass('hidden');
+                $('.fa-volume-off').addClass('hidden');
+            } else {
+                $('.fa-volume-off').removeClass('hidden');
+                $('.fa-volume-up').addClass('hidden');
+            }
+        });
     },
 
     /**
@@ -95,9 +107,11 @@ export default {
                 setTimeout(() => {
                     // Unselect
                     $('.card.selected').removeClass('selected');
-
+                    
                     // User can play again
                     $('button.main').html('Set<span>or press Space</span>').removeAttr('disabled');
+
+                    $('main').removeClass('waiting');
 
                     // Launch bot tests again
                     game.waiting = false;
