@@ -65,6 +65,33 @@ aside {
             border-radius: 8px;
             margin-top: 32px;
         }
+
+        .difficulty {
+            margin-top: 2em;
+            text-align: center;
+
+            p {
+                margin-bottom: .5em;
+            }
+
+            ul {
+                list-style: none;
+                display: flex;
+
+                li {
+                    display: block;
+                    margin: 0 8px;
+                    color: #aaaaaa;
+                    cursor: pointer;
+                    font-weight: bold;
+                    letter-spacing: .02em;
+
+                    &.selected {
+                        color: hsl(300, 70%, 35%);
+                    }
+                }
+            }
+        }
     }
 
     .buttons {

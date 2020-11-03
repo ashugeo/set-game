@@ -28,16 +28,27 @@ export default {
             if (sound.on) {
                 $('.fa-volume-up').removeClass('hidden');
                 $('.fa-volume-off').addClass('hidden');
+                sound.play('click');
             } else {
                 $('.fa-volume-off').removeClass('hidden');
                 $('.fa-volume-up').addClass('hidden');
             }
         });
 
-        // Bind click event
         $(document).on('click', 'button.secondary', () => {
             for (let i = 0; i < 3; i += 1) deck.randomCard();
             ai.test = 0;
+        });
+
+        $(document).on('click', '.difficulty ul li', e => {
+            const $el = $(e.currentTarget);
+            $el.closest('ul').find('li.selected').removeClass('selected');
+            $el.addClass('selected');
+            sound.play('click');
+
+            if ($el.hasClass('easy')) ai.speed = 1000;
+            else if ($el.hasClass('medium')) ai.speed = 500;
+            else if ($el.hasClass('hard')) ai.speed = 200;
         });
     },
 
