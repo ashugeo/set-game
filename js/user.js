@@ -83,9 +83,6 @@ export default {
                 // Display valid set, move it away, increment points, add a new set
                 board.validSet([selected[0], selected[1], selected[2]], 'user');
 
-                // Unselect
-                $('.card.selected').removeClass('selected');
-
                 // Change "Set" button text
                 $('.set-button').text('Well done!');
             } else { // User is wrong

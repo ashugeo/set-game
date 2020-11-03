@@ -20,6 +20,7 @@ export default {
         setTimeout(() => {
             // Move set away
             this.moveSetAway(set, to);
+
             // Increment points
             game.updatePoints(1, to);
 
@@ -87,7 +88,7 @@ export default {
         deck.emptyPos.push(parseInt($('.card#' + id).attr('data-pos')));
 
         // Move cards
-        $('.card#' + id).removeClass('set').attr('data-pos', to).css({
+        $('.card#' + id).removeClass('selected set').attr('data-pos', to).css({
             left: $('.' + to + ' .sets-wrapper').offset().left,
             top: $('.' + to + ' .sets-wrapper').offset().top - 4,
             zIndex: this.zIndex++
