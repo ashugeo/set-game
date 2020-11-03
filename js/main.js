@@ -5,5 +5,5 @@ import user from './user.js';
 $(document).ready(() => {
     deck.init();
     user.init();
-    // ai.init();
+    ai.init();
 });

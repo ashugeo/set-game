@@ -25,34 +25,34 @@ export default {
         // After 20 unsuccessful loops, suggest user to add 3 cards
         if (this.test === 2) game.showAddThree();
 
-        // // Pick two cards at random
-        // const firstCard = deck.shown[Math.floor(Math.random() * deck.shown.length)];
-        // let secondCard = deck.shown[Math.floor(Math.random() * deck.shown.length)];
+        // Pick two cards at random
+        const firstCard = deck.shown[Math.floor(Math.random() * deck.shown.length)];
+        let secondCard = deck.shown[Math.floor(Math.random() * deck.shown.length)];
 
-        // // Make sure the same card has not been picked twice
-        // while (secondCard.id === firstCard.id) {
-        //     secondCard = deck.shown[Math.floor(Math.random() * deck.shown.length)];
-        // }
+        // Make sure the same card has not been picked twice
+        while (secondCard.id === firstCard.id) {
+            secondCard = deck.shown[Math.floor(Math.random() * deck.shown.length)];
+        }
 
-        // // Find corresponding third card
-        // const target = this.findThird(firstCard, secondCard);
+        // Find corresponding third card
+        const target = this.findThird(firstCard, secondCard);
 
-        // // Find corresponding third card ID
-        // const targetID = deck.findCardID(target);
+        // Find corresponding third card ID
+        const targetID = deck.findCardID(target);
 
-        // // Check if third card is on the table
-        // deck.shown.forEach(card => {
-        //     if (card.id === targetID) { // Bot found a set!
-        //         // Display valid set, move it away, increment points, add a new set
-        //         board.validSet([firstCard.id, secondCard.id, targetID], 'bot');
+        // Check if third card is on the table
+        deck.shown.forEach(card => {
+            if (card.id === targetID) { // Bot found a set!
+                // Display valid set, move it away, increment points, add a new set
+                board.validSet([firstCard.id, secondCard.id, targetID], 'bot');
 
-        //         // Stop bot tests
-        //         this.foundSet = true;
+                // Stop bot tests
+                this.foundSet = true;
 
-        //         // Change "Set" button text
-        //         $('.set-button').text('Too late!').addClass('disabled');
-        //     }
-        // });
+                // Change "Set" button text
+                $('.set-button').text('Too late!').addClass('disabled');
+            }
+        });
 
         // This test didn't work, launch a new one
         if (!this.foundSet) this.solveTimeout = setTimeout(() => this.solve(), this.speed);
