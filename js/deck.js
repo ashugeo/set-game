@@ -54,18 +54,12 @@ export default {
      * @return {int}           ID of target card
      */
     findCardID(target) {
-        let targetID;
-        this.cards.forEach(card => {
-            if (
-                target.shape === card.shape
-                && target.color === card.color
-                && target.qty === card.qty
-                && target.fill === card.fill
-            ) {
-                targetID = card.id;
-            }
-        });
-        return targetID;
+        return this.cards.find(card =>
+            target.shape === card.shape &&
+            target.color === card.color &&
+            target.qty === card.qty &&
+            target.fill === card.fill
+        ).id;
     },
 
     /**
