@@ -20,7 +20,7 @@ export default {
         
         // Count tests loops
         this.test += 1;
-        console.log('test ' + this.test);
+        console.log(`test ${this.test}`);
 
         // After 20 unsuccessful loops, suggest user to add 3 cards
         if (this.test === 20) $('button.secondary').removeAttr('disabled');

@@ -90,7 +90,7 @@ export default {
         if (pos === undefined) pos = this.p++;
 
         // Generate card with id, color and fill parameters
-        let $card = $('<div>', { id: card.id, class: 'new card c' + card.color + ' f' + card.fill });
+        let $card = $('<div>', { id: card.id, class: `new card c${card.color} f${card.fill}` });
 
         // Create card 
         const $inner = $('<div>', { class: 'card-inner' });

@@ -7,10 +7,10 @@ export default {
 
     /**
      * Display valid set, then move it away and update points
-     * @param  {array}  set IDs of 3 cards
-     * @param  {string} to  'bot' or 'user'
+     * @param  {array}  set    IDs of 3 cards
+     * @param  {string} winner 'bot' or 'user'
      */
-    validSet(set, to) {
+    validSet(set, winner) {
         // Disable add-three-button
         $('button.secondary').attr('disabled', true);
 
@@ -19,10 +19,10 @@ export default {
 
         setTimeout(() => {
             // Move set away
-            this.moveSetAway(set, to);
+            this.moveSetAway(set, winner);
 
             // Increment points
-            game.updatePoints(1, to);
+            game.updatePoints(1, winner);
 
             setTimeout(() => {
                 $('main').removeClass('waiting');
@@ -55,15 +55,15 @@ export default {
     showValidSet(set) {
         $('main').addClass('set');
 
-        for (let id of set) $('.card#' + id).addClass('set locked');
+        for (let id of set) $(`.card#${id}`).addClass('set locked');
     },
 
     /**
      * Move a valid set away (to either bot or user)
-     * @param  {array}  set IDs of 3 cards
-     * @param  {string} to  'bot' or 'user'
+     * @param  {array}  set    IDs of 3 cards
+     * @param  {string} winner 'bot' or 'user'
      */
-    moveSetAway(set, to) {
+    moveSetAway(set, winner) {
         let delay = 0;
 
         for (let id of set) {
@@ -72,7 +72,7 @@ export default {
                 deck.removeCurrentByID(id);
 
                 // Move card away
-                this.moveCardAway(id, to);
+                this.moveCardAway(id, winner);
             }, delay * 200);
             delay += 1;
         }
@@ -80,19 +80,21 @@ export default {
 
     /**
      * Move a card away
-     * @param  {int}    id card ID
-     * @param  {string} to 'bot' or 'user'
+     * @param  {int}    id     card ID
+     * @param  {string} winner 'bot' or 'user'
      */
-    moveCardAway(id, to) {
+    moveCardAway(id, winner) {
         $('main').removeClass('set');
 
+        const $card = $(`.card#${id}`);
+
         // Save emptied positions for new set to appear
-        deck.emptyPos.push(parseInt($('.card#' + id).attr('data-pos')));
+        deck.emptyPos.push(parseInt($card.attr('data-pos')));
 
         // Move cards
-        $('.card#' + id).removeClass('selected set').attr('data-pos', to).css({
-            left: $('.' + to + ' .sets-wrapper').offset().left,
-            top: $('.' + to + ' .sets-wrapper').offset().top - 4,
+        $card.removeClass('selected set').attr('data-pos', winner).css({
+            left: $(`.${winner} .sets-wrapper`).offset().left,
+            top: $(`.${winner} .sets-wrapper`).offset().top - 4,
             zIndex: this.zIndex++
         });
     },
@@ -105,12 +107,13 @@ export default {
      */
     reorganizeCards() {
         // Build array of slots
-        let slots = Array.from(new Array(12), (_, i) => i);
+        const slots = Array.from(new Array(12), (_, i) => i);
 
         // Build array of currently-displayed cards' positions
         let allPos = [];
-        deck.shown.forEach((card) => {
-            let pos = parseInt($('.card#' + card.id).attr('data-pos'));
+        deck.shown.forEach(card => {
+            const $card = $(`.card#${card.id}`);
+            let pos = parseInt($card.attr('data-pos'));
             allPos.push(pos);
         });
 
@@ -144,7 +147,8 @@ export default {
         // Rebuild array of currently-displayed cards' positions
         allPos = [];
         deck.shown.forEach(card => {
-            let pos = parseInt($('.card#' + card.id).attr('data-pos'));
+            const $card = $(`.card#${card.id}`);
+            const pos = parseInt($card.attr('data-pos'));
             allPos.push(pos);
         });
 
@@ -172,22 +176,25 @@ export default {
      * @TODO: Refactor CSS positioning
      */
     updatePos(card, newPos) {
-        // Get jQuery card object
-        const $card = $('.card[data-pos="' + card + '"]');
+        // Get card
+        const $card = $(`.card[data-pos="${card}"]`);
 
         // Update data-pos attribute
         $card.attr('data-pos', newPos);
 
+        const width = $(window).outerWidth();
+        const height = $(window).outerHeight();
+
         // Update position
         if (newPos < 12) {
             $card.css({
-                top: Math.floor(newPos / 4) * 220 + ($(window).outerHeight() - 800) / 2 + 40,
-                left: (newPos % 4) * 164 + ($(window).outerWidth() - 600)/2
+                top: Math.floor(newPos / 4) * 220 + (height - 800) / 2 + 40,
+                left: (newPos % 4) * 164 + (width - 600)/2
             });
         } else {
             $card.css({
-                top: (newPos % 3) * 220 + ($(window).outerHeight() - 800) / 2 + 40,
-                left: Math.floor(newPos / 3) * 164 + ($(window).outerWidth() - 600) / 2
+                top: (newPos % 3) * 220 + (height - 800) / 2 + 40,
+                left: Math.floor(newPos / 3) * 164 + (width - 600) / 2
             });
         }
     }
