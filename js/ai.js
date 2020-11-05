@@ -12,7 +12,7 @@ export default {
         // Launch bot after 2 seconds
         setTimeout(() => {
             if (!game.waiting) this.solve();
-        }, 3000);
+        }, 4000);
     },
 
     solve() {

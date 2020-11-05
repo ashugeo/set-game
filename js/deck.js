@@ -89,43 +89,50 @@ export default {
         // No pos parameter given, auto-increment
         if (pos === undefined) pos = this.p++;
 
-        // Generate div with id, color and fill parameters
-        let $div = $('<div>', { id: card.id, class: 'new card c' + card.color + ' f' + card.fill });
+        // Generate card with id, color and fill parameters
+        let $card = $('<div>', { id: card.id, class: 'new card c' + card.color + ' f' + card.fill });
+
+        // Create card 
+        const $inner = $('<div>', { class: 'card-inner' });
+
+        // Add slight random rotation
+        $inner.css('transform', `rotate(${Math.round(Math.random() * 6) - 3}deg)`);
 
         // Add position as data attribute
-        $div.attr('data-pos', pos);
+        $card.attr('data-pos', pos);
 
-        // Set position and add slight random rotation
+        // Set position
         if (pos < 12) {
-            $div.css({
+            $card.css({
                 top: Math.floor(pos / 4) * 220 + ($(window).outerHeight() - 624) / 2,
                 left: (pos % 4) * 164 + ($(window).outerWidth() - 320) / 2,
-                transform: 'rotate(' + (Math.round(Math.random() * 6) - 3) + 'deg)'
             });
         } else {
-            $div.css({
+            $card.css({
                 top: (pos % 3) * 220 + ($(window).outerHeight() - 624) / 2,
-                left: Math.floor(pos / 3) * 164 + ($(window).outerWidth() - 320) / 2,
-                transform: 'rotate(' + (Math.round(Math.random() * 6) - 3) + 'deg)'
+                left: Math.floor(pos / 3) * 164 + ($(window).outerWidth() - 320) / 2
             });
         }
 
         // Bind click event
-        $div.on('click', () => {
+        $card.on('click', () => {
             if (!game.waiting) return;
-            user.clickCard($div);
+            user.clickCard($card);
         });
 
         // Add symbol(s)
         for (let qty = 0; qty <= card.qty; qty += 1) {
-            if (card.shape === 0) $div.append('<svg viewBox="0 0 12 8"><use xlink:href="#tild"></use></svg>');
-            else if (card.shape === 1) $div.append('<svg viewBox="0 0 12 8"><use xlink:href="#diamond"></use></svg>');
-            else if (card.shape === 2) $div.append('<svg viewBox="0 0 12 8"><use xlink:href="#oval"></use></svg>');
+            if (card.shape === 0) $inner.append('<svg viewBox="0 0 12 8"><use xlink:href="#tild"></use></svg>');
+            else if (card.shape === 1) $inner.append('<svg viewBox="0 0 12 8"><use xlink:href="#diamond"></use></svg>');
+            else if (card.shape === 2) $inner.append('<svg viewBox="0 0 12 8"><use xlink:href="#oval"></use></svg>');
         }
 
-        // Append div to main
-        $('main').append($div);
-        setTimeout(() => $div.removeClass('new'), 100);
+        // Append inner to card
+        $card.append($inner);
+
+        // Append $card to main
+        $('main').append($card);
+        setTimeout(() => $card.removeClass('new'), 100);
     },
 
     /**

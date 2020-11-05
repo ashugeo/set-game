@@ -198,21 +198,26 @@ main {
 
     &.set {
         .card:not(.locked) {
-            opacity: .3;
-            transform: scale(.9);
-            transition: top .5s ease-in-out, left .5s ease-in-out, transform .3s ease, opacity .3s ease;
+            .card-inner {
+                opacity: .3;
+                transform: scale(.9);
+                transition: top .5s ease-in-out, left .5s ease-in-out, transform .3s ease, opacity .3s ease;
+            }
         }
     }
 
     &.waiting {
         .card:hover {
-            cursor: pointer;
-            transform: scale(1.05) !important;
+            .card-inner {
+                transform: scale(1.05) !important;
+            }
         }
 
         .card.selected {
-            transform: scale(1.1) !important;
-            box-shadow: 0 2px 2px rgba(0,0,0,.1), 0 0 0 4px hsl(0, 30%, 95%), 0 0 0 6px hsl(300, 70%, 35%)
+            .card-inner {
+                transform: scale(1.1) !important;
+                box-shadow: 0 2px 2px rgba(0,0,0,.1), 0 0 0 4px hsl(0, 30%, 95%), 0 0 0 6px hsl(300, 70%, 35%)
+            }
         }
     }
 
@@ -220,32 +225,42 @@ main {
         position: absolute;
         top: 0;
         left: 0;
-        display: inline-flex;
         height: 180px;
         width: 130px;
-        flex-flow: column;
-        justify-content: center;
-        align-items: center;
-        background-color: #ffffff;
-        border-radius: 5px;
-        box-shadow: 0 2px 2px rgba(0,0,0,.1);
-        transition: top .5s ease-in-out, left .5s ease-in-out, transform .3s ease, opacity .3s 1s ease, box-shadow .1s ease, margin-top .3s 1s ease;
-        backface-visibility: hidden;
-        // opacity: .3;
+        cursor: pointer;
+        transition: top .5s ease-in-out, left .5s ease-in-out;
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            display: inline-flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 2px 2px rgba(0,0,0,.1);
+            transition: transform .3s ease, opacity .3s 1s ease, box-shadow .1s ease, margin-top .3s 1s ease;
+            backface-visibility: hidden;
+        }
         
         &.new {
-            margin-top: 16px;
-            opacity: 0;
+            .card-inner {
+                margin-top: 16px;
+                opacity: 0;
+            }
         }
 
         &.locked {
-            opacity: 1;
-            transform: scale(.8) !important;
+            .card-inner {
+                transform: scale(.8) !important;
+            }
 
             &.set {
-                transform: scale(1.1) !important;
+                .card-inner {
+                    transform: scale(1.1) !important;
+                }
             }
-            // box-shadow: none;
         }
 
         svg {
@@ -307,8 +322,11 @@ main {
         }
 
         &.set {
-            opacity: 1;
-            box-shadow: 0 10px 10px rgba(0,0,0,.05);
+            // opacity: 1;
+            
+            .card-inner {
+                box-shadow: 0 10px 10px rgba(0,0,0,.05);
+            }
         }
     }
 }
