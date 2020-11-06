@@ -97,7 +97,7 @@ export default {
             // Create array with the three selected cards
             const triad = [];
             $('.card.selected').each((_, elem) => {
-                cards.push(parseInt($(elem).attr('id')));
+                triad.push(parseInt($(elem).attr('id')));
             });
 
             // Find the third card depending on the first two
