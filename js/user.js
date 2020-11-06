@@ -36,7 +36,8 @@ export default {
         });
 
         $(document).on('click', 'button.secondary', () => {
-            for (let i = 0; i < 3; i += 1) deck.randomCard();
+            deck.draw3Cards();
+            $('.card').each((_, el) => deck.updateCardPos($(el)));
             ai.test = 0;
         });
 
