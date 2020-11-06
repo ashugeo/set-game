@@ -103,101 +103,37 @@ export default {
 
     /**
      * Reorganize cards on the table
-     * @TODO: Works for 12 cards but not more
-     * @TODO: Second 'add-three-button' press will place new cards badly
-     * @TODO: Rework whole process
      */
     reorganizeCards() {
-        // Build array of slots
-        const slots = Array.from(new Array(12), (_, i) => i);
-
-        // Build array of currently-displayed cards' positions
-        let allPos = [];
-        deck.shown.forEach(card => {
-            const $card = $(`.card#${card.id}`);
-            let pos = parseInt($card.attr('data-pos'));
-            allPos.push(pos);
-        });
-
-        // Compute empty slots
-        let emptySlots = slots.filter(x => allPos.indexOf(x) == -1);
-
-        // Move right-most cards to empty spots on their left
-        for (let slot of emptySlots) {
-            // Basic movement is one slot to the left
-            let shift = 1;
-
-            for (let i = slot % 4 + 1; i < 4; i += 1) { // From (empty spot + 1) to the end of the row
-
-                // Card to move
-                let card = slot - slot % 4 + i;
-
-                // If card isn't at this spot anymore, increment shift for next cards
-                if (emptySlots.indexOf(card) !== -1) {
-                    shift += 1;
-                    continue;
-                }
-
-                // Card's new position
-                const newPos = card - shift;
-
-                // Update card's position
-                this.updatePos(card, newPos);
-            }
-        }
-
-        // Rebuild array of currently-displayed cards' positions
-        allPos = [];
-        deck.shown.forEach(card => {
-            const $card = $(`.card#${card.id}`);
+        // Move card to left if possible
+        for (const card of $('.card:not(.locked)').toArray()) {
+            const $card = $(card);
             const pos = parseInt($card.attr('data-pos'));
-            allPos.push(pos);
-        });
 
-        // Compute empty slots again
-        emptySlots = slots.filter(x => allPos.indexOf(x) == -1);
-
-        // Move last column's cards to empty spots
-        for (let card of allPos) {
-            if (card > 11) {
-                // Card's new position
-                const newPos = emptySlots[0];
-
-                // Update card's position
-                this.updatePos(card, newPos);
-
-                emptySlots.shift();
+            let newPos = pos;
+            while (newPos - 3 > 0) {
+                if ($(`.card[data-pos="${newPos - 3}"]`).is(':not(.locked)')) break;
+                newPos -= 3;
             }
+
+            $card.attr('data-pos', newPos);
+            deck.updateCardPos($card, newPos);
         }
-    },
 
-    /**
-     * Update a card's position
-     * @param  {int} card   card's old position
-     * @param  {int} newPos target position
-     * @TODO: Refactor CSS positioning
-     */
-    updatePos(card, newPos) {
-        // Get card
-        const $card = $(`.card[data-pos="${card}"]`);
+        // Fill remaining empty spots
+        for (const card of $('.card:not(.locked)').toArray()) {
+            const $card = $(card);
+            const pos = parseInt($card.attr('data-pos'));
+            if (pos < 12) continue;
 
-        // Update data-pos attribute
-        $card.attr('data-pos', newPos);
+            let newPos = 0;
+            for (let i = 0; i < deck.show; i += 1) {
+                if (!$(`.card[data-pos="${newPos}"]`).length) break;
+                newPos = i;
+            }
 
-        const width = $(window).outerWidth();
-        const height = $(window).outerHeight();
-
-        // Update position
-        if (newPos < 12) {
-            $card.css({
-                top: Math.floor(newPos / 4) * 220 + (height - 800) / 2 + 40,
-                left: (newPos % 4) * 164 + (width - 600)/2
-            });
-        } else {
-            $card.css({
-                top: (newPos % 3) * 220 + (height - 800) / 2 + 40,
-                left: Math.floor(newPos / 3) * 164 + (width - 600) / 2
-            });
+            $card.attr('data-pos', newPos);
+            deck.updateCardPos($card, newPos);
         }
     }
 }
