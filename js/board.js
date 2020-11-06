@@ -90,9 +90,6 @@ export default {
 
         const $card = $(`.card#${id}`);
 
-        // Save emptied positions for new set to appear
-        deck.emptyPos.push(parseInt($card.attr('data-pos')));
-
         // Move cards
         $card.removeClass('selected set').attr('data-pos', winner).css({
             left: $(`.${winner} .sets-wrapper`).offset().left,

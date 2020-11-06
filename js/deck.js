@@ -7,7 +7,6 @@ export default {
     show: 15,  // Number of cards to be shown on the board
     shown: [], // Cards currently on the board
     p: 0, // Position of the cards on the table
-    emptyPos: [],
 
     init() {
         // Generate all 81 cards
@@ -121,13 +120,11 @@ export default {
     updateCardPos($card, pos) {
         if (!pos) pos = parseInt($card.attr('data-pos'));
 
-        console.log(pos, this.show);
-
         const winW = $(window).outerWidth();
         const winH = $(window).outerHeight();
         const cardW = 128;
         const cardH = 176;
-        const margin = 40;
+        const margin = 48;
 
         const cols = Math.max(this.show / 3, 4);
         const originX = 320 + (winW - 320 - (cols * cardW + (cols - 1) * margin)) / 2;
@@ -145,15 +142,15 @@ export default {
     draw3Cards() {
         this.show += 3;
 
-        // Sort spots to fill (top let to bottom right)
-        this.emptyPos = this.emptyPos.sort((a, b) => a < b ? -1 : 1);
+        // Find spots to fill (top let to bottom right)
+        const emptySpots = [...Array(this.show).keys()].filter(d => !$(`.card[data-pos="${d}"]`).length);
 
         // Add three new cards
         for (let i = 0; i < 3; i += 1) {
             // Set new card at first empty spot
             setTimeout(() => {
-                this.randomCard(this.emptyPos[0]);
-                this.emptyPos.shift();
+                this.randomCard(emptySpots[0]);
+                emptySpots.shift();
             }, i * 100);
         }
     }
