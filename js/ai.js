@@ -65,7 +65,7 @@ export default {
      * @return {Object}            third card parameters (without ID)
      */
     findThird(firstCard, secondCard) {
-        let target = {};
+        const target = {};
 
         // Test for shape
         if (firstCard.shape === secondCard.shape) {

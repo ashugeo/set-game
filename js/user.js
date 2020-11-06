@@ -95,20 +95,20 @@ export default {
             $('.countdown').remove();
 
             // Create array with the three selected cards
-            let selected = [];
+            const triad = [];
             $('.card.selected').each((_, elem) => {
-                selected.push(parseInt($(elem).attr('id')));
+                cards.push(parseInt($(elem).attr('id')));
             });
 
             // Find the third card depending on the first two
-            let target = ai.findThird(deck.cards[selected[0]], deck.cards[selected[1]]);
+            const target = ai.findThird(deck.cards[triad[0]], deck.cards[triad[1]]);
 
             // Check if it corresponds to the third selected card
-            if (deck.findCardID(target) === selected[2]) { // User found a set!
+            if (deck.findCardID(target) === triad[2]) { // User found a set!
                 sound.play('4');
 
                 // Display valid set, move it away, increment points, add a new set
-                board.validSet([selected[0], selected[1], selected[2]], 'user');
+                board.validSet([triad[0], triad[1], triad[2]], 'user');
 
                 // Change "Set" button text
                 $('button.main').text('Well done!');
