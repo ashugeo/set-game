@@ -116,9 +116,8 @@ export default {
 
         // Add symbol(s)
         for (let qty = 0; qty <= card.qty; qty += 1) {
-            if (card.shape === 0) $inner.append('<svg viewBox="0 0 12 8"><use xlink:href="#tild"></use></svg>');
-            else if (card.shape === 1) $inner.append('<svg viewBox="0 0 12 8"><use xlink:href="#diamond"></use></svg>');
-            else if (card.shape === 2) $inner.append('<svg viewBox="0 0 12 8"><use xlink:href="#oval"></use></svg>');
+            const shape = ['tild', 'diamond', 'oval'][card.shape];
+            $inner.append(`<svg viewBox="0 0 12 8"><use xlink:href="#${shape}"></use></svg>`);
         }
 
         // Append inner to card
