@@ -3,7 +3,7 @@ import deck from './deck.js';
 import game from './game.js';
 
 export default {
-    speed: 1000, // Bot delay between each test
+    speed: 2000, // Bot delay between each test
     solveTimeout: null,
     test: 0, // Number of bot test loops
     foundSet: false, // Set found?
@@ -12,7 +12,7 @@ export default {
         // Launch bot after 2 seconds
         setTimeout(() => {
             if (!game.waiting) this.solve();
-        }, 4000);
+        }, game.delay['start-bot']);
     },
 
     solve() {
@@ -20,7 +20,7 @@ export default {
         
         // Count tests loops
         this.test += 1;
-        console.log(`test ${this.test}`);
+        // console.log(`test ${this.test}`);
 
         // After 20 unsuccessful loops, suggest user to add 3 cards
         if (this.test === 20) $('button.secondary').removeAttr('disabled');

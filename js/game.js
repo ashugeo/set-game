@@ -7,6 +7,14 @@ export default {
         'bot': 0,
         'user': 0
     },
+    delay: { // Game animations delays
+        'add-cards': 1500,
+        'restart': 2000,
+        'show-bot-set': 3000,
+        'show-user-set': 2000,
+        'show-user-fail': 3000,
+        'start-bot': 5000
+    },
 
     updatePoints(point, to) {
         if (point === 1) {

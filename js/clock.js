@@ -24,7 +24,7 @@ export default {
                 game.waiting = false;
                 ai.foundSet = false;
                 ai.solve();
-            }, 2000);
+            }, game.delay['restart']);
         } else {
             // Display seconds remaining
             // $('.countdown-number').text(t);

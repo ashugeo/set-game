@@ -43,9 +43,9 @@ export default {
                     ai.foundSet = false;
                     ai.test = 0;
                     ai.solve();
-                }, 2000);
-            }, 500);
-        }, 2000);
+                }, game.delay['restart']);
+            }, game.delay['add-cards']);
+        }, game.delay[`show-${winner}-set`]);
     },
 
     /**

@@ -27,7 +27,7 @@ export default {
     
         // Display first 12 cards
         for (let i = 0; i < this.show; i += 1) {
-            setTimeout(() => this.randomCard(), i * 100);
+            setTimeout(() => this.randomCard(), i * 200);
         }
     },
 

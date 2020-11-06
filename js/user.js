@@ -58,9 +58,9 @@ export default {
             $el.addClass('selected');
             sound.play('click');
 
-            if ($el.hasClass('easy')) ai.speed = 1000;
-            else if ($el.hasClass('medium')) ai.speed = 500;
-            else if ($el.hasClass('hard')) ai.speed = 200;
+            if ($el.hasClass('easy')) ai.speed = 2000;
+            else if ($el.hasClass('medium')) ai.speed = 1500;
+            else if ($el.hasClass('hard')) ai.speed = 1000;
         });
 
         $(window).resize(() => {
@@ -154,7 +154,7 @@ export default {
                     game.waiting = false;
                     ai.foundSet = false;
                     ai.solve();
-                }, 3000);
+                }, game.delay['show-user-fail']);
             }
         }
     }
