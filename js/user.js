@@ -81,6 +81,8 @@ export default {
      * @param  {Object} $div jQuery object
      */
     clickCard($div) {
+        if ($('main').is(':not(.waiting)')) return;
+
         // Toggle selected class to this card
         $div.toggleClass('selected');
         const selected = $('.card.selected').length
