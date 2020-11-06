@@ -4,6 +4,7 @@ import user from './user.js';
 export default {
     cards: [], // All 81 cards
     stock: [], // Cards not dealt yet
+    show: 15,  // Number of cards to be shown on the board
     shown: [], // Cards currently on the board
     p: 0, // Position of the cards on the table
     emptyPos: [],
@@ -26,7 +27,7 @@ export default {
         this.stock = this.cards.slice();
     
         // Display first 12 cards
-        for (let i = 0; i < 12; i += 1) {
+        for (let i = 0; i < this.show; i += 1) {
             setTimeout(() => this.randomCard(), i * 100);
         }
     },
@@ -95,18 +96,7 @@ export default {
         // Add position as data attribute
         $card.attr('data-pos', pos);
 
-        // Set position
-        if (pos < 12) {
-            $card.css({
-                top: Math.floor(pos / 4) * 220 + ($(window).outerHeight() - 624) / 2,
-                left: (pos % 4) * 164 + ($(window).outerWidth() - 320) / 2,
-            });
-        } else {
-            $card.css({
-                top: (pos % 3) * 220 + ($(window).outerHeight() - 624) / 2,
-                left: Math.floor(pos / 3) * 164 + ($(window).outerWidth() - 320) / 2
-            });
-        }
+        this.updateCardPos($card, pos);
 
         // Bind click event
         $card.on('click', () => {
@@ -128,10 +118,33 @@ export default {
         setTimeout(() => $card.removeClass('new'), 100);
     },
 
+    updateCardPos($card, pos) {
+        if (!pos) pos = parseInt($card.attr('data-pos'));
+
+        console.log(pos, this.show);
+
+        const winW = $(window).outerWidth();
+        const winH = $(window).outerHeight();
+        const cardW = 128;
+        const cardH = 176;
+        const margin = 40;
+
+        const cols = Math.max(this.show / 3, 4);
+        const originX = 320 + (winW - 320 - (cols * cardW + (cols - 1) * margin)) / 2;
+        const originY = (winH - (3 * cardH + 2 * margin)) / 2;
+
+        $card.css({
+            top: originY + (pos % 3) * (cardH + margin),
+            left: originX + Math.floor(pos / 3) * (cardW + margin)
+        });
+    },
+
     /**
      * Display three new cards and run bot test
      */
     draw3Cards() {
+        this.show += 3;
+
         // Sort spots to fill (top let to bottom right)
         this.emptyPos = this.emptyPos.sort((a, b) => a < b ? -1 : 1);
 

@@ -64,6 +64,8 @@ export default {
      * @param  {string} winner 'bot' or 'user'
      */
     moveSetAway(set, winner) {
+        deck.show -= 3;
+
         let delay = 0;
 
         for (let id of set) {
