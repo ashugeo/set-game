@@ -4,7 +4,7 @@ import user from './user.js';
 export default {
     cards: [], // All 81 cards
     stock: [], // Cards not dealt yet
-    show: 15,  // Number of cards to be shown on the board
+    show: 12,  // Number of cards to be shown on the board
     shown: [], // Cards currently on the board
     p: 0, // Position of the cards on the table
 
