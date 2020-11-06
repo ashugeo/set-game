@@ -37,7 +37,18 @@ export default {
 
         $(document).on('click', 'button.secondary', () => {
             deck.draw3Cards();
-            $('.card').each((_, el) => deck.updateCardPos($(el)));
+
+            const cards = $('main .card').toArray().sort((a, b) => {
+                a = parseInt($(a).attr('data-pos'));
+                b = parseInt($(b).attr('data-pos'));
+
+                return a < b ? -1 : 1;
+            });
+
+            cards.forEach((card, i) => {
+                setTimeout(() => deck.updateCardPos($(card)), i * 50);
+            });
+
             ai.test = 0;
         });
 
