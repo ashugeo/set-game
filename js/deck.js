@@ -132,6 +132,9 @@ export default {
      * Display three new cards and run bot test
      */
     draw3Cards() {
+        // Sort spots to fill (top let to bottom right)
+        this.emptyPos = this.emptyPos.sort((a, b) => a < b ? -1 : 1);
+
         // Add three new cards
         for (let i = 0; i < 3; i += 1) {
             // Set new card at first empty spot
