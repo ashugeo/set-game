@@ -51,6 +51,12 @@ export default {
             else if ($el.hasClass('medium')) ai.speed = 500;
             else if ($el.hasClass('hard')) ai.speed = 200;
         });
+
+        $(window).resize(() => {
+            for (const card of $('.card:not(.locked)').toArray()) {
+                deck.updateCardPos($(card));
+            }
+        });
     },
 
     /**
