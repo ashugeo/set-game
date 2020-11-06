@@ -124,7 +124,7 @@ export default {
         const winH = $(window).outerHeight();
         const cardW = 128;
         const cardH = 176;
-        const margin = 48;
+        const margin = 40;
 
         const cols = Math.max(this.show / 3, 4);
         const originX = 320 + (winW - 320 - (cols * cardW + (cols - 1) * margin)) / 2;
