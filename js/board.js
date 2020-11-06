@@ -3,7 +3,7 @@ import deck from './deck.js';
 import game from './game.js';
 
 export default {
-    zIndex: 0, // z-index of a card
+    zIndex: 10, // z-index of a card
 
     /**
      * Display valid set, then move it away and update points
@@ -90,12 +90,17 @@ export default {
 
         const $card = $(`.card#${id}`);
 
-        // Move cards
+        // Update card's position
         $card.removeClass('selected set').attr('data-pos', winner).css({
             left: $(`.${winner} .sets-wrapper`).offset().left,
             top: $(`.${winner} .sets-wrapper`).offset().top - 4,
             zIndex: this.zIndex++
         });
+
+        setTimeout(() => {
+            // Move card to winner's sets wrapper
+            $(`.${winner} .sets-wrapper`).append($card);
+        }, 500);
     },
 
     /**

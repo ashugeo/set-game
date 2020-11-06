@@ -67,6 +67,14 @@ aside {
             background-color: #f6f6f6;
             border-radius: 8px;
             margin-top: 32px;
+
+            .card {
+                &:nth-last-child(n+6) {
+                    .card-inner {
+                        box-shadow: none;
+                    }
+                }
+            }
         }
 
         .difficulty {
@@ -203,7 +211,6 @@ main {
         .card:not(.locked) {
             .card-inner {
                 opacity: .3;
-                transform: scale(.9);
                 transition: top .5s ease-in-out, left .5s ease-in-out, transform .3s ease, opacity .3s ease;
             }
         }
@@ -227,112 +234,117 @@ main {
             }
         }
     }
+}
 
-    .card {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 176px;
-        width: 128px;
-        transition: top .5s ease-in-out, left .5s ease-in-out, transform .2s ease;
+.card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 176px;
+    width: 128px;
+    transition: top .5s ease-in-out, left .5s ease-in-out, transform .2s ease;
 
+    .card-inner {
+        width: 100%;
+        height: 100%;
+        display: inline-flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0 2px 2px rgba(0,0,0,.1);
+        transition: transform .3s ease, opacity .3s 1s ease, box-shadow .1s ease, margin-top .3s 1s ease;
+        backface-visibility: hidden;
+    }
+    
+    &.new {
         .card-inner {
-            width: 100%;
-            height: 100%;
-            display: inline-flex;
-            flex-flow: column;
-            justify-content: center;
-            align-items: center;
-            background-color: #ffffff;
-            border-radius: 5px;
-            box-shadow: 0 2px 2px rgba(0,0,0,.1);
-            transition: transform .3s ease, opacity .3s 1s ease, box-shadow .1s ease, margin-top .3s 1s ease;
-            backface-visibility: hidden;
+            margin-top: 16px;
+            opacity: 0;
         }
+    }
+
+    &.locked {
         
-        &.new {
+        &:not(.set) {
+            transform: scale(0.8) !important;
+
             .card-inner {
-                margin-top: 16px;
-                opacity: 0;
-            }
-        }
-
-        &.locked {
-            .card-inner {
-                transform: scale(.8) !important;
-            }
-
-            &.set {
-                .card {
-                    transform: scale(1.1) !important;
-                }
-            }
-        }
-
-        svg {
-            display: inline-block;
-            width: 80px;
-            fill: transparent;
-            stroke-width: .2;
-        }
-
-        &.c0 {
-            color: red;
-
-            &.f0 svg {
-                fill: red;
-            }
-
-            &.f1 svg {
-                stroke: red;
-            }
-
-            &.f2 svg {
-                stroke: red;
-                fill: url(#stripes-red);
-            }
-        }
-
-        &.c1 {
-            color: purple;
-
-            &.f0 svg {
-                fill: purple;
-            }
-
-            &.f1 svg {
-                stroke: purple;
-            }
-
-            &.f2 svg {
-                stroke: purple;
-                fill: url(#stripes-purple);
-            }
-        }
-
-        &.c2 {
-            color: green;
-
-            &.f0 svg {
-                fill: green;
-            }
-
-            &.f1 svg {
-                stroke: green;
-            }
-
-            &.f2 svg {
-                stroke: green;
-                fill: url(#stripes-green);
+                transform: none;
             }
         }
 
         &.set {
-            // opacity: 1;
-            
             .card-inner {
-                box-shadow: 0 10px 10px rgba(0,0,0,.05);
+                transform: scale(1.1) !important;
             }
+        }
+    }
+
+    svg {
+        display: inline-block;
+        width: 80px;
+        fill: transparent;
+        stroke-width: .2;
+    }
+
+    &.c0 {
+        color: red;
+
+        &.f0 svg {
+            fill: red;
+        }
+
+        &.f1 svg {
+            stroke: red;
+        }
+
+        &.f2 svg {
+            stroke: red;
+            fill: url(#stripes-red);
+        }
+    }
+
+    &.c1 {
+        color: purple;
+
+        &.f0 svg {
+            fill: purple;
+        }
+
+        &.f1 svg {
+            stroke: purple;
+        }
+
+        &.f2 svg {
+            stroke: purple;
+            fill: url(#stripes-purple);
+        }
+    }
+
+    &.c2 {
+        color: green;
+
+        &.f0 svg {
+            fill: green;
+        }
+
+        &.f1 svg {
+            stroke: green;
+        }
+
+        &.f2 svg {
+            stroke: green;
+            fill: url(#stripes-green);
+        }
+    }
+
+    &.set {
+        // opacity: 1;
+        
+        .card-inner {
+            box-shadow: 0 10px 10px rgba(0,0,0,.05);
         }
     }
 }
@@ -392,7 +404,7 @@ main {
     main {
         .card {
             &.locked {
-                transform: scale(0.65) !important;
+                // transform: scale(0.65) !important;
             }
         }
     }
@@ -412,7 +424,7 @@ main {
     main {
         .card {
             &.locked {
-                transform: scale(0.4) !important;
+                // transform: scale(0.4) !important;
             }
         }
     }
