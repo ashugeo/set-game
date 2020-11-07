@@ -271,6 +271,18 @@ main {
     justify-content: center;
     align-items: center;
 
+    .background {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 866px;
+        height: 783px;
+        background: url('/img/background.png');
+        background-position: left -120px;
+        background-repeat: no-repeat;
+        opacity: .5;
+    }
+
     section {
         position: relative;
         background-color: white;
