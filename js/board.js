@@ -92,7 +92,7 @@ export default {
         // Update card's position
         $card.removeClass('selected set').attr('data-pos', winner).css({
             left: $(`.${winner} .sets-wrapper`).offset().left,
-            top: $(`.${winner} .sets-wrapper`).offset().top - 4,
+            top: $(`.${winner} .sets-wrapper`).offset().top - 84,
             zIndex: this.zIndex++
         });
 

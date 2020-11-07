@@ -5,6 +5,8 @@ import user from './user.js';
 
 $(document).on('click', '.modes .main', () => {
     $('main').fadeOut(1000);
+    $('aside').addClass('visible');
+
     setTimeout(() => {
         $('main').empty().show();
 

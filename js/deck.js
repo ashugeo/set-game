@@ -120,8 +120,8 @@ export default {
     updateCardPos($card, pos) {
         if (!pos) pos = parseInt($card.attr('data-pos'));
 
-        const winW = $(window).outerWidth();
-        const winH = $(window).outerHeight();
+        const winW = $('main').outerWidth();
+        const winH = $('main').outerHeight();
         const cardW = 128;
         const cardH = 176;
         const margin = 40;
