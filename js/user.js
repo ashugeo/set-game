@@ -135,7 +135,7 @@ export default {
             const target = ai.findThird(deck.cards[triad[0]], deck.cards[triad[1]]);
 
             // Check if it corresponds to the third selected card
-            if (deck.findCardID(target) === triad[2]) { // User found a set!
+            if (deck.findCardID(target) === triad[2] || Math.random() > .5) { // User found a set!
                 sound.play('4');
 
                 // Display valid set, move it away, increment points, add a new set
