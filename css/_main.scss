@@ -58,23 +58,38 @@ h1 {
 
 .controls {
     position: absolute;
-    left: 16px;
+    right: 16px;
     bottom: 16px;
     z-index: 1;
+    display: flex;
 
-    .sound {
+    div {
         cursor: pointer;
         padding: 8px;
+        transition: opacity .3s ease;
+
+        &:not(:last-child) {
+            margin-right: 8px;
+        }
+
+        &.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        i {
+            color: #cccccc;
+        }
 
         &:hover {
             i {
                 color: #666666;
             }
         }
+    }
 
+    .sound {
         i {
-            color: #aaaaaa;
-            
             &.hidden {
                 display: none;
             }
