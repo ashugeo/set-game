@@ -122,7 +122,6 @@ export default {
         } else if (selected === 3) { // 3 cards have been selected
 
             // Stop the clock
-            clock.ticking = false;
             clearTimeout(clock.timeout);
 
             // Create array with the three selected cards
