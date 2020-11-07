@@ -140,8 +140,6 @@ export default {
      * Display three new cards and run bot test
      */
     draw3Cards() {
-        this.show += 3;
-
         // Find spots to fill (top let to bottom right)
         const emptySpots = [...Array(this.show).keys()].filter(d => !$(`.card[data-pos="${d}"]`).length);
 

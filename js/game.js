@@ -9,7 +9,7 @@ export default {
     },
     delay: { // Game animations delays
         'add-cards': 1500,
-        'restart': 2000,
+        'restart': 1000,
         'show-bot-set': 3000,
         'show-user-set': 2000,
         'show-user-fail': 3000,

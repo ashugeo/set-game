@@ -9,6 +9,10 @@ export default {
     foundSet: false, // Set found?
 
     init() {
+        game.waiting = false;
+        this.test = 0;
+        this.foundSet = false;
+
         // Launch bot after 2 seconds
         setTimeout(() => {
             if (!game.waiting) this.solve();

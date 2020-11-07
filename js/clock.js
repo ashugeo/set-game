@@ -10,25 +10,21 @@ export default {
      */
     countdown(t) {
         if (t === 0) { // 10 seconds have passed
-            $('.countdown').remove();
-            $('button.main').html('Too late!');
+            $('button.main').html('Too late!').removeClass('waiting');
 
             setTimeout(() => {
                 // Unselect
                 $('.card.selected').removeClass('selected');
                 
                 // User can play again
-                $('button.main').html('Set<span>or press Space</span>').removeAttr('disabled');
+                $('button.main').html('Set<span>or press Space</span>').removeAttr('disabled').removeClass('waiting');
 
                 // Launch bot tests again
-                game.waiting = false;
-                ai.foundSet = false;
-                ai.solve();
+                ai.init();
             }, game.delay['restart']);
         } else {
             // Display seconds remaining
-            // $('.countdown-number').text(t);
-            $('button.main').html(`${t}<span>Click 3 cards</span>`);
+            $('button.main .count').html(t);
 
             // Decrement seconds
             t -= 1;

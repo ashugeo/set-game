@@ -29,6 +29,7 @@ export default {
 
                 if (deck.shown.length === 9) {
                     // Add a new set
+                    deck.show += 3;
                     deck.draw3Cards();
                 } else if (deck.shown.length > 9) {
                     // Reorganize displayed cards
@@ -37,12 +38,10 @@ export default {
 
                 setTimeout(() => {
                     // User can play again
-                    $('button.main').html('Set<span>or press Space</span>').removeAttr('disabled');
+                    $('button.main').html('Set<span>or press Space</span>').removeAttr('disabled').removeClass('waiting');
 
                     // Launch bot tests again
-                    ai.foundSet = false;
-                    ai.test = 0;
-                    ai.solve();
+                    ai.init();
                 }, game.delay['restart']);
             }, game.delay['add-cards']);
         }, game.delay[`show-${winner}-set`]);

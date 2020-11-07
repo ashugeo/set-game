@@ -38,8 +38,13 @@ export default {
             }
         });
 
-        $(document).on('click', 'button.secondary', () => {
-            deck.draw3Cards();
+        $(document).on('click', 'button.secondary', e => {
+            // Stop bot
+            clearTimeout(ai.solveTimeout);
+            deck.show += 3;
+
+            // Disable button
+            $(e.currentTarget).attr('disabled', true);
 
             const cards = $('main .card').toArray().sort((a, b) => {
                 a = parseInt($(a).attr('data-pos'));
@@ -52,7 +57,10 @@ export default {
                 setTimeout(() => deck.updateCardPos($(card)), i * 50);
             });
 
-            ai.test = 0;
+            setTimeout(() => {
+                deck.draw3Cards();
+                ai.init();
+            }, 1000);
         });
 
         $(document).on('click', '.difficulty ul li', e => {
@@ -90,7 +98,7 @@ export default {
         ai.foundSet = true;
 
         // Change button text
-        $('button.main').html('10<span>Click 3 cards</span>').attr('disabled', true);
+        $('button.main').html('<div class="count">10</div><span>Select 3 cards</span>').attr('disabled', true).addClass('waiting');
 
         // Make cards clickable
         $('main').addClass('waiting');
@@ -113,9 +121,9 @@ export default {
             sound.play('2');
         } else if (selected === 3) { // 3 cards have been selected
 
-            // Stop the clock, remove the countdown
+            // Stop the clock
+            clock.ticking = false;
             clearTimeout(clock.timeout);
-            $('.countdown').remove();
 
             // Create array with the three selected cards
             const triad = [];
@@ -133,13 +141,13 @@ export default {
                 // Display valid set, move it away, increment points, add a new set
                 board.validSet([triad[0], triad[1], triad[2]], 'user');
 
-                // Change "Set" button text
-                $('button.main').text('Well done!');
+                // Change "Set" button
+                $('button.main').html('Well done!').removeClass('waiting');
             } else { // User is wrong
                 sound.play('3');
 
-                // Change "Set" button text
-                $('button.main').text('Sorry, no...');
+                // Change "Set" button
+                $('button.main').html('Sorry...<span>This is not a Set</span>').removeClass('waiting');
 
                 // Withdraw one point
                 game.updatePoints(-1, 'user');
@@ -149,14 +157,12 @@ export default {
                     $('.card.selected').removeClass('selected');
                     
                     // User can play again
-                    $('button.main').html('Set<span>or press Space</span>').removeAttr('disabled');
+                    $('button.main').html('Set<span>or press Space</span>').removeAttr('disabled').removeClass('waiting');
 
                     $('main').removeClass('waiting');
 
                     // Launch bot tests again
-                    game.waiting = false;
-                    ai.foundSet = false;
-                    ai.solve();
+                    ai.init();
                 }, game.delay['show-user-fail']);
             }
         }
