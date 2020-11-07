@@ -271,6 +271,41 @@ main {
     justify-content: center;
     align-items: center;
 
+    .background {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: .5;
+
+        div {
+            position: absolute;
+            width: 80px;
+
+            svg {
+                fill: transparent;
+                stroke: transparent;
+                stroke-width: .2;
+                // animation: levitate 60s ease-in-out infinite;
+            }
+
+            &.f0 svg {
+                fill: purple;
+                opacity: .5;
+            }
+    
+            &.f1 svg {
+                stroke: purple;
+            }
+    
+            &.f2 svg {
+                stroke: purple;
+                fill: url(#stripes-purple);
+            }
+        }
+    }
+
     section {
         position: relative;
         background-color: white;
@@ -635,6 +670,15 @@ main {
     }
     to {
         transform: scaleX(1);
+    }
+}
+
+@keyframes levitate {
+    0%, 100% {
+        transform: none;
+    }
+    50% {
+        transform: translateY(-32px) rotate(40deg);
     }
 }
 
