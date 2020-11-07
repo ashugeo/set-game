@@ -25,19 +25,6 @@ export default {
             if (e.which === 32) $('button.main').removeClass('active');
         });
 
-        $(document).on('click', '.controls .sound', () => {
-            sound.on = !sound.on;
-
-            if (sound.on) {
-                $('.fa-volume-up').removeClass('hidden');
-                $('.fa-volume-off').addClass('hidden');
-                sound.play('click');
-            } else {
-                $('.fa-volume-off').removeClass('hidden');
-                $('.fa-volume-up').addClass('hidden');
-            }
-        });
-
         $(document).on('click', 'button.secondary', e => {
             // Stop bot
             clearTimeout(ai.solveTimeout);

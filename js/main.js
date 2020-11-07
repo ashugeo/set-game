@@ -3,6 +3,23 @@ import deck from './deck.js';
 import sound from './sound.js';
 import user from './user.js';
 
+$(document).ready(() => {
+    sound.init();
+});
+
+$(document).on('click', '.controls .sound', () => {
+    sound.on = !sound.on;
+
+    if (sound.on) {
+        $('.fa-volume-up').removeClass('hidden');
+        $('.fa-volume-off').addClass('hidden');
+        sound.play('click');
+    } else {
+        $('.fa-volume-off').removeClass('hidden');
+        $('.fa-volume-up').addClass('hidden');
+    }
+});
+
 $(document).one('click', '.modes .main', () => {
     $('main').fadeOut(800);
     $('aside').addClass('visible');
@@ -40,7 +57,6 @@ $(document).on('mouseleave', '.mode > div', e => {
 
 function start() {
     deck.init();
-    sound.init();
     user.init();
     ai.init();
 }
