@@ -34,6 +34,10 @@ header {
     display: flex;
     align-items: center;
     padding: 0 16px;
+
+    a {
+        text-decoration: none;
+    }
 }
 
 h1 {
@@ -280,7 +284,7 @@ main {
         background: url('/img/background.png');
         background-position: left -120px;
         background-repeat: no-repeat;
-        opacity: .5;
+        opacity: .8;
     }
 
     section {
