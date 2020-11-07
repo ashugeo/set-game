@@ -25,7 +25,7 @@ export default {
             if (e.which === 32) $('button.main').removeClass('active');
         });
 
-        $(document).on('click', '.controls .sound', e => {
+        $(document).on('click', '.controls .sound', () => {
             sound.on = !sound.on;
 
             if (sound.on) {

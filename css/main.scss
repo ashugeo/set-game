@@ -275,20 +275,20 @@ main {
         position: relative;
         background-color: white;
         border-radius: 8px;
-        padding: 40px 32px 24px 32px;
+        padding: 40px 32px 240px 32px;
         box-shadow: 0 4px 8px rgba(0,0,0,.05);
-        max-width: 640px;
-        overflow: hidden;
+        width: 940px;
+        margin-bottom: 120px;
 
-        &::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: linear-gradient(hsl(300, 50%, 45%), var(--color-primary));
-        }
+        // &::before {
+        //     content: "";
+        //     position: absolute;
+        //     top: 0;
+        //     left: 0;
+        //     width: 100%;
+        //     height: 6px;
+        //     background: linear-gradient(hsl(300, 50%, 45%), var(--color-primary));
+        // }
 
         h1 {
             text-align: center;
@@ -299,7 +299,8 @@ main {
             line-height: 1.6em;
             color: #666666;
             text-align: center;
-            margin-bottom: 1.5em;
+            max-width: 620px;
+            margin: 0 auto 2em auto;
         }
 
         button {
@@ -340,15 +341,109 @@ main {
             }
         }
 
-        .buttons {
-            text-align: center;
+        .modes {
+            position: absolute;
+            width: calc(100% - 64px);
+            display: flex;
             margin-top: 2em;
+            justify-content: center;
 
-            button {
-                display: inline;
+            div {
+                flex: 1;
+                position: relative;
+                height: 240px;
+                border-radius: 8px;
+                text-align: center;
+                padding: 32px 24px;
+                box-shadow: 0 0 8px rgba(0,0,0,.1);
+                background-color: white;
+                overflow: hidden;
+                transition: transform .2s ease;
+                
+                &:not(.soon) {
+                    cursor: pointer;
+                    
+                    &:hover {
+                        transform: translateY(-4px);
+
+                        button {
+                            filter: hue-rotate(10deg);
+                        }
+                    }
+                }
+
+                &.soon {
+                    &:before {
+                        content: "Soon";
+                        position: absolute;
+                        top: 8px;
+                        right: -68px;
+                        padding: 4px 80px;
+                        background: linear-gradient(hsl(300, 50%, 45%), var(--color-primary));
+                        transform: rotate(30deg);
+                        color: white;
+                        font-size: .75rem;
+                        font-weight: bold;
+                        text-shadow: 0 2px 2px rgba(0,0,0,.1);
+                        text-transform: uppercase;
+                        letter-spacing: .1em;
+                        box-shadow: 0 4px 8px rgba(0,0,0,.05);
+                    }
+                }
+
+                &.main {
+                    margin-top: -24px;
+                    height: auto;
+                    padding-bottom: 24px;
+
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 6px;
+                        background: linear-gradient(hsl(300, 50%, 45%), var(--color-primary));
+                    }
+                }
 
                 &:not(:last-child) {
                     margin-right: 32px;
+                }
+
+                i {
+                    display: inline-flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 64px;
+                    height: 64px;
+                    font-size: 1.5em;
+                    background-color: hsl(300, 40%, 90%);
+                    color: hsl(300, 80%, 35%);
+                    border-radius: 50%;
+                    margin-bottom: 1rem;
+
+                    &.fa-bolt,
+                    &.fa-mug-hot {
+                        &::before {
+                            margin-left: 4px;
+                        }
+                    }
+                }
+
+                p {
+                    margin-bottom: 1em;
+                }
+
+                h2 {
+                    font-size: 1rem;
+                    font-weight: bold;
+                    color: var(--color-primary);
+                    margin-bottom: 1em;
+                }
+
+                button {
+                    transition: transform .2s ease, filter .2s ease;
                 }
             }
         }
