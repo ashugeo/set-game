@@ -79,6 +79,10 @@ export default {
                 deck.updateCardPos($(card));
             }
         });
+
+        $(window).on('beforeunload', () => {
+            return false;
+        });
     },
 
     /**
