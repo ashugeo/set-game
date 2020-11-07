@@ -70,7 +70,7 @@ aside {
     flex-flow: column wrap;
     z-index: 1;
     transform: translateX(-100%);
-    transition: transform .5s ease;
+    transition: transform 1.5s .5s cubic-bezier(.85, 0, .15, 1);
 
     &.visible {
         transform: none;
@@ -271,41 +271,6 @@ main {
     justify-content: center;
     align-items: center;
 
-    .background {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        opacity: .5;
-
-        div {
-            position: absolute;
-            width: 80px;
-
-            svg {
-                fill: transparent;
-                stroke: transparent;
-                stroke-width: .2;
-                // animation: levitate 60s ease-in-out infinite;
-            }
-
-            &.f0 svg {
-                fill: purple;
-                opacity: .5;
-            }
-    
-            &.f1 svg {
-                stroke: purple;
-            }
-    
-            &.f2 svg {
-                stroke: purple;
-                fill: url(#stripes-purple);
-            }
-        }
-    }
-
     section {
         position: relative;
         background-color: white;
@@ -408,7 +373,7 @@ main {
                 }
 
                 &.soon {
-                    &:before {
+                    &::before {
                         content: "Soon";
                         position: absolute;
                         top: 8px;
