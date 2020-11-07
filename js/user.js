@@ -12,6 +12,9 @@ export default {
         $(document).on('keydown', e => {
             // User pressed space bar, same as clicking "Set" button
             if (e.which === 32) {
+                // Prevent space bar from firing a focused button
+                e.preventDefault();
+
                 $('button.main').addClass('active');
                 this.userSet();
                 clearTimeout(ai.solveTimeout);
