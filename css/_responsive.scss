@@ -1,0 +1,50 @@
+@media screen and (max-height: 900px) {
+    aside {
+        .bot,
+        .user {
+            .sets-wrapper {
+                height: 140px;
+                width: 105px;
+            }
+        }
+    }
+
+    main {
+        .card {
+            &.locked {
+                // transform: scale(0.65) !important;
+            }
+        }
+    }
+}
+
+@media screen and (max-height: 800px) {
+    aside {
+        .bot,
+        .user {
+            .sets-wrapper {
+                height: 86px;
+                width: 66px;
+            }
+        }
+    }
+
+    main {
+        .card {
+            &.locked {
+                // transform: scale(0.4) !important;
+            }
+        }
+    }
+}
+
+@media screen and (max-height: 640px) {
+    aside {
+        .bot,
+        .user {
+            .sets-wrapper {
+                display: none;
+            }
+        }
+    }
+}
