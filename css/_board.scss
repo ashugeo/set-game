@@ -5,8 +5,9 @@ main {
     width: 100%;
     height: calc(100% - 80px);
     display: flex;
-    justify-content: center;
-    align-items: center;
+    // justify-content: center;
+    // align-items: center;
+    padding: 24px 0 80px 0;
 
     &.set {
         .card:not(.locked) {

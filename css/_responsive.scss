@@ -1,3 +1,191 @@
+@media screen and (max-width: 900px) {
+    body {
+        font-size: 14px;
+    }
+
+    main {
+        section {
+            padding: 32px 16px 240px 16px;
+            
+            .modes {
+                width: calc(100% - 32px);
+                // flex-flow: column;
+
+                .mode {
+                    &:not(:last-child) {
+                        margin-right: 16px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    main {
+        .background {
+            display: none;
+        }
+
+        section {
+            padding: 0 0 24px 0;
+            background-color: transparent;
+            box-shadow: none;
+
+            h1 {
+                display: none;
+            }
+
+            > p {
+                max-width: 400px;
+
+                br {
+                    display: none;
+                }
+            }
+            
+            .modes {
+                position: relative;
+                width: 100%;
+                flex-flow: column;
+                margin-top: 2em;
+
+                .mode {                                        
+                    margin-bottom: 1em;
+                    
+                    &:not(:last-child) {
+                        margin-right: 0;
+                    }
+
+                    > div {
+                        display: flex;
+                        height: auto;
+                        padding: 16px 16px 16px 24px;
+
+                        > * {
+                            flex: 1;
+
+                            &:not(:last-child) {
+                                margin-right: 24px;
+                            }
+                        }
+
+                        i {
+                            flex: 0 0 40px;
+                            width: 40px;
+                            height: 40px;
+                            font-size: 1rem;
+                            margin-bottom: 0;
+                            align-self: center;
+                        }
+
+                        > div {
+                            h2 {
+                                text-align: left;
+                                margin-bottom: .5em;
+                            }
+
+                            p {
+                                text-align: left;
+                                margin-bottom: 0;
+                            }
+                        }
+
+                        button {
+                            margin: 0;
+                            flex: 0;
+                            align-self: center;
+                            transform: none;
+                            width: auto;
+                        }
+                    }
+
+
+                    &.main {
+                        order: -1;
+
+                        div {
+                            margin-top: 0;
+
+                            &::before {
+                                height: 100%;
+                                width: 6px;
+                                border-radius: 4px 0 0 4px;
+                            }
+                        }
+                    }
+
+                    &.soon {
+                        > div {
+                            padding-right: 32px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 500px) {
+    header {
+        height: 64px;
+
+        h1 {
+            font-size: 1.2rem;
+
+            span {
+                &:not(:last-child) {
+                    margin-right: 2px;
+                    padding-left: .4em;
+                }
+            }
+        }
+    }
+
+    aside {
+        top: 64px;
+        height: calc(100% - 64px);
+    }
+
+    .controls {
+        top: 16px;
+        right: 24px;
+    }
+
+    main {
+        top: 64px;
+        height: calc(100% - 64px);
+
+        section {
+            max-width: calc(100% - 48px);
+
+            > p {
+                display: none;
+            }
+
+            .modes {
+                margin-top: 0;
+
+                .mode {
+                    > div {
+                        button {
+                            display: none;
+                        }
+                    }
+
+                    &.main {
+                        > div {
+                            > div {
+                                margin-right: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media screen and (max-height: 900px) {
     aside {
         .bot,

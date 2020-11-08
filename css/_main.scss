@@ -7,7 +7,7 @@
 html, body {
     height: 100%;
     width: 100%;
-    overflow: hidden;
+    // overflow: hidden;
 }
 
 body {
@@ -17,7 +17,7 @@ body {
 }
 
 header {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -60,7 +60,7 @@ button {
     display: block;
     margin: 0 auto;
     border: none;
-    font-size: 1rem;
+    font-size: 1em;
     background: none;
     cursor: pointer;
     user-select: none;
@@ -109,7 +109,7 @@ button {
 }
 
 .controls {
-    position: absolute;
+    position: fixed;
     top: 22px;
     right: 32px;
     z-index: 200;

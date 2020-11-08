@@ -18,7 +18,8 @@ main {
         padding: 40px 32px 240px 32px;
         box-shadow: 0 4px 8px rgba(0,0,0,.05);
         width: 940px;
-        margin-bottom: 120px;
+        max-width: calc(100% - 80px);
+        margin: auto;
 
         h1 {
             text-align: center;
@@ -46,7 +47,7 @@ main {
                 transform-style: preserve-3d;
                 backface-visibility: hidden;
 
-                div {
+                > div {
                     flex: 1;
                     position: relative;
                     height: 240px;
@@ -93,6 +94,8 @@ main {
                     button {
                         transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
                         transform: translateZ(8px);
+                        padding: 16px 32px;
+                        width: 180px;
                     }
                 }
 
@@ -130,7 +133,7 @@ main {
                 }
 
                 &.main {
-                    div {
+                    > div {
                         margin-top: -24px;
                         height: auto;
                         padding-bottom: 24px;
