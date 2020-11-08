@@ -77,6 +77,13 @@
                             font-size: 1rem;
                             margin-bottom: 0;
                             align-self: center;
+
+                            &.fa-bolt,
+                            &.fa-mug-hot {
+                                &::before {
+                                    margin-left: 2px;
+                                }
+                            }
                         }
 
                         > div {
@@ -103,9 +110,10 @@
 
                     &.main {
                         order: -1;
-
-                        div {
+                        
+                        > div {
                             margin-top: 0;
+                            padding-bottom: 16px;
 
                             &::before {
                                 height: 100%;
