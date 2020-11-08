@@ -149,7 +149,7 @@ export default {
             <p>Here are a few examples of a Set.</p>
 
             <div class="row">
-                <div class="box">
+                <div class="box valid">
                     <div class="row">
                         <div>
                             <div class="card c1 f1">
@@ -175,7 +175,7 @@ export default {
                     </div>
                     <span>Same color, same shape,<br>same number, different filling.</span>
                 </div>
-                <div class="box">
+                <div class="box valid">
                     <div class="row">
                         <div>
                             <div class="card c1 f0">
@@ -206,7 +206,7 @@ export default {
                 </div>
             </div>
             <div class="row">
-                <div class="box">
+                <div class="box valid">
                     <div class="row">
                         <div>
                             <div class="card c2 f0">
@@ -235,7 +235,7 @@ export default {
                     </div>
                     <span>Different color, different shape,<br>same number, different filling.</span>
                 </div>
-                <div class="box">
+                <div class="box valid">
                     <div class="row">
                         <div>
                             <div class="card c1 f2">
@@ -281,7 +281,7 @@ export default {
             <p>Just to make sure you got this, here are a couple examples of 3 cards that <strong>don't</strong> make a Set.</p>
 
             <div class="row">
-                <div class="box">
+                <div class="box invalid">
                     <div class="row">
                         <div>
                             <div class="card c1 f2">
@@ -307,7 +307,7 @@ export default {
                     </div>
                     <span>Different color, same shape and number, but two cards have the same filling.</span>
                 </div>
-                <div class="box">
+                <div class="box invalid">
                     <div class="row">
                         <div>
                             <div class="card c1 f1">
