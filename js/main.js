@@ -31,7 +31,7 @@ $(document).on('click', '.controls .see-about', () => {
 });
 
 $(document).one('click', '.modes .main', () => {
-    $('main').fadeOut(800);
+    $('main').fadeOut(500);
     $('aside').addClass('visible');
 
     setTimeout(() => {

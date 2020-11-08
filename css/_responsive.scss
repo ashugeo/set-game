@@ -147,7 +147,7 @@
         transform: translateY(100%);
         display: flex;
         flex-flow: row wrap;
-        transition: bottom .3s ease-in-out;
+        transition: transform .3s ease 1s, bottom .3s ease-in-out;
 
         &.open {
             bottom: 0;
