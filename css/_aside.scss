@@ -16,20 +16,20 @@ aside {
         transform: none;
     }
 
+    .bot {
+        padding-bottom: 64px;
+    }
+
+    .user {
+        padding-top: 64px;
+    }
+
     .bot,
     .user {
         flex: 1;
         display: flex;
         justify-content: center;
         align-items: center;
-
-        &.bot {
-            padding-bottom: 64px;
-        }
-
-        &.user {
-            padding-top: 64px;
-        }
 
         &:nth-child(1) {
             border-bottom: 2px solid #eeeeee;

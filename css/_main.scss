@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     touch-action: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 html, body {

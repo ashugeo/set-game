@@ -7,7 +7,10 @@ import sound from './sound.js';
 
 export default {
     init() {
-        $(document).on('click', 'button.main', () => this.userSet());
+        $(document).on('click', 'button.main', () => {
+            this.userSet();
+            return false;
+        });
 
         $(document).on('keydown', e => {
             // User pressed space bar, same as clicking "Set" button
@@ -60,6 +63,8 @@ export default {
             else if ($el.hasClass('medium')) ai.speed = 1500;
             else if ($el.hasClass('hard')) ai.speed = 1000;
         });
+
+        $(document).on('click', '.difficulty', () => false);
 
         $(window).resize(() => {
             for (const card of $('.card:not(.locked)').toArray()) {

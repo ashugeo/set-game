@@ -134,6 +134,136 @@
     }
 }
 
+@media screen and (max-width: 750px) {
+    main {
+        height: calc(100% - 184px);
+    }
+
+    aside {
+        top: auto;
+        bottom: -160px;
+        height: 240px;
+        width: 100%;
+        transform: translateY(100%);
+        display: flex;
+        flex-flow: row wrap;
+        transition: bottom .3s ease-in-out;
+
+        &.open {
+            bottom: 0;
+
+            .bot {
+                &::after {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+
+        .bot,
+        .user {
+            height: 82px;
+            padding-top: 0;
+            padding-bottom: 0;
+            border-bottom: 2px solid #eeeeee;
+
+            &:nth-child(1) {
+                border-right: 2px solid #eeeeee;
+            }
+
+            h2 {
+                font-size: .875rem;
+            }
+
+            p {
+                font-size: .75rem;
+            }
+        }
+
+        .bot {
+            position: relative;
+            padding-right: 64px;
+
+            &::after {
+                content: "\f077";
+                font-family: "Font Awesome 5 Free";
+                font-weight: bold;
+                position: absolute;
+                bottom: 12px;
+                right: -15px;
+                color: #dddddd;
+                width: 24px;
+                height: 22px;
+                border-radius: 50%;
+                background-color: white;
+                border: 2px solid #eeeeee;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-bottom: 2px;
+                transition: transform .3s ease;
+            }
+
+            .difficulty {
+                position: absolute;
+                left: 0;
+                top: 150px;
+                width: 100vw;
+                margin-top: 0;
+                padding: 24px;
+    
+                p {
+                    font-size: .875rem;
+                    margin-bottom: 0;
+                }
+    
+                ul {
+                    justify-content: center;
+
+                    li {
+                        padding: 8px;
+                    }
+                }
+            }
+        }
+
+        .user {
+            padding-left: 64px;
+        }
+
+        .buttons {
+            top: 8px;
+            width: 100vw;
+
+            button {
+                &.main {
+                    position: relative;
+                    width: 160px;
+                    height: auto;
+                    font-size: 1rem;
+                    padding: 16px;
+
+                    span {
+                        display: none;
+                    }
+                }
+
+                &.secondary {
+                    position: absolute;
+                    width: 100%;
+                    left: 0;
+                    top: 106px;
+                    padding: 24px;
+                    border-bottom: 2px solid #eeeeee;
+                }
+            }
+        }
+
+        .sets-wrapper {
+            display: none;
+        }
+    }
+}
+
 @media screen and (max-width: 500px) {
     header {
         height: 64px;
@@ -150,11 +280,6 @@
         }
     }
 
-    aside {
-        top: 64px;
-        height: calc(100% - 64px);
-    }
-
     .controls {
         top: 16px;
         right: 24px;
@@ -162,7 +287,7 @@
 
     main {
         top: 64px;
-        height: calc(100% - 64px);
+        height: calc(100% - 168px);
 
         section {
             max-width: calc(100% - 48px);
@@ -189,6 +314,32 @@
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1200px), (max-height: 750px) {
+    main {
+        .card {
+            width: 96px;
+            height: 132px;
+
+            svg {
+                width: 60px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 950px), (max-height: 600px) {
+    main {
+        .card {
+            width: 64px;
+            height: 88px;
+
+            svg {
+                width: 40px;
             }
         }
     }

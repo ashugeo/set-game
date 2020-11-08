@@ -71,6 +71,10 @@ $(document).on('mouseleave', '.mode > div', e => {
     });
 });
 
+$(document).on('click', 'aside', e => {
+    $(e.currentTarget).toggleClass('open');
+});
+
 function start() {
     tutorial.init();
 

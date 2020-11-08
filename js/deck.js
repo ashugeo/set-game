@@ -122,12 +122,26 @@ export default {
 
         const winW = $('main').outerWidth();
         const winH = $('main').outerHeight();
-        const cardW = 128;
-        const cardH = 176;
-        const margin = 40;
+
+        let cardW;
+        if (winW <= 950 || winH + 80 <= 600) cardW = 64;
+        else if (winW <= 1200 || winH + 80 <= 750) cardW = 96;
+        else cardW = 128;
+        
+        let cardH;
+        if (winW <= 950 || winH + 80 <= 600) cardH = 88;
+        else if (winW <= 1200 || winH + 80 <= 750) cardH = 132;
+        else cardH = 176;
+
+        let margin;
+        if (winW <= 950 || winH + 80 <= 600) margin = 12;
+        else if (winW <= 1200 || winH + 80 <= 750) margin = 24;
+        else margin = 40;
+
+        const padLeft = winW <= 750 ? 0 : 320;
 
         const cols = Math.max(this.show / 3, 4);
-        const originX = 320 + (winW - 320 - (cols * cardW + (cols - 1) * margin)) / 2;
+        const originX = padLeft + (winW - padLeft - (cols * cardW + (cols - 1) * margin)) / 2;
         const originY = (winH - (3 * cardH + 2 * margin)) / 2;
 
         $card.css({
