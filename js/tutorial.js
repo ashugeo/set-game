@@ -348,7 +348,7 @@ export default {
         `<div class="content">
             <h3>Tutorial (4/4)</h3>
             <h2>Ready?</h2>
-            <p>That's it, you know tue rules! The game starts with 12 cards. There is a small chance* that no Set exists on the board, in which case you'll be able to request 3 additional cards after a little while.</p>
+            <p>That's it, you know the rules! The game starts with 12 cards. There is a small chance* that no Set exists on the board, in which case you'll be able to request 3 additional cards after a little while.</p>
 
             <p>The AI has three difficulty levels: the harder, the faster it is!<br><strong>If you are ready, click on Start and play against the computer!</strong></p>
 
