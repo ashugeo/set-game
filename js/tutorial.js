@@ -380,11 +380,8 @@ export default {
 
         // Skip tutorial
         $(document).on('click', '.tutorial button.tertiary', () => {
-            localStorage.setItem('tutorial', 'false');
             this.start();
         });
-
-        this.show();
     },
 
     show() {
@@ -401,7 +398,7 @@ export default {
             $('.tutorial').removeClass('hidden');
         } else {
             $('body').append(`<div class="tutorial hidden">${html}</div>`);
-            setTimeout(() => $('.tutorial').removeClass('hidden'), 1000);
+            setTimeout(() => $('.tutorial').removeClass('hidden'), 100);
         }
     },
 
@@ -411,6 +408,7 @@ export default {
     
         setTimeout(() => {
             if (!game.started) {
+                localStorage.setItem('tutorial', 'false');
                 deck.init();
                 user.init();
             }

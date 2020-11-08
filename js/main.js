@@ -62,11 +62,14 @@ $(document).on('mouseleave', '.mode > div', e => {
 });
 
 function start() {
-    if (false) {
+    tutorial.init();
+
+    if (localStorage.getItem('tutorial') === 'false') {
+        $('.controls .help').removeClass('hidden');
         deck.init();
         user.init();
         ai.init();
     } else {
-        tutorial.init();
+        setTimeout(() => tutorial.show(), 1000);
     }
 }

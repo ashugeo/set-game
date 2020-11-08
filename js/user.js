@@ -68,7 +68,7 @@ export default {
         });
 
         $(window).on('beforeunload', () => {
-            // return false;
+            return false;
         });
 
         setTimeout(() => {
