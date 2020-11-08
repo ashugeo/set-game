@@ -1,0 +1,148 @@
+.tutorial {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    padding-left: 320px;
+    background-color: rgba(0,0,0,.2);
+    transition: opacity .5s ease;
+    
+    &.hidden {
+        opacity: 0;
+        pointer-events: none;
+
+        .content {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+    }
+    
+    .content {
+        max-width: 620px;
+        background-color: white;
+        padding: 32px;
+        box-shadow: 0 4px 8px rgba(0,0,0,.1);
+        border-radius: 8px;
+        transition: transform .5s ease, opacity .3s ease;
+
+        h3 {
+            color: var(--color-primary);
+            text-align: center;
+            font-size: .875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: .5em;
+        }
+        
+        h2 {
+            margin-bottom: 1em;
+            text-align: center;
+        }
+
+        p {
+            color: #666666;
+            line-height: 1.6em;
+            text-align: center;
+            margin-bottom: 1.5em;
+        
+            &.small {
+                font-size: .75rem;
+                max-width: 360px;
+                margin: 0 auto 2em auto;
+            }
+        }
+
+        .row {
+            display: flex;
+
+            &:not(:last-child) {
+                margin-bottom: 1em;
+            }
+
+            > * {
+                flex: 1;
+
+                &:not(:last-child) {
+                    margin-right: 16px;
+                }
+            }
+
+            &.buttons {
+                margin-top: 2em;
+
+                > button {
+                    flex: 0 0 calc(50% - 8px);
+
+                    &:only-child {
+                        flex: 0 0 240px;
+                    }
+                }
+            }
+        }
+
+        .box {
+            // border: 1px solid #dddddd;
+            padding: 16px;
+            border-radius: 8px;
+            // box-shadow: 0 4px 8px rgba(0,0,0,.05);
+            background-color: #f6f3f3;
+
+
+            h4 {
+                text-align: center;
+                color: #666666;
+                margin-bottom: 1em;
+            }
+
+            .row {
+                > * {
+                    text-align: center;
+                }
+            }
+
+            span {
+                text-align: center;
+                display: block;
+                font-size: .75rem;
+                color: #666666;
+                margin-top: 1em;
+            }
+        }
+
+        .card {
+            position: relative;
+            width: 64px;
+            height: 88px;
+
+            svg {
+                width: 40px;
+            }
+        }
+
+        button {
+            margin-bottom: 0;
+
+            &.hidden {
+                visibility: hidden;
+            }
+
+            &.tertiary {
+                margin-top: 1.5em;
+            }
+
+            &.primary,
+            &.secondary {
+                transition: transform .2s ease, box-shadow .2s ease;
+
+                &:hover:not(:active) {
+                    transform: translateY(-2px);
+                }
+            }
+        }
+    }
+}

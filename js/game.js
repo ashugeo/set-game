@@ -1,7 +1,5 @@
-import ai from './ai.js';
-import deck from './deck.js';
-
 export default {
+    started: false,
     waiting: false, // Game paused?
     points: { // Points counter
         'bot': 0,

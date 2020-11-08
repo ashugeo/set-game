@@ -39,47 +39,8 @@ main {
             line-height: 1.6em;
             color: #666666;
             text-align: center;
-            max-width: 620px;
+            max-width: 680px;
             margin: 0 auto 2em auto;
-        }
-
-        button {
-            display: block;
-            margin: 0 auto;
-            border: none;
-            font-size: 1rem;
-            background: none;
-            cursor: pointer;
-
-            &:not(:last-child) {
-                margin-bottom: 1em;
-            }
-
-            &:focus {
-                outline: none;
-            }
-
-            &.primary {
-                color: white;
-                font-weight: bold;
-                letter-spacing: .05rem;
-                background: linear-gradient(hsl(300, 50%, 45%), var(--color-primary));
-                padding: 16px 40px;
-                border-radius: 8px;
-                box-shadow: 0 8px 16px rgba(0,0,0,.2);
-                text-shadow: 0 2px 2px rgba(0,0,0,.2);
-                transition: transform .2s ease, box-shadow .2s ease;
-
-                &:active {
-                    transform: none !important;
-                    box-shadow: 0 4px 8px rgba(0,0,0,.2);
-                }
-            }
-
-            &.secondary {
-                color: var(--color-primary);
-                font-weight: bold;
-            }
         }
 
         .modes {
@@ -141,7 +102,6 @@ main {
     
                     button {
                         transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
-                        user-select: none;
                         transform: translateZ(8px);
                     }
                 }

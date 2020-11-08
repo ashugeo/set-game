@@ -68,8 +68,13 @@ export default {
         });
 
         $(window).on('beforeunload', () => {
-            return false;
+            // return false;
         });
+
+        setTimeout(() => {
+            game.started = true;
+            $('button.main').removeAttr('disabled').html('Set<span>or press Space</span>');
+        }, 3000);
     },
 
     /**

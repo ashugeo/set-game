@@ -137,13 +137,15 @@ aside {
                     font-size: .725rem;
                     font-weight: normal;
                     letter-spacing: 0;
-                    opacity: .5;
+                    opacity: .7;
                 }
 
                 &:active,
                 &.active {
-                    transform: translateY(2px);
-                    box-shadow: 0 2px 8px rgba(0,0,0,.2);
+                    &:not(:disabled) {
+                        transform: translateY(2px);
+                        box-shadow: 0 2px 8px rgba(0,0,0,.2);
+                    }
                 }
 
                 &::before {
@@ -168,15 +170,9 @@ aside {
                 }
 
                 &:disabled {
-                    // background: linear-gradient(hsl(300, 0%, 100%), hsl(300, 0%, 90%));
-                    // background: white;
-                    // color: hsl(300, 70%, 40%);
                     text-shadow: none;
                     overflow: hidden;
-
-                    span {
-                        opacity: 1;
-                    }
+                    cursor: default;
 
                     &:not(.waiting) {
                         &::before {
@@ -195,6 +191,7 @@ aside {
 
                 &:disabled {
                     color: hsl(300, 0%, 85%);
+                    cursor: default;
                 }
             }
         }

@@ -2,6 +2,7 @@ import ai from './ai.js';
 import deck from './deck.js';
 import sound from './sound.js';
 import user from './user.js';
+import tutorial from './tutorial.js';
 
 $(document).ready(() => {
     sound.init();
@@ -18,6 +19,11 @@ $(document).on('click', '.controls .sound', () => {
         $('.fa-volume-off').removeClass('hidden');
         $('.fa-volume-up').addClass('hidden');
     }
+});
+
+$(document).on('click', '.controls .help', () => {
+    if ($('.tutorial').is(':not(.hidden)')) return;
+    tutorial.show();
 });
 
 $(document).one('click', '.modes .main', () => {
@@ -56,7 +62,11 @@ $(document).on('mouseleave', '.mode > div', e => {
 });
 
 function start() {
-    deck.init();
-    user.init();
-    ai.init();
+    if (false) {
+        deck.init();
+        user.init();
+        ai.init();
+    } else {
+        tutorial.init();
+    }
 }
