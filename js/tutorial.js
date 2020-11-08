@@ -9,7 +9,7 @@ export default {
         `<div class="content">
             <h3>Tutorial (1/4)</h3>
             <h2>Welcome to a game of Set!</h2>
-            <p>This game has 81 uniques cards, each with four different features: the color, shape, number and shading of the symbols they contain.</p>
+            <p>This game has 81 uniques cards, each with four different features: the color, shape, number and filling of the symbols they contain.</p>
 
             <div class="row">
                 <div class="box">
@@ -63,10 +63,10 @@ export default {
                         <div>
                             <div class="card c0 f0">
                                 <div class="card-inner">
-                                    <svg viewBox="0 0 12 8"><use xlink:href="#oval"></use></svg>
+                                    <svg viewBox="0 0 12 8"><use xlink:href="#pill"></use></svg>
                                 </div>
                             </div>
-                            <span>Oval</span>
+                            <span>Pill</span>
                         </div>
                     </div>
                 </div>
@@ -105,7 +105,7 @@ export default {
                     </div>
                 </div>
                 <div class="box">
-                    <h4>Shading</h4>
+                    <h4>Filling</h4>
                     <div class="row">
                         <div>
                             <div class="card c1 f0">
@@ -173,7 +173,7 @@ export default {
                             </div>
                         </div>
                     </div>
-                    <span>Same color, same shape,<br>same number, different shading.</span>
+                    <span>Same color, same shape,<br>same number, different filling.</span>
                 </div>
                 <div class="box">
                     <div class="row">
@@ -202,7 +202,7 @@ export default {
                             </div>
                         </div>
                     </div>
-                    <span>Different color, same shape,<br>different number, same shading.</span>
+                    <span>Different color, same shape,<br>different number, same filling.</span>
                 </div>
             </div>
             <div class="row">
@@ -211,29 +211,29 @@ export default {
                         <div>
                             <div class="card c2 f0">
                                 <div class="card-inner">
-                                    <svg viewBox="0 0 12 8"><use xlink:href="#oval"></use></svg>
-                                    <svg viewBox="0 0 12 8"><use xlink:href="#oval"></use></svg>
+                                    <svg viewBox="0 0 12 8"><use xlink:href="#pill"></use></svg>
+                                    <svg viewBox="0 0 12 8"><use xlink:href="#pill"></use></svg>
                                 </div>
                             </div>
                         </div>
                         <div>
                             <div class="card c0 f1">
                                 <div class="card-inner">
-                                    <svg viewBox="0 0 12 8"><use xlink:href="#oval"></use></svg>
-                                    <svg viewBox="0 0 12 8"><use xlink:href="#oval"></use></svg>
+                                    <svg viewBox="0 0 12 8"><use xlink:href="#pill"></use></svg>
+                                    <svg viewBox="0 0 12 8"><use xlink:href="#pill"></use></svg>
                                 </div>
                             </div>
                         </div>
                         <div>
                             <div class="card c1 f2">
                                 <div class="card-inner">
-                                    <svg viewBox="0 0 12 8"><use xlink:href="#oval"></use></svg>
-                                    <svg viewBox="0 0 12 8"><use xlink:href="#oval"></use></svg>
+                                    <svg viewBox="0 0 12 8"><use xlink:href="#pill"></use></svg>
+                                    <svg viewBox="0 0 12 8"><use xlink:href="#pill"></use></svg>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <span>Different color, different shape,<br>same number, different shading.</span>
+                    <span>Different color, different shape,<br>same number, different filling.</span>
                 </div>
                 <div class="box">
                     <div class="row">
@@ -262,7 +262,7 @@ export default {
                             </div>
                         </div>
                     </div>
-                    <span>Different color, same shape,<br>different number, different shading.</span>
+                    <span>Different color, same shape,<br>different number, different filling.</span>
                 </div>
             </div>
 
@@ -305,7 +305,7 @@ export default {
                             </div>
                         </div>
                     </div>
-                    <span>Different color, same shape and number, but two cards have the same shading.</span>
+                    <span>Different color, same shape and number, but two cards have the same filling.</span>
                 </div>
                 <div class="box">
                     <div class="row">
@@ -320,9 +320,9 @@ export default {
                         <div>
                             <div class="card c2 f1">
                                 <div class="card-inner">
-                                    <svg viewBox="0 0 12 8"><use xlink:href="#oval"></use></svg>
-                                    <svg viewBox="0 0 12 8"><use xlink:href="#oval"></use></svg>
-                                    <svg viewBox="0 0 12 8"><use xlink:href="#oval"></use></svg>
+                                    <svg viewBox="0 0 12 8"><use xlink:href="#pill"></use></svg>
+                                    <svg viewBox="0 0 12 8"><use xlink:href="#pill"></use></svg>
+                                    <svg viewBox="0 0 12 8"><use xlink:href="#pill"></use></svg>
                                 </div>
                             </div>
                         </div>
@@ -334,7 +334,7 @@ export default {
                             </div>
                         </div>
                     </div>
-                    <span>Different color and number, same shading, but two cards have the same shape.</span>
+                    <span>Different color and number, same filling, but two cards have the same shape.</span>
                 </div>
             </div>
 

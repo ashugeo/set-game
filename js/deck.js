@@ -105,7 +105,7 @@ export default {
 
         // Add symbol(s)
         for (let qty = 0; qty <= card.qty; qty += 1) {
-            const shape = ['tilde', 'diamond', 'oval'][card.shape];
+            const shape = ['tilde', 'diamond', 'pill'][card.shape];
             $inner.append(`<svg viewBox="0 0 12 8"><use xlink:href="#${shape}"></use></svg>`);
         }
 

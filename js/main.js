@@ -26,6 +26,10 @@ $(document).on('click', '.controls .help', () => {
     tutorial.show();
 });
 
+$(document).on('click', '.controls .see-about', () => {
+    $('.about').removeClass('hidden');
+});
+
 $(document).one('click', '.modes .main', () => {
     $('main').fadeOut(800);
     $('aside').addClass('visible');

@@ -25,7 +25,7 @@ export default {
             if (e.which === 32) $('button.main').removeClass('active');
         });
 
-        $(document).on('click', 'button.secondary', e => {
+        $(document).on('click', 'aside button.secondary', e => {
             // Stop bot
             clearTimeout(ai.solveTimeout);
             deck.show += 3;
