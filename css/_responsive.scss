@@ -1,3 +1,20 @@
+@media screen and (max-width: 1000px) {
+    .tutorial {
+        .content {
+            > .row {
+                &:not(.buttons) {
+                    display: block;
+
+                    > *:not(:last-child) {
+                        margin-right: 0;
+                        margin-bottom: 1em;
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media screen and (max-width: 900px) {
     body {
         font-size: 14px;
@@ -261,6 +278,10 @@
         .sets-wrapper {
             display: none;
         }
+    }
+
+    .tutorial {
+        padding-left: 0;
     }
 }
 

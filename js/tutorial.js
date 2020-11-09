@@ -368,14 +368,14 @@ export default {
                 this.start();
             } else {
                 const html = this.screens[++this.nth];
-                $('.tutorial').html(html);
+                $('.tutorial').html(html).scrollTop(0);
             }
         });
 
         // Previous button
         $(document).on('click', '.tutorial button.secondary', () => {
             const html = this.screens[--this.nth];
-            $('.tutorial').html(html);
+            $('.tutorial').html(html).scrollTop(0);
         });
 
         // Skip tutorial
@@ -394,7 +394,7 @@ export default {
 
         // First screen
         if ($('.tutorial').length) {
-            $('.tutorial').html(html);
+            $('.tutorial').html(html).scrollTop(0);
             $('.tutorial').removeClass('hidden');
         } else {
             $('body').append(`<div class="tutorial hidden">${html}</div>`);
