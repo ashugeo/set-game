@@ -6,6 +6,8 @@ import tutorial from './tutorial.js';
 
 $(document).ready(() => {
     sound.init();
+
+    if (location.href.includes('#about')) $('.about').removeClass('hidden');
 });
 
 $(document).on('click', '.controls .sound', () => {
@@ -28,7 +30,20 @@ $(document).on('click', '.controls .help', () => {
 
 $(document).on('click', '.controls .see-about', () => {
     $('.about').removeClass('hidden');
+    history.pushState(null, null, '#about');
 });
+
+$(document).on('click', '.about, .about button', () => {
+    $('.about').addClass('hidden');
+    history.pushState(null, null, '/');
+});
+
+$(document).on('keydown', e => {
+    if (e.which === 27) $('.about').addClass('hidden');
+    history.pushState(null, null, '/');
+});
+
+$(document).on('click', '.about .content', e => e.stopPropagation());
 
 $(document).one('click', '.modes .main', () => {
     $('main').fadeOut(500);
@@ -74,17 +89,6 @@ $(document).on('mouseleave', '.mode > div', e => {
 $(document).on('click', 'aside', e => {
     $(e.currentTarget).toggleClass('open');
 });
-
-$(document).on('click', '.about, .about button', () => {
-    $('.about').addClass('hidden');
-});
-
-$(document).on('keydown', e => {
-    if (e.which === 27) $('.about').addClass('hidden');
-});
-
-$(document).on('click', '.about .content', e => e.stopPropagation());
-
 
 function start() {
     tutorial.init();
