@@ -144,7 +144,7 @@ export default {
         `<div class="content">
             <h3>Tutorial (2/4)</h3>
             <h2>Find as many Sets as you can</h2>
-            <p>A Set is 3 cards where each individual feature is either all the same, or all different. Whenever you find one, click on the "Set" button, then select the 3 cards. The player with the most Sets at the end wins!</p>
+            <p>A Set is 3 cards where each individual feature is either all the same, or all different. Whenever you find one, click on the "Set" button, then collect the 3 cards. The player with the most Sets at the end wins!</p>
 
             <p>Here are a few examples of a Set.</p>
 
@@ -350,7 +350,7 @@ export default {
             <h2>Ready?</h2>
             <p>That's it, you know the rules! The game starts with 12 cards. There is a small chance* that no Set exists on the board, in which case you'll be able to request 3 additional cards after a little while.</p>
 
-            <p>The AI has three difficulty levels: the harder, the faster it is!<br><strong>If you are ready, click on Start and play against the computer!</strong></p>
+            <p>The AI has three difficulty levels: the harder, the faster it goes!<br><strong>If you are ready, click on Start and play against the computer!</strong></p>
 
             <p class="small">* There's about a 3% chance that no Set exists within 12 cards, and it gets down to a 0.04% chance within 15 cards.</p>
 
