@@ -283,6 +283,18 @@
     .controls {
         top: 16px;
         right: 24px;
+
+        i {
+            font-size: 1.2em;
+        }
+
+        .sound {
+            i {
+                &.fa-volume-off {
+                    margin-right: 11px;
+                }
+            }
+        }
     }
 
     main {

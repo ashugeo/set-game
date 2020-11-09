@@ -75,6 +75,17 @@ $(document).on('click', 'aside', e => {
     $(e.currentTarget).toggleClass('open');
 });
 
+$(document).on('click', '.about, .about button', () => {
+    $('.about').addClass('hidden');
+});
+
+$(document).on('keydown', e => {
+    if (e.which === 27) $('.about').addClass('hidden');
+});
+
+$(document).on('click', '.about .content', e => e.stopPropagation());
+
+
 function start() {
     tutorial.init();
 

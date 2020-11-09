@@ -9,7 +9,8 @@
 html, body {
     height: 100%;
     width: 100%;
-    // overflow: hidden;
+    position: fixed;
+    overflow: hidden;
 }
 
 body {
@@ -56,6 +57,11 @@ h1 {
         background-color: white;
         box-shadow: 0 4px 8px rgba(0,0,0,.05);
     }
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-primary);
 }
 
 button {
@@ -162,18 +168,23 @@ button {
     width: 100%;
     height: 100%;
     z-index: 300;
-    background-color: rgba(0,0,0,.2);
+    background-color: rgba(0,0,0,.3);
     transition: opacity .3s ease;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 16px 0;
+    overflow: auto;
+    touch-action: auto;
+
+    * {
+        touch-action: auto;
+    }
 
     &.hidden {
         opacity: 0;
         pointer-events: none;
 
         .content {
-            transform: none;
+            transform: translateY(40px);
         }
     }
 
@@ -182,20 +193,35 @@ button {
         padding: 32px;
         border-radius: 8px;
         box-shadow: 0 8px 16px rgba(0,0,0,.1);
-        transform: translateY(-40px);
         transition: transform .5s ease;
-        max-width: 600px;
+        width: 800px;
+        max-width: calc(100% - 32px);
         text-align: center;
+        margin: auto;
+
+        h1 {
+            margin-bottom: 1em;
+        }
 
         h2 {
             font-size: 1.25rem;
             font-weight: bold;
-            margin-bottom: 1em;
+            margin-bottom: 1.5em;
         }
 
         p {
             color: #666666;
             line-height: 1.6em;
+            max-width: 680px;
+            margin: 0 auto 1.5em auto;
+
+            &.small {
+                font-size: .75rem;
+            }
+        }
+
+        button {
+            margin-top: 2em;
         }
     }
 }
