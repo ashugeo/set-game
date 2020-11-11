@@ -93,53 +93,53 @@ main {
     }
 
     &.c0 {
-        color: red;
+        color: var(--color-0);
 
         &.f0 svg {
-            fill: red;
+            fill: var(--color-0);
         }
 
         &.f1 svg {
-            stroke: red;
+            stroke: var(--color-0);
         }
 
         &.f2 svg {
-            stroke: red;
-            fill: url(#stripes-red);
+            stroke: var(--color-0);
+            fill: url(#stripes-c0);
         }
     }
 
     &.c1 {
-        color: purple;
+        color: var(--color-1);
 
         &.f0 svg {
-            fill: purple;
+            fill: var(--color-1);
         }
 
         &.f1 svg {
-            stroke: purple;
+            stroke: var(--color-1);
         }
 
         &.f2 svg {
-            stroke: purple;
-            fill: url(#stripes-purple);
+            stroke: var(--color-1);
+            fill: url(#stripes-c1);
         }
     }
 
     &.c2 {
-        color: green;
+        color: var(--color-2);
 
         &.f0 svg {
-            fill: green;
+            fill: var(--color-2);
         }
 
         &.f1 svg {
-            stroke: green;
+            stroke: var(--color-2);
         }
 
         &.f2 svg {
-            stroke: green;
-            fill: url(#stripes-green);
+            stroke: var(--color-2);
+            fill: url(#stripes-c2);
         }
     }
 
