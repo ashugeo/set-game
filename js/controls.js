@@ -1,3 +1,6 @@
+import sound from './sound.js';
+import tutorial from './tutorial.js';
+
 export default {
     init() {
         $(document).on('click', '.controls .sound', () => {
