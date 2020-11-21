@@ -49,6 +49,8 @@ export default {
             $('.palettes li.selected').removeClass('selected');
             $(e.currentTarget).addClass('selected');
 
+            localStorage.setItem('palette', $(e.currentTarget).index());
+
             let colors;
             if ($(e.currentTarget).hasClass('custom')) {
                 $('.palettes div.custom').removeClass('hidden');
@@ -67,6 +69,7 @@ export default {
         });
 
         this.getCustomColors();
+        this.getPalette();
     },
 
     setCustomColors(colors, updateCustom = false) {
@@ -79,11 +82,23 @@ export default {
         document.documentElement.style.setProperty('--color-1', colors[1]);
         document.documentElement.style.setProperty('--color-2', colors[2]);
 
-        localStorage.setItem('colors', colors.join(','));
+        localStorage.setItem('colors', colors.join('|'));
     },
 
     getCustomColors() {
         const colors = localStorage.getItem('colors');
-        if (colors) this.setCustomColors(colors.split(','), true);
+        if (colors) this.setCustomColors(colors.split('|'), true);
+    },
+
+    getPalette() {
+        const palette = localStorage.getItem('palette');
+        if (!palette) return;
+
+        const $palette = $('.palettes ul li').eq(parseInt(palette));
+        $('.palettes li.selected').removeClass('selected');
+        $palette.addClass('selected');
+
+        const colors = $palette.find('div').toArray().map(d => $(d).css('background-color'));
+        this.setCustomColors(colors);
     }
 }
