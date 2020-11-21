@@ -19,7 +19,14 @@ $(document).one('click', '.modes .main', () => {
     $('aside').addClass('visible');
 
     setTimeout(() => {
-        $('main').empty().show();
+        const html = `<div class="pause">
+            <div class="content">
+                <h2>Game paused</h2>
+                <button class="primary">Resume</button>
+            </div>
+        </div>`;
+
+        $('main').empty().html(html).show();
 
         start();
     }, 1200);

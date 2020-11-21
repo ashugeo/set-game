@@ -36,6 +36,43 @@ main {
             }
         }
     }
+
+    .pause {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0,0,0,.5);
+        z-index: 10;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .3s ease;
+
+        .content {
+            h2 {
+                text-align: center;
+                margin-bottom: 1em;
+                color: white;
+                text-shadow: 0 4px 4px rgba(0,0,0,.05);
+            }
+        }
+    }
+
+    &.paused {
+        .pause {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .card {
+            opacity: 0;
+            pointer-events: none;
+        }
+    }
 }
 
 .card {

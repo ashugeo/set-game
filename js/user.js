@@ -76,6 +76,14 @@ export default {
             return false;
         });
 
+        $(document).on('visibilitychange', () => {
+            if (document.hidden) game.pause();
+        });
+
+        $(document).on('click', '.pause button', () => {
+            game.resume();
+        });
+
         setTimeout(() => {
             game.started = true;
             $('button.main').removeAttr('disabled').html('Set<span>or press Space</span>');
