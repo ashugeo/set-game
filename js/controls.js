@@ -22,6 +22,7 @@ export default {
         });
         
         $(document).on('click', '.controls .see-about', () => {
+            $('.palettes').addClass('hidden');
             $('.about').removeClass('hidden');
             history.pushState(null, null, '#about');
         });
