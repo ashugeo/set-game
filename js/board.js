@@ -41,13 +41,8 @@ export default {
                     this.reorganizeCards();
                 }
 
-                setTimeout(() => {
-                    // User can play again
-                    $('button.main').html('Set<span>or press Space</span>').removeAttr('disabled').removeClass('waiting');
-
-                    // Launch bot tests again
-                    ai.init();
-                }, game.delay['restart']);
+                setTimeout(() => game.unfreeze(), game.delay['resume']);
+                
             }, game.delay['add-cards']);
         }, game.delay[`show-${winner}-set`]);
     },

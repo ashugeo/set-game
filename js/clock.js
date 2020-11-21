@@ -16,12 +16,8 @@ export default {
                 // Unselect
                 $('.card.selected').removeClass('selected');
                 
-                // User can play again
-                $('button.main').html('Set<span>or press Space</span>').removeAttr('disabled').removeClass('waiting');
-
-                // Launch bot tests again
-                ai.init();
-            }, game.delay['restart']);
+                game.unfreeze();
+            }, game.delay['resume']);
         } else {
             // Display seconds remaining
             $('button.main .count').html(t);

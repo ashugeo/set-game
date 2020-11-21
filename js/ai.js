@@ -9,14 +9,7 @@ export default {
     foundSet: false, // Set found?
 
     init() {
-        game.waiting = false;
-        this.test = 0;
-        this.foundSet = false;
-
-        // Launch bot
-        setTimeout(() => {
-            if (!game.waiting) this.solve();
-        }, game.delay['start-bot']);
+        this.resume();
     },
 
     solve() {
@@ -60,6 +53,22 @@ export default {
 
         // This test didn't work, launch a new one
         if (!this.foundSet) this.solveTimeout = setTimeout(() => this.solve(), this.speed);
+    },
+
+    // Pause AI
+    pause() {
+        clearTimeout(this.solveTimeout);
+    },
+
+    // Resume AI
+    resume() {
+        this.test = 0;
+        this.foundSet = false;
+
+        // Launch bot
+        setTimeout(() => {
+            if (!game.waiting) this.solve();
+        }, game.delay['start-bot']);
     },
 
     /**

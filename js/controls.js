@@ -1,3 +1,4 @@
+import game from './game.js';
 import sound from './sound.js';
 import toast from './toast.js';
 import tutorial from './tutorial.js';
@@ -26,6 +27,8 @@ export default {
             $('.palettes').addClass('hidden');
             $('.about').removeClass('hidden');
             history.pushState(null, null, '#about');
+
+            game.pause();
         });
         
         $(document).on('click', '.about, .about button', () => {
@@ -44,6 +47,8 @@ export default {
 
         $(document).on('click', '.see-palettes', () => {
             $('.palettes').toggleClass('hidden');
+            game.pause();
+            return false;
         });
 
         $(document).on('click', '.palettes li', e => {

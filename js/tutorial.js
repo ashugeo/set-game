@@ -386,8 +386,7 @@ export default {
 
     show() {
         // Pause game
-        clearTimeout(ai.solveTimeout);
-        game.waiting = true;
+        game.pause();
 
         this.nth = 0;
         const html = this.screens[this.nth];
