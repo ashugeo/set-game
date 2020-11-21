@@ -32,8 +32,10 @@ export default {
         });
         
         $(document).on('keydown', e => {
-            if (e.which === 27) $('.about').addClass('hidden');
-            history.pushState(null, null, '/');
+            if (e.which === 27) {
+                $('.about').addClass('hidden');
+                history.pushState(null, null, '/');
+            }
         });
         
         $(document).on('click', '.about .content', e => e.stopPropagation());
