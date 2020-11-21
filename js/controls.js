@@ -1,4 +1,5 @@
 import sound from './sound.js';
+import toast from './toast.js';
 import tutorial from './tutorial.js';
 
 export default {
@@ -68,8 +69,43 @@ export default {
             this.setCustomColors(colors, true);
         });
 
+        $(document).on('click', '.palettes .reset', () => {
+            const colors = ['#cccccc', '#cccccc', '#cccccc'];
+            this.setCustomColors(colors, true);
+        });
+
+        $(document).on('click', '.palettes .share', () => {
+            const url = `${location.href}#palette=${localStorage.getItem('colors').replace(/[\#\|]/g, '')}`;
+
+            navigator.clipboard.writeText(url).then(() => {
+                const html = `<p><strong>Link to palette copied in clipboard!</strong></p>
+                <p class="small">Paste it anywhere to share it with friends</p>`;
+                const icon = 'far fa-clipboard';
+                toast.show('palette', html, icon);
+            });
+        });
+
         this.getCustomColors();
         this.getPalette();
+
+        if (location.hash.includes('#palette')) {
+            const colors = location.hash.split('#palette=')[1].split('&')[0].match(/.{6}/g).map(d => `#${d}`);
+            if (colors.length === 3 && colors.every(d => d.match(/^#[a-f0-9]{6}$/i) !== null)) {
+                this.setCustomColors(colors, true);
+
+                const html = `<p><strong>Palette successfully loaded!</strong></p>
+                <p class="small">Wow, shiny colors! ${colors.map(d => `<span class="color" style="background-color: ${d}"></span>`).join('')}</p>`;
+                const icon = 'fas fa-palette';
+                toast.show(null, html, icon);
+            } else {
+                const html = `<p><strong>Couldn't load palette</strong></p>
+                <p class="small">Something was wrong with these colors codes</p>`;
+                const icon = 'fas fa-times';
+                toast.show(null, html, icon);
+            }
+
+            history.pushState(null, null, '/');
+        }
     },
 
     setCustomColors(colors, updateCustom = false) {

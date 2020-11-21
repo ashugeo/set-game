@@ -145,4 +145,26 @@
             }
         }
     }
+
+    .buttons {
+        margin-top: 1.5em;
+
+        button {
+            font-size: .875rem;
+            color: #999999;
+
+            &:hover {
+                color: var(--color-primary);
+            }
+
+            i {
+                font-size: .75rem;
+                margin-right: 8px;
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 0;
+            }
+        }
+    }
 }
