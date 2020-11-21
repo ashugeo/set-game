@@ -243,6 +243,7 @@ button {
         padding: 8px 16px;
         font-size: .875rem;
         width: 360px;
+        max-width: calc(100vw - 32px);
         transition: transform .2s ease, margin .2s ease;
 
         &.hidden {
