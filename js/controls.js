@@ -51,6 +51,14 @@ export default {
             return false;
         });
 
+        $(document).on('click', () => {
+            $('.palettes').addClass('hidden');
+        });
+
+        $(document).on('click', '.palettes', e => {
+            e.stopPropagation();
+        });
+
         $(document).on('click', '.palettes li', e => {
             $('.palettes li.selected').removeClass('selected');
             $(e.currentTarget).addClass('selected');
