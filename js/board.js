@@ -21,6 +21,11 @@ export default {
             // Move set away
             this.moveSetAway(set, winner);
 
+            for (let id of set) {
+                // Remove card from currently-displayed array
+                deck.removeCurrentByID(id);
+            }
+
             // Increment points
             game.updatePoints(1, winner);
 
@@ -65,17 +70,9 @@ export default {
     moveSetAway(set, winner) {
         deck.show -= 3;
 
-        let delay = 0;
-
-        for (let id of set) {
-            setTimeout(() => {
-                // Remove card from currently-displayed array
-                deck.removeCurrentByID(id);
-
-                // Move card away
-                this.moveCardAway(id, winner);
-            }, delay * 200);
-            delay += 1;
+        for (let [i, id] of set.entries()) {
+            // Move card away
+            setTimeout(() => this.moveCardAway(id, winner), i * 200);
         }
     },
 
