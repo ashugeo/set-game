@@ -73,7 +73,7 @@ export default {
         });
 
         $(window).on('beforeunload', () => {
-            return false;
+            if (game.started) return false;
         });
 
         $(document).on('visibilitychange', () => {

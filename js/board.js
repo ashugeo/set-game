@@ -29,6 +29,11 @@ export default {
             // Increment points
             game.updatePoints(1, winner);
 
+            if (ai.findValidSets().length === 0 && deck.stock.length === 0) {
+                setTimeout(() => game.end(), game.delay['add-cards']);
+                return;
+            }
+
             setTimeout(() => {
                 $('main').removeClass('waiting');
 

@@ -28,7 +28,7 @@ export default {
             $('.about').removeClass('hidden');
             history.pushState(null, null, '#about');
 
-            game.pause();
+            if (game.started) game.pause();
         });
         
         $(document).on('click', '.about, .about button', () => {
@@ -47,7 +47,7 @@ export default {
 
         $(document).on('click', '.see-palettes', () => {
             $('.palettes').toggleClass('hidden');
-            game.pause();
+            if (game.started) game.pause();
             return false;
         });
 

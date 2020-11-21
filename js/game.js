@@ -1,8 +1,17 @@
 import ai from './ai.js';
+import sound from './sound.js';
 
 export default {
     started: false,
     waiting: false, // Game paused?
+    sets: { // Set counter
+        'bot': 0,
+        'user': 0,
+    },
+    errors: { // Errors counter
+        'bot': 0,
+        'user': 0,  
+    },
     points: { // Points counter
         'bot': 0,
         'user': 0
@@ -19,13 +28,12 @@ export default {
     updatePoints(point, to) {
         if (point === 1) {
             // Add a point
+            this.sets[to] += 1;
             this.points[to] += 1;
         } else if (point === -1 && this.points[to] !== 0) {
             // Withdraw a point (if not already at 0)
             this.points[to] -= 1;
-
-            // Take upper set away
-            // moveSetAway([], 'none')
+            this.errors[to] += 1;
         }
 
         // Update text
@@ -43,7 +51,6 @@ export default {
         $('main').removeClass('paused');
         
         this.unfreeze();
-        ai.resume();
     },
 
     unfreeze() {
@@ -51,5 +58,86 @@ export default {
 
         // User can play again
         $('button.main').html('Set<span>or press Space</span>').removeAttr('disabled').removeClass('waiting');
-    } 
+
+        ai.resume();
+    },
+
+    end() {
+        this.started = false;
+        
+        const won = this.points.user > this.points.bot;
+
+        const html = `<div class="end hidden">
+            <div class="content">
+                <h3>Game ended</h3>
+                <h2 class="hidden">${won ? 'Well done!' : 'Maybe next time'}</h2>
+
+                <div class="row">
+                    <div>
+                        <span class="icon hidden">${won ? '' : '<i class="fas fa-crown"></i>'}</span>
+                        <h4>Bot score</h4>
+                        <h1 class="bot" data-to="${this.points.bot}">·</h1>
+                        <p>Sets found: ${this.sets.bot}</p>
+                    </div>
+
+                    <div>
+                        <span class="icon hidden">${won ? '<i class="fas fa-crown"></i>' : ''}</span>
+                        <h4>Your score</h4>
+                        <h1 class="user" data-to="${this.points.user}">·</h1>
+
+                        <p>Sets found: <span class="${this.sets.user ? 'valid' : 'error'}">${this.sets.user}</span></p>
+                        <p>Errors: <span class="${this.errors.user ? 'error' : 'valid'}">${this.errors.user ? `-${this.errors.user}` : this.errors.user}</span></p>
+                    </div>
+                </div>
+
+                <button class="primary hidden">Play again</button>
+                <a href="/"><button class="tertiary hidden">Back to homepage</button></a>
+            </div>
+        </div>`;
+
+        const frameDuration = 1000 / 60;
+        const totalFrames = Math.round(2000 / (1000 / 60));
+
+        const easeOutQuad = t => t * ( 2 - t );
+
+        const count = el => {
+            let frame = 0;
+            const countTo = parseInt($(el).attr('data-to'), 10);
+            const counter = setInterval(() => {
+                frame++;
+                const progress = easeOutQuad(frame / totalFrames);
+                const currentCount = Math.round( countTo * progress );
+
+                if (parseInt(el.innerHTML, 10) !== currentCount) {
+                    sound.play('click');
+                    el.innerHTML = currentCount;
+                }
+
+                if (frame === totalFrames) clearInterval(counter);
+            }, frameDuration );
+        };
+
+        const $end = $(html);
+        $('main').append($end);
+        
+        setTimeout(() => {
+            $end.removeClass('hidden');
+
+            setTimeout(() => {
+                count($('h1.bot')[0]);
+                
+                setTimeout(() => {
+                    count($('h1.user')[0]);
+
+                    setTimeout(() => {
+                        if (won) sound.play('4');
+                        else sound.play('3');
+
+                        $('.end h2, .end .icon').removeClass('hidden');
+                        setTimeout(() => $('.end button').removeClass('hidden'), 1000);
+                    }, 2500);
+                }, 2000);
+            }, 1000);
+        }, 100);
+    }
 }
