@@ -19,8 +19,8 @@ export default {
         this.test += 1;
         // console.log(`test ${this.test}`);
 
-        // After 20 unsuccessful loops, suggest user to add 3 cards
-        if (this.test === 20) $('button.secondary').removeAttr('disabled');
+        // After 20 unsuccessful loops, suggest user to add 3 cards (if there are some left in stock)
+        if (this.test === 20 && deck.stock.length) $('button.secondary').removeAttr('disabled');
 
         // Pick two cards at random
         const firstCard = deck.shown[Math.floor(Math.random() * deck.shown.length)];
