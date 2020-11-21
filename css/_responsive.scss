@@ -141,6 +141,11 @@
 @media screen and (max-width: 750px) {
     main {
         height: calc(100% - 184px);
+
+        .pause {
+            height: 100vh;
+            padding-bottom: 240px;
+        }
     }
 
     aside {
