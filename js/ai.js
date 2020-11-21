@@ -13,7 +13,7 @@ export default {
         this.test = 0;
         this.foundSet = false;
 
-        // Launch bot after 2 seconds
+        // Launch bot
         setTimeout(() => {
             if (!game.waiting) this.solve();
         }, game.delay['start-bot']);
