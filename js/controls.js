@@ -58,19 +58,32 @@ export default {
                 colors = $(e.currentTarget).find('div').toArray().map(d => $(d).css('background-color'));
             }
 
-            document.documentElement.style.setProperty('--color-0', colors[0]);
-            document.documentElement.style.setProperty('--color-1', colors[1]);
-            document.documentElement.style.setProperty('--color-2', colors[2]);
+            this.setCustomColors(colors, $(e.currentTarget).hasClass('custom'));
         });
 
         $(document).on('input', '.palettes input[type="color"]', () => {
             const colors = $('.palettes input[type="color"]').toArray().map(d => $(d).val());
-
-            $('.palettes li.custom div').each((i, el) => $(el).css('background-color', colors[i]));
-
-            document.documentElement.style.setProperty('--color-0', colors[0]);
-            document.documentElement.style.setProperty('--color-1', colors[1]);
-            document.documentElement.style.setProperty('--color-2', colors[2]);
+            this.setCustomColors(colors, true);
         });
+
+        this.getCustomColors();
+    },
+
+    setCustomColors(colors, updateCustom = false) {
+        if (updateCustom) {
+            $('.palettes li.custom div').each((i, el) => $(el).css('background-color', colors[i]));
+            $('.palettes input[type="color"]').each((i, el) => $(el).val(colors[i]));
+        }
+
+        document.documentElement.style.setProperty('--color-0', colors[0]);
+        document.documentElement.style.setProperty('--color-1', colors[1]);
+        document.documentElement.style.setProperty('--color-2', colors[2]);
+
+        localStorage.setItem('colors', colors.join(','));
+    },
+
+    getCustomColors() {
+        const colors = localStorage.getItem('colors');
+        if (colors) this.setCustomColors(colors.split(','), true);
     }
 }
