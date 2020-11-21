@@ -76,13 +76,12 @@ export default {
         if (updateCustom) {
             $('.palettes li.custom div').each((i, el) => $(el).css('background-color', colors[i]));
             $('.palettes input[type="color"]').each((i, el) => $(el).val(colors[i]));
+            localStorage.setItem('colors', colors.join('|'));
         }
 
-        document.documentElement.style.setProperty('--color-0', colors[0]);
-        document.documentElement.style.setProperty('--color-1', colors[1]);
-        document.documentElement.style.setProperty('--color-2', colors[2]);
-
-        localStorage.setItem('colors', colors.join('|'));
+        for (const [i, color] of colors.entries()) {
+            document.documentElement.style.setProperty(`--color-${i}`, color);
+        }
     },
 
     getCustomColors() {
@@ -97,6 +96,7 @@ export default {
         const $palette = $('.palettes ul li').eq(parseInt(palette));
         $('.palettes li.selected').removeClass('selected');
         $palette.addClass('selected');
+        if ($palette.hasClass('custom')) $('.palettes div.custom').removeClass('hidden');
 
         const colors = $palette.find('div').toArray().map(d => $(d).css('background-color'));
         this.setCustomColors(colors);
