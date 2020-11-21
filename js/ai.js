@@ -102,5 +102,23 @@ export default {
         }
 
         return target;
+    },
+
+    findValidSets() {
+        const sets = [];
+        const shown = deck.shown;
+        
+        for (let i = 0; i < deck.shown.length - 2; i += 1) {
+            for (let j = i + 1; j < deck.shown.length; j += 1) {
+                const third = this.findThird(shown[i], shown[j]);
+                const thirdID = deck.findCardID(third);
+                if (shown.some(d => d.id === thirdID)) {
+                    const set = [shown[i].id, shown[j].id, thirdID].sort((a, b) => a < b ? -1 : 1);
+                    if (!sets.some(d => JSON.stringify(d) === JSON.stringify(set))) sets.push(set);
+                }
+            }
+        }
+
+        return sets;
     }
 }
