@@ -343,9 +343,16 @@
         top: 76px;
     }
 
+    aside.visible {
+        ~ main {
+            height: calc(100% - 168px);
+        }
+    }
+
     main {
         top: 64px;
-        height: calc(100% - 168px);
+        height: 100%;
+        transition: height .2s ease 1s;
 
         section {
             max-width: calc(100% - 48px);
@@ -373,6 +380,10 @@
                     }
                 }
             }
+        }
+
+        .end {
+            height: calc(100% - 168px);
         }
     }
 }
