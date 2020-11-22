@@ -1,9 +1,13 @@
 import ai from './ai.js';
+import board from './board.js';
+import deck from './deck.js';
 import sound from './sound.js';
+import tutorial from './tutorial.js';
+import user from './user.js';
 
 export default {
     started: false,
-    waiting: false, // Game paused?
+    waiting: true, // Game paused?
     sets: { // Set counter
         'bot': 0,
         'user': 0,
@@ -23,6 +27,54 @@ export default {
         'show-user-set': 2000,
         'show-user-fail': 3000,
         'start-bot': 5000
+    },
+
+    init() {
+        this.started = false;
+        this.waiting = true;
+        this.sets = {
+            'bot': 0,
+            'user': 0,
+        };
+        this.errors = {
+            'bot': 0,
+            'user': 0,  
+        };
+        this.points = {
+            'bot': 0,
+            'user': 0
+        };
+
+        tutorial.init();
+    
+        if (localStorage.getItem('tutorial') === 'false') {
+            this.start();
+        } else {
+            setTimeout(() => tutorial.show(), 1000);
+        }
+    },
+
+    start() {
+        $('.controls .help').removeClass('hidden');
+        deck.init();
+        user.init();
+        ai.init();
+
+        setTimeout(() => {
+            this.started = true;
+            this.waiting = false;
+            $('button.main').removeAttr('disabled');
+        }, 3000);
+    },
+
+    reset() {
+        $('.end').addClass('hidden');
+        $('aside').addClass('visible');
+
+        setTimeout(() => {
+            $('.end').remove();
+            setTimeout(() => this.init(), 1000);
+        }, 500);
     },
 
     updatePoints(point, to) {
@@ -64,6 +116,15 @@ export default {
 
     end() {
         this.started = false;
+
+        $('aside').removeClass('visible');
+        $('main .card').fadeOut(1000, () => $('main .card').remove());
+
+        setTimeout(() => {
+            $('aside .score').html('No set yet');
+            $('aside .sets-wrapper').empty();
+            $('aside button.main').html('Set<span>or press Space</span>');
+        }, 2000);
         
         const won = this.points.user > this.points.bot;
 
@@ -120,6 +181,8 @@ export default {
         const $end = $(html);
         $('main').append($end);
         
+        $(document).one('click', '.end button.primary', () => this.reset());
+        
         setTimeout(() => {
             $end.removeClass('hidden');
 
@@ -138,6 +201,6 @@ export default {
                     }, 2500);
                 }, 2000);
             }, 1000);
-        }, 100);
+        }, 2000);
     }
 }

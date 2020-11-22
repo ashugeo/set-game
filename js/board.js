@@ -5,6 +5,10 @@ import game from './game.js';
 export default {
     zIndex: 10, // z-index of a card
 
+    init() {
+        this.zIndex = 10;
+    },
+
     /**
      * Display valid set, then move it away and update points
      * @param  {array}  set    IDs of 3 cards

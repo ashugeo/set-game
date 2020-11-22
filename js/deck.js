@@ -4,11 +4,16 @@ import user from './user.js';
 export default {
     cards: [], // All 81 cards
     stock: [], // Cards not dealt yet
-    show: 12,  // Number of cards to be shown on the board
     shown: [], // Cards currently on the board
+    show: 12,  // Number of cards to be shown on the board
     p: 0, // Position of the cards on the table
 
     init() {
+        this.cards = [];
+        this.shown = [];
+        this.show = 12;
+        this.p = 0;
+
         // Generate all 81 cards
         let id = 0;
         for (let shape = 0; shape < 3; shape += 1) {

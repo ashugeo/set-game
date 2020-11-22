@@ -8,11 +8,15 @@ import sound from './sound.js';
 export default {
     init() {
         $(document).on('click', 'button.main', () => {
+            if (game.waiting) return;
+
             this.userSet();
             return false;
         });
 
         $(document).on('keydown', e => {
+            if (game.waiting) return;
+
             // User pressed space bar, same as clicking "Set" button
             if (e.which === 32) {
                 // Prevent space bar from firing a focused button
@@ -83,11 +87,6 @@ export default {
         $(document).on('click', '.pause button', () => {
             game.resume();
         });
-
-        setTimeout(() => {
-            game.started = true;
-            $('button.main').removeAttr('disabled').html('Set<span>or press Space</span>');
-        }, 3000);
     },
 
     /**
@@ -163,6 +162,8 @@ export default {
                 setTimeout(() => {
                     // Unselect
                     $('.card.selected').removeClass('selected');
+                    
+                    game.waiting = false;
                     
                     // User can play again
                     $('button.main').html('Set<span>or press Space</span>').removeAttr('disabled').removeClass('waiting');

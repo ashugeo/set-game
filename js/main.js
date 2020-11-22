@@ -1,10 +1,7 @@
-import ai from './ai.js';
 import controls from './controls.js';
-import deck from './deck.js';
+import game from './game.js';
 import sound from './sound.js';
-import tutorial from './tutorial.js';
 import ui from './ui.js';
-import user from './user.js';
 
 $(document).ready(() => {
     controls.init();
@@ -28,19 +25,6 @@ $(document).one('click', '.modes .main', () => {
 
         $('main').empty().html(html).show();
 
-        start();
+        game.init();
     }, 1200);
 });
-
-function start() {
-    tutorial.init();
-
-    if (localStorage.getItem('tutorial') === 'false') {
-        $('.controls .help').removeClass('hidden');
-        deck.init();
-        user.init();
-        ai.init();
-    } else {
-        setTimeout(() => tutorial.show(), 1000);
-    }
-}
