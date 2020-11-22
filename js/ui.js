@@ -1,16 +1,18 @@
 export default {
     init() {
+        const isTouchScreen = window.matchMedia('(pointer: coarse)').matches;
+
         $(document).on('mouseenter', '.mode > div', e => {
-            if (e.originalEvent.sourceCapabilities.firesTouchEvents) return;
-        
+            if (isTouchScreen) return;
+
             const $el = $(e.currentTarget);
             setTimeout(() => $el.css('transition', 'none'), 100);
             $el.parent('.mode').css('transform', 'translateZ(0) scale(1.03)');
         });
         
         $(document).on('mousemove', '.mode > div', e => {
-            if (e.originalEvent.sourceCapabilities.firesTouchEvents) return;
-        
+            if (isTouchScreen) return;
+
             const $el = $(e.currentTarget);
         
             var ax = (e.pageX - $el.offset().left - $el.outerWidth() / 2) / 20;
@@ -20,8 +22,8 @@ export default {
         });
         
         $(document).on('mouseleave', '.mode > div', e => {
-            if (e.originalEvent.sourceCapabilities.firesTouchEvents) return;
-        
+            if (isTouchScreen) return;
+
             const $el = $(e.currentTarget);
             $el.parent('.mode').css('transform', '');
             $el.css({
