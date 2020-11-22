@@ -120,9 +120,11 @@ export default {
     clickCard($div) {
         if ($('main').is(':not(.waiting)')) return;
 
+        if ($('.card.selected').length === 3) return;
+
         // Toggle selected class to this card
         $div.toggleClass('selected');
-        const selected = $('.card.selected').length
+        const selected = $('.card.selected').length;
 
         if (selected === 1) {
             sound.play('1');
