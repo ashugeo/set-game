@@ -161,6 +161,7 @@
         display: flex;
         flex-flow: row wrap;
         transition: transform .3s ease 1s, bottom .3s ease-in-out;
+        z-index: 100;
 
         &.open {
             bottom: 0;
@@ -280,7 +281,9 @@
         }
 
         .sets-wrapper {
-            display: none;
+            width: 0 !important;
+            height: 0 !important;
+            margin: 0 !important;
         }
     }
 
@@ -459,7 +462,9 @@
         .bot,
         .user {
             .sets-wrapper {
-                display: none;
+                width: 0 !important;
+                height: 0 !important;
+                margin: 0 !important;
             }
         }
     }
