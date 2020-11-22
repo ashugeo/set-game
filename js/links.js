@@ -1,9 +1,13 @@
-const isDev = true;
+const isDev = location.hostname === '127.0.0.1' || location.hostname === 'localhost';
 
 // Page title
-const title = document.createElement('title');
-title.innerHTML = `Set Game${isDev ? ' · dev' : ''}`;
-document.head.appendChild(title);
+if (isDev) {
+    document.head.removeChild(document.head.getElementsByTagName('title')[0]);
+
+    const title = document.createElement('title');
+    title.innerHTML = 'Set Game · dev';
+    document.head.appendChild(title);
+}
 
 // Manifest
 const manifest = document.createElement('link');
