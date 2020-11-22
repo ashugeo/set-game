@@ -17,6 +17,7 @@ export default {
     validSet(set, winner) {
         // Disable add-three-button
         $('button.secondary').attr('disabled', true);
+        $('aside').removeClass('openable');
 
         // Display valid set
         this.showValidSet(set);

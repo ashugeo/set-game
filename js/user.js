@@ -39,6 +39,7 @@ export default {
 
             // Disable button
             $(e.currentTarget).attr('disabled', true);
+            $('aside').removeClass('openable');
 
             const cards = $('main .card').toArray().sort((a, b) => {
                 a = parseInt($(a).attr('data-pos'));
