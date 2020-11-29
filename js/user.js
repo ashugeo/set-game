@@ -7,6 +7,8 @@ import sound from './sound.js';
 
 export default {
     init() {
+        console.log('user init');
+
         $(document).on('click', 'button.main', () => {
             if (game.waiting) return;
 

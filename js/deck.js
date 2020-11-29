@@ -9,10 +9,7 @@ export default {
     p: 0, // Position of the cards on the table
 
     init() {
-        this.cards = [];
-        this.shown = [];
-        this.show = 12;
-        this.p = 0;
+        console.log('deck init');
 
         // Generate all 81 cards
         let id = 0;
@@ -27,10 +24,27 @@ export default {
             }
         }
 
+        this.reset();
+    },
+
+    reset() {
+        console.log('deck reset');
+
+        this.cards = [];
+        this.shown = [];
+        this.show = 12;
+        this.p = 0;
+
         // Copy all cards array to stock arrays
         this.stock = this.cards.slice();
     
-        // Display first 12 cards
+        this.firstDeal();
+    },
+
+    /**
+     * Display first 12 cards
+     */ 
+    firstDeal() {
         for (let i = 0; i < this.show; i += 1) {
             setTimeout(() => this.randomCard(), i * 200);
         }

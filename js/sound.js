@@ -3,6 +3,8 @@ export default {
     on: true,
 
     init() {
+        console.log('sound init');
+
         Howler.volume(.5);
         
         this.sounds['1'] = new Howl({ src: ['/sound/01.wav'] });

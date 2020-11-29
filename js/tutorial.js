@@ -362,6 +362,8 @@ export default {
     ],
 
     init() {
+        console.log('tutorial init');
+
         // Next button
         $(document).on('click', '.tutorial button.primary', () => {
             if (this.nth === 3) {
@@ -385,9 +387,9 @@ export default {
     },
 
     show() {
-        // Pause game
-        game.pause();
+        console.log('tutorial show');
 
+        this.starting = false;
         this.nth = 0;
         const html = this.screens[this.nth];
 
@@ -402,6 +404,11 @@ export default {
     },
 
     start() {
+        console.log('tutorial start');
+
+        if (this.starting) return;
+        this.starting = true;
+
         $('.tutorial').addClass('hidden');
         $('.controls .help').removeClass('hidden');
     
@@ -412,6 +419,7 @@ export default {
                 user.init();
             }
 
+            game.waiting = false;
             ai.init();
         }, 1000);
     }

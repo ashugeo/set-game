@@ -9,6 +9,8 @@ export default {
     foundSet: false, // Set found?
 
     init() {
+        console.log('ai init');
+        
         this.resume();
     },
 
@@ -17,7 +19,7 @@ export default {
         
         // Count tests loops
         this.test += 1;
-        // console.log(`test ${this.test}`);
+        console.log(`ai solve ${this.test}`);
 
         // After 20 unsuccessful loops, suggest user to add 3 cards (if there are some left in stock)
         if (this.test === 20 && deck.stock.length) {
@@ -60,11 +62,14 @@ export default {
 
     // Pause AI
     pause() {
+        console.log('ai pause');
         clearTimeout(this.solveTimeout);
     },
 
     // Resume AI
     resume() {
+        console.log('ai resume');
+
         this.test = 0;
         this.foundSet = false;
 

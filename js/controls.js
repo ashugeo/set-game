@@ -5,6 +5,8 @@ import tutorial from './tutorial.js';
 
 export default {
     init() {
+        console.log('controls init');
+
         $(document).on('click', '.controls .sound', () => {
             sound.on = !sound.on;
         
@@ -20,6 +22,7 @@ export default {
         
         $(document).on('click', '.controls .help', () => {
             if ($('.tutorial').is(':not(.hidden)')) return;
+            game.pause(false);
             tutorial.show();
         });
         

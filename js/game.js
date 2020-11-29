@@ -6,20 +6,6 @@ import tutorial from './tutorial.js';
 import user from './user.js';
 
 export default {
-    started: false,
-    waiting: true, // Game paused?
-    sets: { // Set counter
-        'bot': 0,
-        'user': 0,
-    },
-    errors: { // Errors counter
-        'bot': 0,
-        'user': 0,  
-    },
-    points: { // Points counter
-        'bot': 0,
-        'user': 0
-    },
     delay: { // Game animations delays
         'add-cards': 1500,
         'resume': 1000,
@@ -30,6 +16,35 @@ export default {
     },
 
     init() {
+        console.log('game init');
+
+        tutorial.init();
+    
+        if (localStorage.getItem('tutorial') === 'false') {
+            this.start();
+        } else {
+            setTimeout(() => tutorial.show(), 1000);
+        }
+    },
+
+    start() {
+        console.log('game start');
+
+        $('.controls .help').removeClass('hidden');
+        deck.init();
+        user.init();
+        ai.init();
+        this.started = true;
+
+        setTimeout(() => {
+            this.waiting = false;
+            $('button.main').removeAttr('disabled');
+        }, 3000);
+    },
+
+    reset() {
+        console.log('game reset');
+
         this.started = false;
         this.waiting = true;
         this.sets = {
@@ -44,37 +59,6 @@ export default {
             'bot': 0,
             'user': 0
         };
-
-        tutorial.init();
-    
-        if (localStorage.getItem('tutorial') === 'false') {
-            this.start();
-        } else {
-            setTimeout(() => tutorial.show(), 1000);
-        }
-    },
-
-    start() {
-        $('.controls .help').removeClass('hidden');
-        deck.init();
-        user.init();
-        ai.init();
-
-        setTimeout(() => {
-            this.started = true;
-            this.waiting = false;
-            $('button.main').removeAttr('disabled');
-        }, 3000);
-    },
-
-    reset() {
-        $('.end').addClass('hidden');
-        $('aside').addClass('visible');
-
-        setTimeout(() => {
-            $('.end').remove();
-            setTimeout(() => this.init(), 1000);
-        }, 500);
     },
 
     updatePoints(point, to) {
@@ -92,20 +76,28 @@ export default {
         $(`.${to} p.score`).text(this.points[to] ? `${this.points[to]} set${this.points[to] > 1 ? 's' : ''}` : 'No set yet');
     },
 
-    pause() {
-        $('main').addClass('paused');
+    pause(showPause = true) {
+        console.log('game pause');
+
+        if (showPause) $('main').addClass('paused');
     
         this.waiting = true;
         ai.pause();
     },
 
     resume() {
+        console.log('game resume');
+
         $('main').removeClass('paused');
         
         this.unfreeze();
+
+        this.end();
     },
 
     unfreeze() {
+        console.log('game unfreeze');
+
         this.waiting = false;
 
         // User can play again
@@ -115,7 +107,12 @@ export default {
     },
 
     end() {
+        console.log('game end');
+        
         this.started = false;
+        this.waiting = true;
+        
+        ai.pause();
 
         $('aside').removeClass('visible');
         $('main .card').fadeOut(1000, () => $('main .card').remove());
@@ -181,7 +178,14 @@ export default {
         const $end = $(html);
         $('main').append($end);
         
-        $(document).one('click', '.end button.primary', () => this.reset());
+        $('.end button.primary').one('click', () => {
+            $('.end').addClass('hidden');
+            setTimeout(() => $('.end').remove(), 500);
+            $('aside').addClass('visible');
+
+            this.reset();
+            setTimeout(() => this.init(), 1500);
+        });
         
         setTimeout(() => {
             $end.removeClass('hidden');

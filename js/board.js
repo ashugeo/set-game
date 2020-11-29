@@ -6,6 +6,8 @@ export default {
     zIndex: 10, // z-index of a card
 
     init() {
+        console.log('board pause');
+
         this.zIndex = 10;
     },
 
