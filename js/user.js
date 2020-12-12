@@ -35,6 +35,8 @@ export default {
         });
 
         $(document).on('click', 'aside button.secondary', e => {
+            if ($(e.currentTarget).is(':disabled')) return;
+            
             // Stop bot
             clearTimeout(ai.solveTimeout);
             deck.show += 3;
