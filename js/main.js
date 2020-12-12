@@ -19,6 +19,13 @@ $(document).one('click', '.modes .main', () => {
         const html = `<div class="pause">
             <div class="content">
                 <h2>Game paused</h2>
+                <p>Cards are hidden for sportsmanship.</p>
+
+                <p>
+                    <input type="checkbox" id="show" name="show">
+                    <label for="show">Show them anyway</label>
+                </p>
+
                 <button class="primary">Resume</button>
             </div>
         </div>`;
