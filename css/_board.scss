@@ -78,6 +78,7 @@ main {
 
             input {
                 appearance: none;
+                -webkit-appearance: none;
                 width: 24px;
                 height: 24px;
                 border: 2px solid var(--color-primary);
