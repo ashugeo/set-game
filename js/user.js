@@ -167,12 +167,18 @@ export default {
                 // Change "Set" button
                 $('button.main').html('Wrong!<span>This is not a Set</span>').removeClass('waiting');
 
-                // Withdraw one point
-                game.updatePoints(-1, 'user');
-
                 setTimeout(() => {
                     // Unselect
                     $('.card.selected').removeClass('selected');
+
+                    // Withdraw one point
+                    game.updatePoints(-1, 'user');
+    
+                    // Move a Set away
+                    let userCards = $('.user .sets-wrapper .card:not(.away)').toArray();
+                    userCards = userCards.slice(Math.max(userCards.length - 3, 0)).reverse();
+                    userCards.forEach((el, i) => setTimeout(() => $(el).addClass('away'), i * 100));
+
                     $('main').removeClass('waiting');
 
                     game.unfreeze();

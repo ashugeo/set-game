@@ -61,6 +61,10 @@ aside {
                         box-shadow: none;
                     }
                 }
+                
+                &.away {
+                    top: 200%;
+                }
             }
         }
 
