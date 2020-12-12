@@ -7,7 +7,7 @@ import sound from './sound.js';
 
 export default {
     init() {
-        console.log('user init');
+        if (isDev) console.log('user init');
 
         $(document).on('click', 'button.main', () => {
             if (game.waiting) return;
@@ -82,7 +82,7 @@ export default {
         });
 
         $(window).on('beforeunload', () => {
-            if (game.started) return false;
+            if (game.started && !isDev) return false;
         });
 
         $(document).on('visibilitychange', () => {

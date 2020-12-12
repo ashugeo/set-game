@@ -5,7 +5,7 @@ import tutorial from './tutorial.js';
 
 export default {
     init() {
-        console.log('controls init');
+        if (isDev) console.log('controls init');
 
         $(document).on('click', '.controls .sound', () => {
             sound.on = !sound.on;

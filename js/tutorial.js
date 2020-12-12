@@ -362,7 +362,7 @@ export default {
     ],
 
     init() {
-        console.log('tutorial init');
+        if (isDev) console.log('tutorial init');
 
         // Next button
         $(document).on('click', '.tutorial button.primary', () => {
@@ -385,7 +385,7 @@ export default {
     },
 
     show() {
-        console.log('tutorial show');
+        if (isDev) console.log('tutorial show');
 
         this.starting = false;
         this.nth = 0;
@@ -402,7 +402,7 @@ export default {
     },
 
     start() {
-        console.log('tutorial start');
+        if (isDev) console.log('tutorial start');
 
         localStorage.setItem('tutorial', 'false');
 

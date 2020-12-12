@@ -5,10 +5,6 @@ import game from './game.js';
 export default {
     zIndex: 10, // z-index of a card
 
-    init() {
-        console.log('board pause');
-    },
-
     reset() {
         this.zIndex = 10;
     },

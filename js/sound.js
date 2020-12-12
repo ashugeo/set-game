@@ -3,7 +3,7 @@ export default {
     on: true,
 
     init() {
-        console.log('sound init');
+        if (isDev) console.log('sound init');
 
         Howler.volume(.5);
         

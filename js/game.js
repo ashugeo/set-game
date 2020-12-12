@@ -16,7 +16,7 @@ export default {
     },
 
     init() {
-        console.log('game init');
+        if (isDev) console.log('game init');
 
         this.reset();
 
@@ -32,7 +32,7 @@ export default {
     },
 
     start() {
-        console.log('game start');
+        if (isDev) console.log('game start');
 
         $('.controls .help').removeClass('hidden');
         this.started = true;
@@ -49,7 +49,7 @@ export default {
     },
 
     reset() {
-        console.log('game reset');
+        if (isDev) console.log('game reset');
 
         this.started = false;
         this.waiting = true;
@@ -83,7 +83,7 @@ export default {
     },
 
     pause(showPause = true) {
-        console.log('game pause');
+        if (isDev) console.log('game pause');
 
         if (showPause) $('main').addClass('paused');
     
@@ -93,7 +93,7 @@ export default {
     },
 
     resume() {
-        console.log('game resume');
+        if (isDev) console.log('game resume');
         if (!this.started) return this.start();
 
         $('main').removeClass('paused');
@@ -102,7 +102,7 @@ export default {
     },
 
     unfreeze() {
-        console.log('game unfreeze');
+        if (isDev) console.log('game unfreeze');
 
         this.waiting = false;
 
@@ -113,7 +113,7 @@ export default {
     },
 
     end() {
-        console.log('game end');
+        if (isDev) console.log('game end');
         
         this.started = false;
         this.waiting = true;

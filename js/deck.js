@@ -9,7 +9,7 @@ export default {
     p: 0, // Position of the cards on the table
 
     init() {
-        console.log('deck init');
+        if (isDev) console.log('deck init');
 
         // Generate all 81 cards
         let id = 0;
@@ -28,7 +28,7 @@ export default {
     },
 
     reset() {
-        console.log('deck reset');
+        if (isDev) console.log('deck reset');
 
         this.shown = [];
         this.show = 12;
