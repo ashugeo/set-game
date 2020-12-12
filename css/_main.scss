@@ -129,7 +129,7 @@ button {
         transition: opacity .3s ease;
 
         &:not(:last-child) {
-            margin-right: 16px;
+            margin-right: 32px;
         }
 
         &.hidden {
@@ -139,11 +139,31 @@ button {
 
         i {
             color: #aaaaaa;
+            margin-right: 4px;
+        }
+        
+        span {
+            color: #666666;
+        }
+
+        &.sound {
+            span {
+                display: inline-block;
+                width: 80px;
+            }
+
+            i {
+                width: 16px;
+            }
         }
 
         &:hover {
             i {
-                color: #666666;
+                color: var(--color-primary);
+            }
+
+            span {
+                color: var(--color-primary);
             }
         }
     }
@@ -152,10 +172,6 @@ button {
         i {
             &.hidden {
                 display: none;
-            }
-
-            &.fa-volume-off {
-                margin-right: 10px;
             }
         }
     }

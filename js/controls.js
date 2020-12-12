@@ -14,9 +14,11 @@ export default {
                 $('.fa-volume-up').removeClass('hidden');
                 $('.fa-volume-off').addClass('hidden');
                 sound.play('click');
+                $('.controls .sound span').html('Sound on');
             } else {
                 $('.fa-volume-off').removeClass('hidden');
                 $('.fa-volume-up').addClass('hidden');
+                $('.controls .sound span').html('Sound off');
             }
         });
         
