@@ -98,12 +98,13 @@ export default {
         // Update card's position
         $card.removeClass('selected set').attr('data-pos', winner).css({
             left: $(`.${winner} .sets-wrapper`).offset().left,
-            top: $(`.${winner} .sets-wrapper`).offset().top - 84,
+            top: $(`.${winner} .sets-wrapper`).offset().top - 80,
             zIndex: this.zIndex++
         });
 
         setTimeout(() => {
             // Move card to winner's sets wrapper
+            $card.css({ left: '', top: '' });
             $(`.${winner} .sets-wrapper`).append($card);
         }, 500);
     },
