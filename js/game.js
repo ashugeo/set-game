@@ -40,6 +40,8 @@ export default {
         deck.firstDeal();
 
         setTimeout(() => {
+            if (this.paused) return;
+            
             this.waiting = false;
             $('button.main').removeAttr('disabled');
             ai.resume();
@@ -85,6 +87,7 @@ export default {
 
         if (showPause) $('main').addClass('paused');
     
+        this.paused = true;
         this.waiting = true;
         ai.pause();
     },
