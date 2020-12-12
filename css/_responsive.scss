@@ -7,6 +7,17 @@
         font-size: 14px;
     }
 
+    .controls {
+        font-size: 16px;
+        right: 24px;
+
+        div {    
+            &:not(:last-child) {
+                margin-right: 24px;
+            }
+        }
+    }
+
     main {
         section {
             padding: 32px 16px 240px 16px;
@@ -149,6 +160,16 @@
 
         .end {
             top: 24px;
+        }
+    }
+
+    .controls {
+        span {
+            display: none !important;
+        }
+
+        i {
+            font-size: 1.2em;
         }
     }
 
@@ -329,14 +350,20 @@
         top: 16px;
         right: 24px;
 
-        i {
-            font-size: 1.2em;
-        }
+        div {
+            &:not(:last-child) {
+                margin-right: 12px;
+            }
 
-        .sound {
             i {
-                &.fa-volume-off {
-                    margin-right: 11px;
+                font-size: 1em;
+            }
+    
+            &.sound {
+                i {
+                    &.fa-volume-off {
+                        margin-right: 4px;
+                    }
                 }
             }
         }
@@ -387,6 +414,23 @@
 
         .end {
             height: calc(100% - 168px);
+        }
+    }
+}
+
+@media screen and (max-width: 350px) {
+    header {
+        padding: 0 8px;
+    }
+
+    .controls {
+        right: 16px;
+
+        div {
+            &:not(:last-child) {
+                margin-right: 8px;
+            }
+
         }
     }
 }
@@ -477,7 +521,12 @@
                 width: 0 !important;
                 height: 0 !important;
                 margin: 0 !important;
+                overflow: hidden;
             }
         }
+    }
+
+    .card {
+        z-index: 0 !important;
     }
 }
