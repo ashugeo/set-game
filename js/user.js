@@ -163,7 +163,7 @@ export default {
                 sound.play('3');
 
                 // Change "Set" button
-                $('button.main').html('Sorry<span>This is not a Set</span>').removeClass('waiting');
+                $('button.main').html('Wrong!<span>This is not a Set</span>').removeClass('waiting');
 
                 // Withdraw one point
                 game.updatePoints(-1, 'user');
