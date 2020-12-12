@@ -381,9 +381,7 @@ export default {
         });
 
         // Skip tutorial
-        $(document).on('click', '.tutorial button.tertiary', () => {
-            this.start();
-        });
+        $(document).on('click', '.tutorial button.tertiary', () => this.start());
     },
 
     show() {
@@ -406,21 +404,11 @@ export default {
     start() {
         console.log('tutorial start');
 
-        if (this.starting) return;
-        this.starting = true;
+        localStorage.setItem('tutorial', 'false');
 
         $('.tutorial').addClass('hidden');
         $('.controls .help').removeClass('hidden');
     
-        setTimeout(() => {
-            if (!game.started) {
-                localStorage.setItem('tutorial', 'false');
-                deck.init();
-                user.init();
-            }
-
-            game.waiting = false;
-            ai.init();
-        }, 1000);
+        setTimeout(() => game.resume(), 1000);
     }
 }

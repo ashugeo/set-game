@@ -30,15 +30,12 @@ export default {
     reset() {
         console.log('deck reset');
 
-        this.cards = [];
         this.shown = [];
         this.show = 12;
         this.p = 0;
 
         // Copy all cards array to stock arrays
         this.stock = this.cards.slice();
-    
-        this.firstDeal();
     },
 
     /**

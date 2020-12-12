@@ -8,12 +8,6 @@ export default {
     test: 0, // Number of bot test loops
     foundSet: false, // Set found?
 
-    init() {
-        console.log('ai init');
-        
-        this.resume();
-    },
-
     solve() {
         if (game.waiting) return;
         
@@ -76,7 +70,7 @@ export default {
         // Launch bot
         setTimeout(() => {
             if (!game.waiting) this.solve();
-        }, game.delay['start-bot']);
+        }, this.speed);
     },
 
     /**

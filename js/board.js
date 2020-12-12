@@ -7,7 +7,9 @@ export default {
 
     init() {
         console.log('board pause');
+    },
 
+    reset() {
         this.zIndex = 10;
     },
 

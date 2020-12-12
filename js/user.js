@@ -56,7 +56,7 @@ export default {
 
             setTimeout(() => {
                 deck.draw3Cards();
-                ai.init();
+                setTimeout(() => game.unfreeze(), game.delay['resume']);
             }, 1000);
         });
 
@@ -167,16 +167,9 @@ export default {
                 setTimeout(() => {
                     // Unselect
                     $('.card.selected').removeClass('selected');
-                    
-                    game.waiting = false;
-                    
-                    // User can play again
-                    $('button.main').html('Set<span>or press Space</span>').removeAttr('disabled').removeClass('waiting');
-
                     $('main').removeClass('waiting');
 
-                    // Launch bot tests again
-                    ai.init();
+                    game.unfreeze();
                 }, game.delay['show-user-fail']);
             }
         }

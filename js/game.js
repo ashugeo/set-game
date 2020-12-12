@@ -18,10 +18,14 @@ export default {
     init() {
         console.log('game init');
 
+        this.reset();
+
+        deck.init();
         tutorial.init();
+        user.init();
     
         if (localStorage.getItem('tutorial') === 'false') {
-            this.start();
+            setTimeout(() => this.start(), 1000);
         } else {
             setTimeout(() => tutorial.show(), 1000);
         }
@@ -31,14 +35,14 @@ export default {
         console.log('game start');
 
         $('.controls .help').removeClass('hidden');
-        deck.init();
-        user.init();
-        ai.init();
         this.started = true;
+
+        deck.firstDeal();
 
         setTimeout(() => {
             this.waiting = false;
             $('button.main').removeAttr('disabled');
+            ai.resume();
         }, 3000);
     },
 
@@ -87,12 +91,11 @@ export default {
 
     resume() {
         console.log('game resume');
+        if (!this.started) return this.start();
 
         $('main').removeClass('paused');
         
         this.unfreeze();
-
-        this.end();
     },
 
     unfreeze() {
@@ -184,7 +187,10 @@ export default {
             $('aside').addClass('visible');
 
             this.reset();
-            setTimeout(() => this.init(), 1500);
+            board.reset();
+            deck.reset();
+            
+            setTimeout(() => this.start(), 1000);
         });
         
         setTimeout(() => {
