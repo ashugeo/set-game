@@ -444,14 +444,20 @@
             .sets-wrapper {
                 height: 86px;
                 width: 66px;
+
+                .card {
+                    transform: scale(0.5) translate(20px, 30px) !important;
+                    transform-origin: top left;
+                }
             }
         }
     }
 
     main {
         .card {
-            &.locked {
-                // transform: scale(0.4) !important;
+            &.locked:not(.set) {
+                transform: scale(0.5) translate(20px, 30px) !important;
+                transform-origin: top left;
             }
         }
     }
