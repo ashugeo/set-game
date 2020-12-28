@@ -1,0 +1,187 @@
+.tutorial {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    // justify-content: center;
+    // align-items: center;
+    z-index: 200;
+    padding: 20px 0 32px 0;
+    background-color: rgba(0,0,0,.5);
+    transition: opacity .5s ease;
+    overflow: auto;
+    touch-action: initial;
+
+    * {
+        touch-action: initial;
+    }
+    
+    &.hidden {
+        opacity: 0;
+        pointer-events: none;
+
+        .content {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+    }
+    
+    .content {
+        background-color: white;
+        width: 620px;
+        max-width: calc(100% - 32px);
+        padding: 32px 32px 24px 32px;
+        box-shadow: 0 4px 8px rgba(0,0,0,.1);
+        border-radius: 8px;
+        transition: transform .5s ease, opacity .3s ease;
+        margin: auto;
+
+        h3 {
+            color: var(--color-primary);
+            text-align: center;
+            font-size: .875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: .5em;
+        }
+        
+        h2 {
+            margin-bottom: 1em;
+            text-align: center;
+        }
+
+        p {
+            color: #666666;
+            line-height: 1.6em;
+            text-align: center;
+            margin-bottom: 1.5em;
+        
+            &.small {
+                font-size: .75rem;
+                max-width: 360px;
+                margin: 0 auto 2em auto;
+            }
+        }
+
+        .row {
+            display: flex;
+
+            &:not(:last-child) {
+                margin-bottom: 1em;
+            }
+
+            > * {
+                flex: 1;
+
+                &:not(:last-child) {
+                    margin-right: 16px;
+                }
+            }
+
+            &.buttons {
+                margin-top: 2em;
+
+                > button {
+                    flex: 0 0 calc(50% - 8px);
+
+                    &:only-child {
+                        flex: 0 0 240px;
+                    }
+                }
+            }
+        }
+
+        .box {
+            position: relative;
+            padding: 16px;
+            border-radius: 8px;
+            background-color: #f6f3f3;
+
+            &::after {
+                font-family: 'Font Awesome 5 Free';
+                position: absolute;
+                top: -12px;
+                right: -12px;
+                background-color: white;
+                border-radius: 50%;
+                font-size: 1.2rem;
+                font-weight: bold;
+                border: 4px solid white;
+            }
+
+            &.valid {
+                &::after {
+                    content: "\f058";
+                    color: hsl(120, 80%, 35%);
+                }
+            }
+
+            &.invalid {
+                &::after {
+                    content: "\f057";
+                    color: hsl(0, 60%, 50%);
+                }
+            }
+
+            h4 {
+                text-align: center;
+                color: #666666;
+                margin-bottom: 1em;
+            }
+
+            .row {
+                justify-content: center;
+
+                > * {
+                    flex: 0;
+                    text-align: center;
+                }
+
+                .card {
+                    margin: 0 auto;
+                }
+            }
+
+            span {
+                text-align: center;
+                display: block;
+                font-size: .75rem;
+                color: #666666;
+                margin-top: 1em;
+            }
+        }
+
+        .card {
+            position: relative;
+            width: 64px;
+            height: 88px;
+
+            svg {
+                width: 40px;
+            }
+        }
+
+        button {
+            margin-bottom: 0;
+
+            &.hidden {
+                visibility: hidden;
+            }
+
+            &.tertiary {
+                margin-top: 1.5em;
+            }
+
+            &.primary,
+            &.secondary {
+                transition: transform .2s ease, box-shadow .2s ease;
+
+                &:hover:not(:active) {
+                    transform: translateY(-2px);
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,256 @@
+main {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 80px);
+    display: flex;
+    // justify-content: center;
+    // align-items: center;
+    padding: 24px 0 80px 0;
+
+    &.set {
+        .card:not(.locked) {
+            .card-inner {
+                opacity: .3;
+                transition: top .5s ease-in-out, left .5s ease-in-out, transform .3s ease, opacity .3s ease;
+            }
+        }
+    }
+
+    &.waiting {
+        .card {
+            cursor: pointer;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+
+            &.selected {
+                transform: scale(1.1);
+    
+                .card-inner {
+                    transform: none !important;
+                    box-shadow: 0 2px 2px rgba(0,0,0,.1), 0 0 0 4px hsl(0, 30%, 95%), 0 0 0 6px var(--color-primary);
+                }
+            }
+        }
+    }
+
+    .pause {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0,0,0,.5);
+        z-index: 100;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity .3s ease;
+
+        .content {
+            text-align: center;
+            background-color: white;
+            padding: 24px 64px;
+            max-width: calc(100% - 32px);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,.05);
+
+            h2,
+            p {
+                margin-bottom: 1em;
+            }
+
+            p {
+                color: #666666;
+            }
+
+            input,
+            label {
+                cursor: pointer;
+                color: var(--color-primary);
+                font-weight: bold;
+            }
+
+            input {
+                appearance: none;
+                -webkit-appearance: none;
+                width: 24px;
+                height: 24px;
+                border: 2px solid var(--color-primary);
+                border-radius: 4px;
+                vertical-align: 2px;
+                margin-right: 4px;
+
+                &::after {
+                    content: "\f00c";
+                    font-family: "Font Awesome 5 Free";
+                    font-size: .75rem;
+                    color: white;
+                    font-weight: bold;
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                &:not(:checked) {
+                    opacity: .5;
+
+                    + label {
+                        opacity: .5;
+                    }
+                }
+
+                &:checked {
+                    background-color: var(--color-primary);
+                }
+
+                &:focus {
+                    outline: none;
+                    box-shadow: 0 0 0 2px white, 0 0 0 4px var(--color-primary);
+                }
+            }
+
+            button {
+                margin-top: 2em;
+            }
+        }
+    }
+
+    &.paused {
+        .pause {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .card {
+            pointer-events: none;
+        }
+
+        &:not(.shown) {
+            .card {
+                svg {
+                    opacity: 0;
+                }
+            }
+        }
+    }
+}
+
+.card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 176px;
+    width: 128px;
+    transition: top .5s ease-in-out, left .5s ease-in-out, transform .2s ease;
+
+    .card-inner {
+        width: 100%;
+        height: 100%;
+        display: inline-flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0 2px 2px rgba(0,0,0,.1);
+        transition: transform .3s ease, opacity .3s ease, box-shadow .1s ease, margin-top .3s ease;
+        backface-visibility: hidden;
+    }
+    
+    &.new {
+        .card-inner {
+            margin-top: 40px;
+            opacity: 0;
+            transform: scale(1.05) !important;
+        }
+    }
+
+    &.locked {
+        
+        &:not(.set) {
+            transform: scale(0.8) !important;
+
+            .card-inner {
+                transform: none;
+            }
+        }
+
+        &.set {
+            .card-inner {
+                transform: scale(1.1) !important;
+            }
+        }
+    }
+
+    svg {
+        display: inline-block;
+        width: 80px;
+        fill: transparent;
+        stroke-width: .3;
+    }
+
+    &.c0 {
+        color: var(--color-0);
+
+        &.f0 svg {
+            fill: var(--color-0);
+        }
+
+        &.f1 svg {
+            stroke: var(--color-0);
+        }
+
+        &.f2 svg {
+            stroke: var(--color-0);
+            fill: url(#stripes-c0);
+        }
+    }
+
+    &.c1 {
+        color: var(--color-1);
+
+        &.f0 svg {
+            fill: var(--color-1);
+        }
+
+        &.f1 svg {
+            stroke: var(--color-1);
+        }
+
+        &.f2 svg {
+            stroke: var(--color-1);
+            fill: url(#stripes-c1);
+        }
+    }
+
+    &.c2 {
+        color: var(--color-2);
+
+        &.f0 svg {
+            fill: var(--color-2);
+        }
+
+        &.f1 svg {
+            stroke: var(--color-2);
+        }
+
+        &.f2 svg {
+            stroke: var(--color-2);
+            fill: url(#stripes-c2);
+        }
+    }
+
+    &.set {
+        .card-inner {
+            box-shadow: 0 10px 10px rgba(0,0,0,.05);
+        }
+    }
+}

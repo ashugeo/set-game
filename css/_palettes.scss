@@ -1,0 +1,171 @@
+.palettes {
+    position: fixed;
+    top: 92px;
+    right: 160px;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0,0,0,.1);
+    width: 288px;
+    transition: all .3s ease;
+    z-index: 300;
+
+    &:before {
+        content: "";
+        position: absolute;
+        top: -8px;
+        right: 74px;
+        border-bottom: 8px solid white;
+        border-right: 8px solid transparent;
+        border-left: 8px solid transparent;
+    }
+
+    &.hidden {
+        transform: translateY(32px);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    p {
+        color: #666666;
+        font-size: .875rem;
+        padding: 16px;
+        text-align: center;
+    }
+
+    ul {
+        list-style: none;
+        border-top: 1px solid #dddddd;
+
+        li {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 16px;
+            color: #999999;
+            font-weight: bold;
+            user-select: none;
+            
+            &:not(:last-child) {
+                border-bottom: 1px solid #dddddd;
+            }
+
+            div {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                // box-shadow: 0 2px 4px rgba(0,0,0,.1);
+
+                &:not(:last-of-type) {
+                    margin-right: 4px;
+                }
+
+                &:last-of-type {
+                    margin-right: 12px;
+                }
+            }
+
+            span {
+                position: relative;
+                padding-right: 24px;
+                font-size: .875rem;
+            }
+
+            &.selected {
+                color: var(--color-primary);
+                font-weight: bold;
+                background-color: hsl(300, 20%, 95%);
+                
+                span {
+                    &::after {
+                        content: "\f00c";
+                        font-family: "Font Awesome 5 Free";
+                        font-weight: bold;
+                        font-size: .75rem;
+                        position: absolute;
+                        top: 2px;
+                        right: 4px;
+                    }
+                }
+            }
+        }
+    }
+
+    div.custom {
+        border-top: 1px solid #dddddd;
+        padding: 16px;
+
+        &.hidden {
+            display: none;
+        }
+
+        p {
+            padding: 0 0 24px 0;
+            font-size: .75rem;
+        }
+
+        > div {
+            display: flex;
+    
+            div {
+                flex: 1;
+                display: flex;
+                flex-flow: column;
+                align-items: center;
+    
+                input[type="color"] {
+                    appearance: none;
+                    border: none;
+                    padding: 0;
+                    margin: 0;
+                    background-color: transparent;
+                    color: transparent;
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 50%;
+                    overflow: hidden;
+    
+                    &:focus {
+                        outline: none;
+                    }
+    
+                    &::-webkit-color-swatch-wrapper {
+                        padding: 0;
+                    }
+    
+                    &::-webkit-color-swatch {
+                        border: none;
+                    }
+                }
+    
+                span {
+                    display: block;
+                    margin-top: 12px;
+                    font-size: .75rem;
+                    color: #666666;
+                }
+            }
+        }
+    }
+
+    .buttons {
+        margin-top: 1.5em;
+
+        button {
+            font-size: .875rem;
+            color: #999999;
+
+            &:hover {
+                color: var(--color-primary);
+            }
+
+            i {
+                font-size: .75rem;
+                margin-right: 8px;
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
