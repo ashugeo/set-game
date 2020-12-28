@@ -23,7 +23,14 @@ main {
 
         h1 {
             text-align: center;
-            margin-bottom: 1em;
+            font-size: 2.25rem;
+            margin-bottom: 2rem;
+
+            span {
+                padding-left: .25em;
+                border-width: 3px;
+                margin: 0 6px;
+            }
         }
 
         p {

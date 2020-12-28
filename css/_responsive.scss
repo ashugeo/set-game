@@ -22,6 +22,18 @@
         section {
             padding: 32px 16px 240px 16px;
             
+            h1 {
+                text-align: center;
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+    
+                span {
+                    padding-left: .35em;
+                    border-width: 2px;
+                    margin: 0 4px;
+                }
+            }
+            
             .modes {
                 width: calc(100% - 32px);
                 // flex-flow: column;
@@ -48,11 +60,12 @@
             box-shadow: none;
 
             h1 {
-                display: none;
+                margin-bottom: 1rem;
             }
 
             > p {
                 max-width: 400px;
+                margin-bottom: 2.5rem;
 
                 br {
                     display: none;
@@ -392,6 +405,7 @@
         section {
             max-width: calc(100% - 48px);
 
+            > h1,
             > p {
                 display: none;
             }
