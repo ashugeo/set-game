@@ -67,6 +67,14 @@ export default {
         this.test = 0;
         this.foundSet = false;
 
+        //have ai check each time it resumes if game should end; copied from board logic
+        if (isDev)  console.log(`ai sets found: ${this.findValidSets().length}`);
+        if (isDev)  console.log(`ai cards left: ${deck.stock.length}`);
+        if (this.findValidSets().length === 0 && deck.stock.length === 0) {
+            setTimeout(() => game.end(), game.delay['add-cards']);
+            return;
+        }
+
         // Launch bot
         setTimeout(() => {
             if (!game.waiting) this.solve();
