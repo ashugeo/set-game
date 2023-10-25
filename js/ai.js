@@ -69,7 +69,7 @@ export default {
 
         // have ai check each time it resumes if game should end; this logic used to be in board.js before card draw
         let numValidSets = this.findValidSets().length
-        if (isDev)  console.log(`ai sets found: ${numValidSets}, cards left: ${deck.stock.length`);
+        if (isDev)  console.log(`ai sets found: ${numValidSets}, cards left: ${deck.stock.length}`);
         if (numValidSets === 0 && deck.stock.length === 0) {
             game.end();
             return;
